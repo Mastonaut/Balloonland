@@ -156,6 +156,16 @@
   background: rgba(63, 184, 175, .08);
   border-color: rgba(63, 184, 175, .4);
 }
+.login__notice--err {
+  background: rgba(224, 92, 106, .08);
+  border-color: rgba(224, 92, 106, .45);
+}
+.login__notice code {
+  background: rgba(250, 247, 242, .1);
+  padding: .1rem .4rem;
+  border-radius: 6px;
+  font-size: .82rem;
+}
 
 /* nazad na sajt */
 .login__back {

@@ -3,3 +3,6 @@
 .vscode/
 Thumbs.db
 Desktop.ini
+
+# CMS kredencijali — nikad na git (server ih auto-kreira pri prvom startu)
+cms/korisnici.json

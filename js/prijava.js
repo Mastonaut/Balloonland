@@ -46,15 +46,33 @@
     })
   );
 
-  /* ─────── PRIJAVA ─────── */
-  loginForm.addEventListener("submit", (e) => {
+  /* ─────── PRIJAVA (CMS backend: cms/server.mjs) ─────── */
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!validiraj(loginForm)) return;
-
-    // ═══ PRIJAVI_SE — ovdje se kači CMS backend ═══
-    // const odgovor = await fetch("/api/prijava", { method: "POST", body: ... })
-    // Za sada: dashboard je u izradi, prikaži obavijest.
-    document.getElementById("loginNotice").hidden = false;
+    const greska = document.getElementById("loginGreska");
+    const napomena = document.getElementById("loginNotice");
+    greska.hidden = true;
+    napomena.hidden = true;
+    try {
+      const r = await fetch("/api/prijava", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          korisnik: document.getElementById("lUser").value.trim(),
+          lozinka: pass.value,
+        }),
+      });
+      if (r.ok) {
+        location.href = "dashboard.html";
+        return;
+      }
+      if (r.status === 401) greska.hidden = false; // pogrešni podaci
+      else napomena.hidden = false; // statički server bez API-ja (404 i sl.)
+    } catch (mreza) {
+      napomena.hidden = false; // server nije pokrenut (statički sajt / file://)
+    }
   });
 
   /* ─────── RESET LOZINKE ─────── */

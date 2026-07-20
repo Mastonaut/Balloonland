@@ -54,9 +54,14 @@
           <button type="button" class="login__link" id="toReset">Resetujte ga odmah</button>
         </p>
 
+        <div class="login__notice login__notice--err" id="loginGreska" hidden>
+          <span>⛔</span>
+          <p id="loginGreskaTekst"><strong>Pogrešno korisničko ime ili lozinka.</strong> Pokušajte ponovo.</p>
+        </div>
+
         <div class="login__notice" id="loginNotice" hidden>
           <span>🔧</span>
-          <p><strong>Dashboard je u izradi.</strong> Prijava će biti aktivna čim CMS bude gotov — korisničko ime i lozinku dobićete tada.</p>
+          <p><strong>CMS server nije pokrenut.</strong> Pokrenite ga komandom <code>node cms/server.mjs</code> pa otvorite <strong>http://localhost:8200/prijava.html</strong>.</p>
         </div>
       </form>
 

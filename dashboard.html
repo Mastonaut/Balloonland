@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Balloon Land CMS</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/dashboard.css?v=1">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body class="dash-body">
+
+  <!-- ─────── BOČNA TRAKA ─────── -->
+  <aside class="dash-side">
+    <a href="index.html" class="dash-side__logo">
+      <img src="img/logo-white.png" alt="Balloon Land">
+    </a>
+    <p class="dash-side__naslov">CMS Dashboard</p>
+    <nav class="dash-side__nav">
+      <button class="dash-side__link is-active">📰 Blog</button>
+      <button class="dash-side__link" disabled title="Uskoro">🖼️ Galerija</button>
+      <button class="dash-side__link" disabled title="Uskoro">📦 Paketi</button>
+      <button class="dash-side__link" disabled title="Uskoro">🎈 Usluge</button>
+      <button class="dash-side__link" disabled title="Uskoro">⚙️ Postavke</button>
+    </nav>
+    <div class="dash-side__dno">
+      <a href="index.html" target="_blank" rel="noopener" class="dash-side__mali">↗ Otvori sajt</a>
+      <button class="dash-side__mali dash-side__odjava" id="dOdjava">⏻ Odjava</button>
+    </div>
+  </aside>
+
+  <!-- ─────── SADRŽAJ ─────── -->
+  <main class="dash-main">
+
+    <!-- LISTA OBJAVA -->
+    <section class="dash-panel is-active" id="panelLista">
+      <header class="dash-head">
+        <div>
+          <h1>Blog <em>objave</em></h1>
+          <p id="dBrojac">Učitavanje…</p>
+        </div>
+        <button class="btn btn--gold" id="dNova">+ Nova objava</button>
+      </header>
+      <div class="dash-lista" id="dLista"></div>
+    </section>
+
+    <!-- FORMA (nova / izmjena) -->
+    <section class="dash-panel" id="panelForma">
+      <header class="dash-head">
+        <div>
+          <h1 id="dFormaNaslov">Nova <em>objava</em></h1>
+          <p>Objava se odmah pojavljuje na sajtu nakon snimanja.</p>
+        </div>
+        <button class="btn btn--outline" id="dNazad">← Nazad na listu</button>
+      </header>
+
+      <form class="dash-forma" id="dForma" novalidate>
+        <input type="hidden" id="fId">
+
+        <div class="cform__row">
+          <div class="cform__field" style="flex:2">
+            <label for="fNaslov">Naslov *</label>
+            <input type="text" id="fNaslov" placeholder="Naslov objave" required>
+          </div>
+        </div>
+
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="fKategorija">Kategorija</label>
+            <select id="fKategorija">
+              <option>Novosti</option>
+              <option>Trendovi</option>
+              <option>Iza kulisa</option>
+              <option>Savjeti</option>
+            </select>
+          </div>
+          <div class="cform__field">
+            <label for="fDatum">Datum (prazno = danas)</label>
+            <input type="text" id="fDatum" placeholder="npr. 20. jul 2026.">
+          </div>
+        </div>
+
+        <div class="cform__field">
+          <label>Naslovna slika</label>
+          <div class="dash-slika">
+            <img id="fSlikaPregled" src="img/gold-balloons-gift.jpg" alt="Pregled slike">
+            <div>
+              <input type="file" id="fSlikaFajl" accept="image/*" hidden>
+              <button type="button" class="btn btn--outline btn--sm" id="fSlikaDugme">📁 Izaberi sliku</button>
+              <p class="dash-slika__info" id="fSlikaInfo">img/gold-balloons-gift.jpg</p>
+            </div>
+          </div>
+          <input type="hidden" id="fSlika" value="img/gold-balloons-gift.jpg">
+        </div>
+
+        <div class="cform__field">
+          <label for="fUvod">Uvod (kratki opis na kartici)</label>
+          <textarea id="fUvod" rows="2" placeholder="Rečenica-dvije koje mame na čitanje…"></textarea>
+        </div>
+
+        <div class="cform__field">
+          <label for="fSadrzaj">Sadržaj * <span class="dash-hint">(pasusi odvojeni praznim redom; dozvoljeno &lt;strong&gt;, &lt;em&gt;, &lt;a&gt;)</span></label>
+          <textarea id="fSadrzaj" rows="10" placeholder="Tekst objave…" required></textarea>
+        </div>
+
+        <div class="dash-forma__akcije">
+          <button type="submit" class="btn btn--gold btn--lg" id="fSnimi">💾 Snimi objavu</button>
+          <span class="dash-status" id="dStatus"></span>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <script src="js/dashboard.js?v=1"></script>
+</body>
+</html>

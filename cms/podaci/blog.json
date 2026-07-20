@@ -1,9 +1,4 @@
-/* ═══════════════════════════════════════════
-   BALLOON LAND — Blog objave (CMS core)
-   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
-   Izvor: cms/podaci/blog.json (uređuje se kroz dashboard)
-   ═══════════════════════════════════════════ */
-window.BLOG_OBJAVE = [
+[
   {
     "id": "kreator-dekoracija",
     "naslov": "Novo: kreiraj sam svoju dekoraciju — online!",
@@ -31,4 +26,4 @@ window.BLOG_OBJAVE = [
     "uvod": "Od skice i pumpanja prvog balona do finalne spirale — vodimo vas kroz proces izrade našeg najtraženijeg luka.",
     "sadrzaj": "\n      <p>Svaki luk počinje razgovorom: dimenzije prostora, tema proslave i boje koje volite. Zatim crtamo skicu i računamo — za prosječan luk od šest metara potrebno je oko <strong>200 balona</strong>.</p>\n      <p>Baloni se pumpaju na tačno određene veličine (kalibrišemo ih šablonima!), vezuju u klastere od po četiri, pa se klasteri nižu na aluminijumsku konstrukciju. Za dijagonalni uzorak boje se pažljivo rotiraju iz klastera u klaster — tako nastaje ona prepoznatljiva spirala.</p>\n      <p>Montaža na licu mjesta traje 60–90 minuta, a nakon proslave sve tiho pospremimo. Vama ostaju samo fotografije — i uspomene.</p>\n    "
   }
-];
+]
