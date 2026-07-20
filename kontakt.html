@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontakt — Balloon Land | Lux Weddings &amp; Events</title>
+  <meta name="description" content="Kontaktirajte Balloon Land — pošaljite datum i ideju, odgovaramo u roku od 24h sa prijedlogom i ponudom.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="img/logo-white.png" alt="Balloon Land — Lux weddings and events">
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html" class="nav__link">Početna</a>
+        <a href="onama.html" class="nav__link">O nama</a>
+        <a href="usluge.html" class="nav__link">Usluge</a>
+        <a href="paketi.html" class="nav__link">Paketi</a>
+        <a href="galerija.html" class="nav__link">Galerija</a>
+        <a href="kontakt.html" class="nav__link is-active">Kontakt</a>
+        <a href="kreiraj.html" class="btn btn--gold btn--sm nav__cta">✨ Kreiraj dekoraciju</a>
+      </nav>
+      <button class="nav__burger" id="burger" aria-label="Meni">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════ PAGE HEADER ═══════════ -->
+  <section class="page-head">
+    <div class="page-head__bg" style="background-image:url('img/hero-sparklers.jpg')"></div>
+    <div class="page-head__overlay"></div>
+    <div class="container page-head__inner">
+      <p class="section__kicker section__kicker--light">Tu smo za vas</p>
+      <h1 class="page-head__title">Javite <em>nam se</em></h1>
+      <p class="page-head__crumbs"><a href="index.html">Početna</a> <span>✦</span> Kontakt</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ KONTAKT ═══════════ -->
+  <section class="contact section" style="padding-top: 5rem;">
+    <div class="container contact__grid">
+
+      <div class="contact__info reveal">
+        <p class="section__kicker">Kontakt</p>
+        <h2 class="section__title">Vaš BUM počinje <em>porukom</em></h2>
+        <p class="contact__text">Pošaljite nam datum, lokaciju i ideju — odgovaramo u roku od 24h sa prijedlogom dekoracije i jasnom ponudom.</p>
+
+        <div class="contact__cards">
+          <a href="tel:+38761000000" class="c-card">
+            <span class="c-card__icon">📞</span>
+            <div><h3>Pozovite nas</h3><p>+387 61 000 000</p></div>
+          </a>
+          <a href="mailto:info@balloonland.ba" class="c-card">
+            <span class="c-card__icon">✉️</span>
+            <div><h3>Pišite nam</h3><p>info@balloonland.ba</p></div>
+          </a>
+          <div class="c-card">
+            <span class="c-card__icon">📍</span>
+            <div><h3>Posjetite nas</h3><p>Ul. Primjer bb, Sarajevo</p></div>
+          </div>
+          <div class="c-card">
+            <span class="c-card__icon">🕘</span>
+            <div><h3>Radno vrijeme</h3><p>Pon–Sub: 09–18h</p></div>
+          </div>
+        </div>
+
+        <div class="contact__social">
+          <p>Zapratite nas — najsvježiji radovi su na mrežama:</p>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="TikTok">TT</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact__form-wrap reveal" style="--d:.15s">
+        <form class="cform" id="contactForm" novalidate>
+          <h3 class="cform__title">Zatražite <em>ponudu</em></h3>
+
+          <div class="cform__row">
+            <div class="cform__field">
+              <label for="cfName">Ime i prezime *</label>
+              <input type="text" id="cfName" name="name" placeholder="Vaše ime" required>
+            </div>
+            <div class="cform__field">
+              <label for="cfPhone">Telefon *</label>
+              <input type="tel" id="cfPhone" name="phone" placeholder="06x xxx xxx" required>
+            </div>
+          </div>
+
+          <div class="cform__row">
+            <div class="cform__field">
+              <label for="cfEmail">Email</label>
+              <input type="email" id="cfEmail" name="email" placeholder="vas@email.com">
+            </div>
+            <div class="cform__field">
+              <label for="cfDate">Datum događaja</label>
+              <input type="date" id="cfDate" name="date">
+            </div>
+          </div>
+
+          <div class="cform__field">
+            <label for="cfType">Vrsta događaja</label>
+            <select id="cfType" name="type">
+              <option value="">Izaberite...</option>
+              <option>Vjenčanje</option>
+              <option>Rođendan / jubilej</option>
+              <option>Dječija proslava</option>
+              <option>Gender reveal</option>
+              <option>Korporativni event</option>
+              <option>Nešto drugo</option>
+            </select>
+          </div>
+
+          <div class="cform__field">
+            <label for="cfMsg">Vaša ideja *</label>
+            <textarea id="cfMsg" name="message" rows="4" placeholder="Opišite nam prostor, temu, boje — sve što vam je na umu..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--gold btn--lg cform__submit">Pošalji upit 🎈</button>
+          <p class="cform__note">* obavezna polja. Odgovaramo u roku od 24h.</p>
+
+          <div class="cform__success" id="formSuccess" hidden>
+            <span>🎉</span>
+            <h3>Poruka je poslana!</h3>
+            <p>Hvala vam na povjerenju — javljamo se u roku od 24h sa prijedlogom i ponudom.</p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ MAPA ═══════════ -->
+  <section class="map reveal">
+    <iframe
+      title="Balloon Land lokacija"
+      src="https://www.google.com/maps?q=Sarajevo,Bosna+i+Hercegovina&z=13&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen></iframe>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="img/logo-white.png" alt="Balloon Land" class="footer__logo">
+        <p>Luksuzne dekoracije za vjenčanja, rođendane i proslave. Stvaramo momente koji se pamte zauvijek.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Navigacija</h4>
+        <a href="index.html">Početna</a>
+        <a href="onama.html">O nama</a>
+        <a href="usluge.html">Usluge</a>
+        <a href="paketi.html">Paketi</a>
+        <a href="galerija.html">Galerija</a>
+      </div>
+      <div class="footer__col">
+        <h4>Usluge</h4>
+        <a href="usluge.html#vjencanja">Vjenčanja</a>
+        <a href="usluge.html#rodjendani">Rođendani</a>
+        <a href="usluge.html#efekti">Prskalice &amp; efekti</a>
+        <a href="kreiraj.html">Kreiraj sam</a>
+      </div>
+      <div class="footer__col">
+        <h4>Kontakt</h4>
+        <a href="tel:+38761000000">+387 61 000 000</a>
+        <a href="mailto:info@balloonland.ba">info@balloonland.ba</a>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Balloon Land — Lux weddings &amp; events. Sva prava zadržana.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

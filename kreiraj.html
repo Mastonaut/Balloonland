@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kreiraj sam dekoraciju — Balloon Land</title>
+  <meta name="description" content="Interaktivni kreator dekoracija — sastavi svoj luk ili stub od balona, izaberi boje i dobij ponudu odmah.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/kreator.css?v=2">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <header class="nav is-scrolled" id="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="img/logo-white.png" alt="Balloon Land — Lux weddings and events">
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html" class="nav__link">Početna</a>
+        <a href="onama.html" class="nav__link">O nama</a>
+        <a href="usluge.html" class="nav__link">Usluge</a>
+        <a href="paketi.html" class="nav__link">Paketi</a>
+        <a href="galerija.html" class="nav__link">Galerija</a>
+        <a href="kontakt.html" class="nav__link">Kontakt</a>
+        <a href="kreiraj.html" class="btn btn--gold btn--sm nav__cta">✨ Kreiraj dekoraciju</a>
+      </nav>
+      <button class="nav__burger" id="burger" aria-label="Meni">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════ KREATOR ═══════════ -->
+  <main class="kreator">
+    <div class="container">
+      <div class="kreator__head">
+        <p class="section__kicker">Budi svoj dizajner</p>
+        <h1 class="kreator__title">Kreiraj <em>svoju</em> dekoraciju</h1>
+        <p class="kreator__sub">Odgovori na par pitanja — dekoracija nastaje pred tvojim očima.</p>
+      </div>
+
+      <div class="kreator__layout">
+
+        <!-- ─────── LIJEVO: KORACI ─────── -->
+        <div class="kreator__panel">
+
+          <div class="kreator__progress">
+            <div class="kreator__progress-bar"><span id="kProgressBar"></span></div>
+            <p class="kreator__progress-text"><span id="kStepNow">1</span> / <span id="kStepTotal">5</span> — <span id="kStepName">Dekoracija</span></p>
+          </div>
+
+          <!-- KORAK 1: vrsta dekoracije -->
+          <section class="kstep is-active" data-step="dekoracija">
+            <h2 class="kstep__q">Šta želiš da <em>kreiraš</em>?</h2>
+            <div class="kopts kopts--2">
+              <button class="kopt" data-set="deko" data-value="luk">
+                <svg viewBox="0 0 120 90" aria-hidden="true">
+                  <path d="M15 82 C15 30 105 30 105 82" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
+                </svg>
+                <h3>Luk od balona</h3>
+                <p>Klasik koji uokviruje ulaz, sto ili foto zonu</p>
+              </button>
+              <button class="kopt" data-set="deko" data-value="stub">
+                <svg viewBox="0 0 120 90" aria-hidden="true">
+                  <circle cx="60" cy="22" r="16" fill="currentColor"/>
+                  <rect x="49" y="38" width="22" height="46" rx="10" fill="currentColor"/>
+                </svg>
+                <h3>Stub od balona</h3>
+                <p>Elegantni stubovi sa velikim završnim balonom</p>
+              </button>
+            </div>
+          </section>
+
+          <!-- KORAK 2: tip balona -->
+          <section class="kstep" data-step="baloni">
+            <h2 class="kstep__q">Kakve balone <em>želiš</em>?</h2>
+            <div class="kopts kopts--2">
+              <button class="kopt" data-set="tip" data-value="isti">
+                <svg viewBox="0 0 120 90" aria-hidden="true">
+                  <circle cx="30" cy="45" r="17" fill="currentColor"/>
+                  <circle cx="62" cy="45" r="17" fill="currentColor" opacity=".75"/>
+                  <circle cx="94" cy="45" r="17" fill="currentColor"/>
+                </svg>
+                <h3>Baloni iste veličine</h3>
+                <p>Uredan, moderan i simetričan izgled</p>
+              </button>
+              <button class="kopt" data-set="tip" data-value="kombinacija">
+                <svg viewBox="0 0 120 90" aria-hidden="true">
+                  <circle cx="32" cy="42" r="20" fill="currentColor"/>
+                  <circle cx="58" cy="60" r="9" fill="currentColor" opacity=".75"/>
+                  <circle cx="82" cy="40" r="15" fill="currentColor"/>
+                  <circle cx="100" cy="60" r="7" fill="currentColor" opacity=".75"/>
+                </svg>
+                <h3>Veliki + mali baloni</h3>
+                <p>Organski, razigran "organic" stil</p>
+              </button>
+            </div>
+          </section>
+
+          <!-- KORAK 3: slaganje -->
+          <section class="kstep" data-step="slaganje">
+            <h2 class="kstep__q">Kako slažemo <em>boje</em>?</h2>
+            <div class="kopts kopts--3">
+              <button class="kopt kopt--img" data-set="slaganje" data-value="ravno">
+                <img src="img/slaganje-ravno.jpg" alt="Ravno slaganje — boje u pravilnim prstenovima" loading="lazy">
+                <h3>Ravno</h3>
+                <p>Boje se ređaju u pravilnim prstenovima</p>
+              </button>
+              <button class="kopt kopt--img" data-set="slaganje" data-value="dijagonalno">
+                <img src="img/slaganje-dijagonalno.jpg" alt="Dijagonalno slaganje — spiralni efekat" loading="lazy">
+                <h3>Dijagonalno</h3>
+                <p>Boje se spiralno uvijaju oko dekoracije</p>
+              </button>
+              <button class="kopt kopt--img" data-set="slaganje" data-value="mix">
+                <img src="img/slaganje-mix.jpg" alt="Mix slaganje — nasumično raspoređene boje" loading="lazy">
+                <h3>Mix <span class="kopt__sub">(nasumično)</span></h3>
+                <p>Boje razbacane bez pravila — razigrano</p>
+              </button>
+            </div>
+            <p class="kstep__hint">💡 Nakon ovog koraka prikazaćemo tvoju dekoraciju — za početak u bijeloj mat boji.</p>
+          </section>
+
+          <!-- KORAK 4: boje -->
+          <section class="kstep" data-step="boje">
+            <h2 class="kstep__q">Koliko <em>boja</em> želiš?</h2>
+            <div class="kopts kopts--3 kopts--slim">
+              <button class="kopt kopt--slim" data-set="brojBoja" data-value="2"><h3>2 boje</h3><p>uključeno u cijenu</p></button>
+              <button class="kopt kopt--slim" data-set="brojBoja" data-value="3"><h3>3 boje</h3><p>+ 15 KM</p></button>
+              <button class="kopt kopt--slim" data-set="brojBoja" data-value="4"><h3>4 boje</h3><p>+ 25 KM</p></button>
+            </div>
+            <div class="krows" id="kRows"></div>
+          </section>
+
+          <!-- KORAK 5 (samo stub): završni balon -->
+          <section class="kstep" data-step="zavrsni">
+            <h2 class="kstep__q">Završni <em>balon</em></h2>
+            <p class="kstep__hint" style="margin-top:-0.5rem">Svaki stub krunišemo velikim balonom na vrhu.</p>
+            <div class="krow">
+              <p class="krow__label">Boja završnog balona</p>
+              <div class="kswatches" id="kTopColors"></div>
+            </div>
+            <div class="krow">
+              <p class="krow__label">Natpis na balonu <span class="krow__opt">(opcionalno, + 15 KM)</span></p>
+              <input type="text" class="kinput" id="kNatpis" maxlength="18" placeholder="npr. Sretan rođendan!">
+            </div>
+          </section>
+
+          <!-- KORAK 6: upit -->
+          <section class="kstep" data-step="upit">
+            <h2 class="kstep__q">Tvoja dekoracija je <em>spremna</em>!</h2>
+            <ul class="ksummary" id="kSummary"></ul>
+            <div class="kform">
+              <div class="cform__row">
+                <div class="cform__field">
+                  <label for="kName">Ime i prezime *</label>
+                  <input type="text" id="kName" placeholder="Vaše ime" required>
+                </div>
+                <div class="cform__field">
+                  <label for="kPhone">Telefon *</label>
+                  <input type="tel" id="kPhone" placeholder="06x xxx xxx" required>
+                </div>
+              </div>
+              <div class="cform__field">
+                <label for="kDate">Datum događaja</label>
+                <input type="date" id="kDate">
+              </div>
+            </div>
+          </section>
+
+          <div class="kreator__nav">
+            <button class="btn btn--outline" id="kBack" disabled>← Nazad</button>
+            <button class="btn btn--gold" id="kNext" disabled>Dalje →</button>
+          </div>
+        </div>
+
+        <!-- ─────── DESNO: PREGLED ─────── -->
+        <aside class="kpreview">
+          <div class="kpreview__card">
+            <div class="kpreview__stage-wrap">
+              <canvas id="kStage" class="kpreview__stage" width="1200" height="940" role="img" aria-label="Pregled dekoracije"></canvas>
+              <p class="kpreview__placeholder" id="kPlaceholder">Tvoja dekoracija će se pojaviti ovdje ✨</p>
+            </div>
+            <div class="kpreview__meta">
+              <div class="kpreview__chips" id="kChips"></div>
+              <div class="kpreview__price">
+                <span>Procjena cijene</span>
+                <strong><span id="kPrice">—</span> KM</strong>
+              </div>
+              <p class="kpreview__note">Finalna cijena zavisi od dimenzija i lokacije — potvrđujemo je uz ponudu.</p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- SUCCESS OVERLAY -->
+    <div class="ksuccess" id="kSuccess" hidden>
+      <div class="ksuccess__card">
+        <span>🎉</span>
+        <h3>Upit je poslan!</h3>
+        <p>Tvoja dekoracija je stigla do nas — javljamo se u roku od 24h sa potvrdom cijene i termina.</p>
+        <a href="index.html" class="btn btn--gold">← Nazad na početnu</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer__bottom">
+      <p>© 2026 Balloon Land — Lux weddings &amp; events. Sva prava zadržana.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+  <script src="js/maske.js?v=3"></script>
+  <script src="js/kreator.js?v=3"></script>
+</body>
+</html>

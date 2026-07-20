@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerija — Balloon Land | Lux Weddings &amp; Events</title>
+  <meta name="description" content="Pogledajte trenutke koje smo ukrasili — vjenčanja, rođendani, dječije proslave i spektakularni efekti u našoj galeriji.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <img src="img/logo-white.png" alt="Balloon Land — Lux weddings and events">
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html" class="nav__link">Početna</a>
+        <a href="onama.html" class="nav__link">O nama</a>
+        <a href="usluge.html" class="nav__link">Usluge</a>
+        <a href="paketi.html" class="nav__link">Paketi</a>
+        <a href="galerija.html" class="nav__link is-active">Galerija</a>
+        <a href="kontakt.html" class="nav__link">Kontakt</a>
+        <a href="kreiraj.html" class="btn btn--gold btn--sm nav__cta">✨ Kreiraj dekoraciju</a>
+      </nav>
+      <button class="nav__burger" id="burger" aria-label="Meni">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════ PAGE HEADER ═══════════ -->
+  <section class="page-head">
+    <div class="page-head__bg" style="background-image:url('img/photozone-bluegold.jpg')"></div>
+    <div class="page-head__overlay"></div>
+    <div class="container page-head__inner">
+      <p class="section__kicker section__kicker--light">Naš portfolio</p>
+      <h1 class="page-head__title">Galerija <em>momenata</em></h1>
+      <p class="page-head__crumbs"><a href="index.html">Početna</a> <span>✦</span> Galerija</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ FILTERI ═══════════ -->
+  <nav class="pills" aria-label="Filtriraj galeriju">
+    <div class="container pills__row" id="galleryFilters">
+      <button class="pill is-active" data-filter="all">✦ Sve</button>
+      <button class="pill" data-filter="vjencanja">💍 Vjenčanja</button>
+      <button class="pill" data-filter="rodjendani">🥂 Rođendani</button>
+      <button class="pill" data-filter="djecije">🎈 Dječije</button>
+      <button class="pill" data-filter="efekti">✨ Efekti</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ MASONRY GALERIJA ═══════════ -->
+  <section class="gpage section" style="padding-top: 3.5rem;">
+    <div class="container">
+      <div class="masonry" id="masonry">
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/wedding-aisle.jpg" alt="Ceremonija u bijelom" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Ceremonija u bijelom</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="efekti">
+          <img src="img/hero-sparklers.jpg" alt="Špalir prskalica" loading="lazy">
+          <figcaption><span>Efekti</span><h3>Špalir prskalica</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/birthday-blackgold.jpg" alt="Crno-zlatni rođendan" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Crno-zlatni glamur</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="djecije">
+          <img src="img/photozone-pink.jpg" alt="Roze foto zona za prvi rođendan" loading="lazy">
+          <figcaption><span>Dječije</span><h3>Prvi rođendan u rozom</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/hero-wedding-altar.jpg" alt="Noćni oltar sa balonima" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Noćni oltar</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="efekti">
+          <img src="img/smoke-dance.jpg" alt="Prvi ples u oblacima" loading="lazy">
+          <figcaption><span>Efekti</span><h3>Ples u oblacima</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/arch-blackgold.jpg" alt="Trendy balonski luk" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Trendy luk</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="djecije">
+          <img src="img/gender-reveal.jpg" alt="Gender reveal balon" loading="lazy">
+          <figcaption><span>Dječije</span><h3>Boy or girl?</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/create-your-own.jpg" alt="Glamur žurka sa zlatnim balonima" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Zlatni glamur</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/wedding-tables.jpg" alt="Svečana sala" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Svečana sala</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="djecije">
+          <img src="img/photozone-bluegold.jpg" alt="Plavo-zlatna foto zona" loading="lazy">
+          <figcaption><span>Dječije</span><h3>Plavo-zlatna foto zona</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="efekti">
+          <img src="img/smoke-fireworks-arch.jpg" alt="Dim i vatromet" loading="lazy">
+          <figcaption><span>Efekti</span><h3>Dim &amp; vatromet</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/candy-bar.jpg" alt="Luksuzni candy bar" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Luksuzni candy bar</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/arch-pinkgold.jpg" alt="Roze-zlatni photowall" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Roze-zlatni photowall</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="djecije">
+          <img src="img/kids-balloons.jpg" alt="Dječija čarolija" loading="lazy">
+          <figcaption><span>Dječije</span><h3>Dječija čarolija</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="efekti">
+          <img src="img/sparkler-closeup.jpg" alt="Hladna iskra izbliza" loading="lazy">
+          <figcaption><span>Efekti</span><h3>Hladna iskra</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/hero-balloons-stage.jpg" alt="Balonska scena" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Balonska scena</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="djecije">
+          <img src="img/kids-party.jpg" alt="Mala žurka" loading="lazy">
+          <figcaption><span>Dječije</span><h3>Mala žurka</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="rodjendani">
+          <img src="img/gold-balloons-gift.jpg" alt="Zlatni konfeti baloni" loading="lazy">
+          <figcaption><span>Rođendani</span><h3>Zlatni konfeti</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/photo-corner.jpg" alt="Cvjetni fotokutak" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Cvjetni fotokutak</h3></figcaption>
+        </figure>
+        <figure class="g-item reveal" data-cat="vjencanja">
+          <img src="img/hero-gold-arch.jpg" alt="Zlatni balonski luk" loading="lazy">
+          <figcaption><span>Vjenčanja</span><h3>Zlatni luk</h3></figcaption>
+        </figure>
+      </div>
+      <p class="gpage__empty" id="galleryEmpty" hidden>Nema fotografija u ovoj kategoriji — uskoro stižu nove!</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ LIGHTBOX ═══════════ -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lbClose" aria-label="Zatvori">✕</button>
+    <button class="lightbox__arrow lightbox__arrow--prev" id="lbPrev" aria-label="Prethodna">←</button>
+    <figure class="lightbox__figure">
+      <img src="" alt="" id="lbImg">
+      <figcaption id="lbCaption"></figcaption>
+    </figure>
+    <button class="lightbox__arrow lightbox__arrow--next" id="lbNext" aria-label="Sljedeća">→</button>
+  </div>
+
+  <!-- ═══════════ CTA ═══════════ -->
+  <section class="cta cta--compact">
+    <div class="cta__bg" style="background-image:url('img/gold-balloons-gift.jpg')"></div>
+    <div class="cta__overlay"></div>
+    <div class="container cta__inner reveal">
+      <h2 class="cta__title">Želite ovako <em>nešto</em>?</h2>
+      <p class="cta__sub">Svaka od ovih dekoracija počela je jednom porukom. Pošaljite nam svoju ideju — napravimo sljedeću zajedno.</p>
+      <div class="cta__actions">
+        <a href="tel:+38761000000" class="btn btn--gold btn--lg">📞 061 000 000</a>
+        <a href="kreiraj.html" class="btn btn--ghost btn--lg">✨ Kreiraj svoju dekoraciju</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="img/logo-white.png" alt="Balloon Land" class="footer__logo">
+        <p>Luksuzne dekoracije za vjenčanja, rođendane i proslave. Stvaramo momente koji se pamte zauvijek.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Navigacija</h4>
+        <a href="index.html">Početna</a>
+        <a href="onama.html">O nama</a>
+        <a href="usluge.html">Usluge</a>
+        <a href="paketi.html">Paketi</a>
+        <a href="galerija.html">Galerija</a>
+      </div>
+      <div class="footer__col">
+        <h4>Usluge</h4>
+        <a href="usluge.html#vjencanja">Vjenčanja</a>
+        <a href="usluge.html#rodjendani">Rođendani</a>
+        <a href="usluge.html#efekti">Prskalice &amp; efekti</a>
+        <a href="kreiraj.html">Kreiraj sam</a>
+      </div>
+      <div class="footer__col">
+        <h4>Kontakt</h4>
+        <a href="tel:+38761000000">+387 61 000 000</a>
+        <a href="mailto:info@balloonland.ba">info@balloonland.ba</a>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Balloon Land — Lux weddings &amp; events. Sva prava zadržana.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

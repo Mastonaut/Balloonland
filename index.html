@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balloon Land — Lux Weddings &amp; Events | Dekoracije koje ostavljaju bez daha</title>
+  <meta name="description" content="Balloon Land — luksuzne dekoracije za vjenčanja, rođendane i proslave. Baloni, prskalice, dimni efekti i nezaboravni momenti.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body>
+
+  <!-- ═══════════ PRELOADER ═══════════ -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__inner">
+      <img src="img/logo-white.png" alt="Balloon Land" class="preloader__logo">
+      <div class="preloader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo">
+        <img src="img/logo-white.png" alt="Balloon Land — Lux weddings and events">
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="#pocetna" class="nav__link is-active">Početna</a>
+        <a href="onama.html" class="nav__link">O nama</a>
+        <a href="usluge.html" class="nav__link">Usluge</a>
+        <a href="paketi.html" class="nav__link">Paketi</a>
+        <a href="galerija.html" class="nav__link">Galerija</a>
+        <a href="kontakt.html" class="nav__link">Kontakt</a>
+        <a href="#kreiraj" class="btn btn--gold btn--sm nav__cta">✨ Kreiraj dekoraciju</a>
+      </nav>
+      <button class="nav__burger" id="burger" aria-label="Meni">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════ HERO SLIDER ═══════════ -->
+  <section class="hero" id="pocetna">
+    <canvas id="confetti" class="hero__confetti"></canvas>
+
+    <div class="hero__slides">
+      <div class="hero__slide is-active">
+        <div class="hero__bg" style="background-image:url('img/hero-sparklers.jpg')"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__content container">
+          <p class="hero__kicker reveal-line"><span>Lux weddings &amp; events</span></p>
+          <h1 class="hero__title">Momenti koji <em>eksplodiraju</em><br>od emocija</h1>
+          <p class="hero__sub">Prskalice, baloni i magija — pretvaramo vaše najvažnije trenutke u spektakl koji se pamti zauvijek.</p>
+          <div class="hero__actions">
+            <a href="#paketi" class="btn btn--gold">Pogledaj pakete</a>
+            <a href="#galerija" class="btn btn--ghost">Naši radovi</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__slide">
+        <div class="hero__bg" style="background-image:url('img/hero-gold-arch.jpg')"></div>
+        <div class="hero__overlay hero__overlay--light"></div>
+        <div class="hero__content container">
+          <p class="hero__kicker"><span>Balonske instalacije</span></p>
+          <h1 class="hero__title">Lukovi od balona<br>koji <em>oduzimaju dah</em></h1>
+          <p class="hero__sub">Od nježnih pastela do raskošnog zlata — svaka instalacija je umjetničko djelo krojeno po vašoj želji.</p>
+          <div class="hero__actions">
+            <a href="#usluge" class="btn btn--gold">Istraži usluge</a>
+            <a href="#kreiraj" class="btn btn--ghost">Kreiraj svoju</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__slide">
+        <div class="hero__bg" style="background-image:url('img/hero-balloons-stage.jpg')"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__content container">
+          <p class="hero__kicker"><span>Proslave &amp; eventi</span></p>
+          <h1 class="hero__title">Vaša proslava,<br>naš <em>spektakl</em></h1>
+          <p class="hero__sub">Rođendani, punoljetstva, korporativni eventi — scenografija koja podiže atmosferu na novi nivo.</p>
+          <div class="hero__actions">
+            <a href="#paketi" class="btn btn--gold">Izaberi paket</a>
+            <a href="kontakt.html" class="btn btn--ghost">Kontaktiraj nas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__slide">
+        <div class="hero__bg" style="background-image:url('img/smoke-fireworks-arch.jpg')"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__content container">
+          <p class="hero__kicker"><span>Dimni &amp; svjetlosni efekti</span></p>
+          <h1 class="hero__title">Prvi ples<br>u <em>oblacima</em></h1>
+          <p class="hero__sub">Teški dim, hladne prskalice i svjetlosna magija — filmska scena čiji ste vi glavni glumci.</p>
+          <div class="hero__actions">
+            <a href="#usluge" class="btn btn--gold">Efekti koje nudimo</a>
+            <a href="kontakt.html" class="btn btn--ghost">Zakaži termin</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__ui container">
+      <div class="hero__dots" id="heroDots"></div>
+      <div class="hero__arrows">
+        <button class="hero__arrow" id="heroPrev" aria-label="Prethodni slajd">←</button>
+        <button class="hero__arrow" id="heroNext" aria-label="Sljedeći slajd">→</button>
+      </div>
+    </div>
+    <div class="hero__progress"><span id="heroProgress"></span></div>
+
+    <a href="#marquee" class="hero__scroll" aria-label="Skrolaj dole"><span></span></a>
+  </section>
+
+  <!-- ═══════════ GOLD MARQUEE ═══════════ -->
+  <div class="marquee" id="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        <span>Baloni</span><span>Prskalice</span><span>Dimni efekti</span><span>Cvjetni zidovi</span><span>Konfete</span><span>Svjetleća slova</span><span>Lukovi</span><span>Fotokutak</span>
+      </div>
+      <div class="marquee__group">
+        <span>Baloni</span><span>Prskalice</span><span>Dimni efekti</span><span>Cvjetni zidovi</span><span>Konfete</span><span>Svjetleća slova</span><span>Lukovi</span><span>Fotokutak</span>
+      </div>
+      <div class="marquee__group">
+        <span>Baloni</span><span>Prskalice</span><span>Dimni efekti</span><span>Cvjetni zidovi</span><span>Konfete</span><span>Svjetleća slova</span><span>Lukovi</span><span>Fotokutak</span>
+      </div>
+      <div class="marquee__group">
+        <span>Baloni</span><span>Prskalice</span><span>Dimni efekti</span><span>Cvjetni zidovi</span><span>Konfete</span><span>Svjetleća slova</span><span>Lukovi</span><span>Fotokutak</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ USLUGE / BANERI ═══════════ -->
+  <section class="services section" id="usluge">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__kicker">Šta radimo</p>
+        <h2 class="section__title">Dekoracije za svaki <em>povod</em></h2>
+        <p class="section__sub">Četiri svijeta magije — jedan tim koji ih stvara.</p>
+      </div>
+
+      <div class="services__grid">
+        <a href="usluge.html#vjencanja" class="service-card service-card--tall reveal">
+          <img src="img/wedding-aisle.jpg" alt="Dekoracija vjenčanja" loading="lazy">
+          <div class="service-card__body">
+            <span class="service-card__num">01</span>
+            <h3>Vjenčanja</h3>
+            <p>Elegancija u bijelom i zlatnom — od ceremonije do prvog plesa.</p>
+            <span class="service-card__link">Saznaj više →</span>
+          </div>
+        </a>
+        <a href="usluge.html#rodjendani" class="service-card reveal" style="--d:.1s">
+          <img src="img/birthday-blackgold.jpg" alt="Dekoracija rođendana" loading="lazy">
+          <div class="service-card__body">
+            <span class="service-card__num">02</span>
+            <h3>Rođendani</h3>
+            <p>Od prvog rođendana do velikih jubileja — svaki broj zaslužuje BUM.</p>
+            <span class="service-card__link">Saznaj više →</span>
+          </div>
+        </a>
+        <a href="usluge.html#efekti" class="service-card reveal" style="--d:.2s">
+          <img src="img/sparkler-closeup.jpg" alt="Prskalice i efekti" loading="lazy">
+          <div class="service-card__body">
+            <span class="service-card__num">03</span>
+            <h3>Prskalice &amp; efekti</h3>
+            <p>Hladne prskalice, teški dim, konfeti topovi — čista adrenalinska magija.</p>
+            <span class="service-card__link">Saznaj više →</span>
+          </div>
+        </a>
+        <a href="usluge.html#djecije" class="service-card service-card--wide reveal" style="--d:.3s">
+          <img src="img/kids-balloons.jpg" alt="Dječije proslave" loading="lazy">
+          <div class="service-card__body">
+            <span class="service-card__num">04</span>
+            <h3>Dječije proslave</h3>
+            <p>Šareni svjetovi iz mašte — jer dječiji osmijeh je najljepša dekoracija.</p>
+            <span class="service-card__link">Saznaj više →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ KREIRAJ SAM BANER ═══════════ -->
+  <section class="creator" id="kreiraj">
+    <div class="creator__bg parallax" data-speed="0.25" style="background-image:url('img/create-your-own.jpg')"></div>
+    <div class="creator__overlay"></div>
+    <div class="container creator__inner">
+      <div class="creator__content reveal">
+        <p class="section__kicker section__kicker--light">Budi svoj dizajner</p>
+        <h2 class="creator__title">Kreiraj <em>sam</em> sebi<br>dekoraciju</h2>
+        <p class="creator__sub">Izaberi boje, oblike, efekte i temu — naš interaktivni alat pretvara tvoju ideju u ponudu za par minuta. Ti zamisliš, mi napravimo.</p>
+        <a href="kreiraj.html" class="btn btn--gold btn--lg creator__cta">
+          Pokreni kreator <span class="creator__cta-arrow">→</span>
+        </a>
+        <ul class="creator__perks">
+          <li>🎨 Izbor boja i stilova</li>
+          <li>🎈 3D prikaz ideje</li>
+          <li>⚡ Ponuda za 2 minute</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ STATISTIKA ═══════════ -->
+  <section class="stats">
+    <div class="container stats__grid">
+      <div class="stat reveal"><span class="stat__num" data-count="750">0</span><span class="stat__plus">+</span><p>ukrašenih događaja</p></div>
+      <div class="stat reveal" style="--d:.1s"><span class="stat__num" data-count="120">0</span><span class="stat__plus">k</span><p>napuhanih balona</p></div>
+      <div class="stat reveal" style="--d:.2s"><span class="stat__num" data-count="98">0</span><span class="stat__plus">%</span><p>zadovoljnih klijenata</p></div>
+      <div class="stat reveal" style="--d:.3s"><span class="stat__num" data-count="9">0</span><span class="stat__plus">god</span><p>iskustva i ljubavi</p></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PAKETI ═══════════ -->
+  <section class="packages section" id="paketi">
+    <div class="packages__bg" style="background-image:url('img/packages-bg.jpg')"></div>
+    <div class="container">
+      <div class="section__head section__head--light reveal">
+        <p class="section__kicker section__kicker--light">Ponuda</p>
+        <h2 class="section__title">Izaberi svoj <em>BUM</em></h2>
+        <p class="section__sub">Tri paketa — svaki dizajniran da ostavi utisak. Sve pakete moguće je prilagoditi.</p>
+      </div>
+
+      <div class="packages__grid">
+        <article class="package reveal">
+          <div class="package__head">
+            <h3>Mini <span>BUM</span></h3>
+            <p class="package__tag">Za intimne proslave</p>
+          </div>
+          <div class="package__price"><sup>od</sup> 149 <span>KM</span></div>
+          <ul class="package__list">
+            <li>Balonski stub ili mini luk</li>
+            <li>Brojka / natpis od balona</li>
+            <li>Konfeti baloni</li>
+            <li>Dostava i montaža</li>
+            <li class="off">Fotokutak</li>
+            <li class="off">Svjetlosni efekti</li>
+          </ul>
+          <a href="kontakt.html" class="btn btn--outline package__btn">Rezerviši</a>
+        </article>
+
+        <article class="package package--featured reveal" style="--d:.12s">
+          <span class="package__badge">★ Najpopularniji</span>
+          <div class="package__head">
+            <h3>Veliki <span>BUM</span></h3>
+            <p class="package__tag">Za nezaboravne momente</p>
+          </div>
+          <div class="package__price"><sup>od</sup> 399 <span>KM</span></div>
+          <ul class="package__list">
+            <li>Veliki balonski luk ili zid</li>
+            <li>Fotokutak sa pozadinom</li>
+            <li>Personalizovani natpisi</li>
+            <li>Konfeti top + prskalice</li>
+            <li>Dekoracija stolova</li>
+            <li>Dostava, montaža i demontaža</li>
+          </ul>
+          <a href="kontakt.html" class="btn btn--gold package__btn">Rezerviši odmah</a>
+        </article>
+
+        <article class="package reveal" style="--d:.24s">
+          <div class="package__head">
+            <h3>Lux <span>BUM</span></h3>
+            <p class="package__tag">Full spektakl produkcija</p>
+          </div>
+          <div class="package__price"><sup>od</sup> 899 <span>KM</span></div>
+          <ul class="package__list">
+            <li>Kompletna scenografija prostora</li>
+            <li>Hladne prskalice + teški dim</li>
+            <li>Svjetleća slova i LED dekor</li>
+            <li>Cvjetni / balonski zidovi</li>
+            <li>Koordinator na događaju</li>
+            <li>Sve iz paketa Veliki BUM</li>
+          </ul>
+          <a href="kontakt.html" class="btn btn--outline package__btn">Rezerviši</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ GALERIJA ═══════════ -->
+  <section class="gallery section" id="galerija">
+    <div class="section__head reveal container">
+      <p class="section__kicker">Portfolio</p>
+      <h2 class="section__title">Trenuci koje smo <em>ukrasili</em></h2>
+    </div>
+    <div class="gallery__marquee">
+      <div class="gallery__track">
+        <img src="img/hero-gold-arch.jpg" alt="Zlatni balonski luk">
+        <img src="img/wedding-tables.jpg" alt="Svečana sala">
+        <img src="img/gold-balloons-gift.jpg" alt="Zlatni baloni">
+        <img src="img/hero-wedding-altar.jpg" alt="Vjenčani oltar sa balonima">
+        <img src="img/birthday-blackgold.jpg" alt="Rođendanska dekoracija">
+        <img src="img/hero-sparklers.jpg" alt="Prskalice na vjenčanju">
+        <img src="img/hero-gold-arch.jpg" alt="Zlatni balonski luk">
+        <img src="img/wedding-tables.jpg" alt="Svečana sala">
+        <img src="img/gold-balloons-gift.jpg" alt="Zlatni baloni">
+        <img src="img/hero-wedding-altar.jpg" alt="Vjenčani oltar sa balonima">
+        <img src="img/birthday-blackgold.jpg" alt="Rođendanska dekoracija">
+        <img src="img/hero-sparklers.jpg" alt="Prskalice na vjenčanju">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section class="testi section">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="section__kicker">Utisci</p>
+        <h2 class="section__title">Riječi naših <em>klijenata</em></h2>
+      </div>
+      <div class="testi__slider reveal" id="testiSlider">
+        <div class="testi__slide is-active">
+          <p class="testi__text">"Kada smo ušli u salu, ostali smo bez teksta. Gosti su fotografisali dekoraciju više nego nas! Balloon Land je pretvorio naše vjenčanje u bajku."</p>
+          <p class="testi__author">Amina &amp; Emir <span>— vjenčanje, Sarajevo</span></p>
+        </div>
+        <div class="testi__slide">
+          <p class="testi__text">"Rođendan naše kćerke izgledao je kao scena iz filma. Profesionalni, tačni i puni ideja. Već smo rezervisali i sljedeću proslavu!"</p>
+          <p class="testi__author">Porodica Hodžić <span>— 1. rođendan</span></p>
+        </div>
+        <div class="testi__slide">
+          <p class="testi__text">"Hladne prskalice na prvom plesu — momenat koji niko od gostiju neće zaboraviti. Vrijedi svake marke. Preporuka od srca!"</p>
+          <p class="testi__author">Lejla &amp; Adnan <span>— vjenčanje, Mostar</span></p>
+        </div>
+        <div class="testi__nav">
+          <button id="testiPrev" aria-label="Prethodni">←</button>
+          <div class="testi__dots" id="testiDots"></div>
+          <button id="testiNext" aria-label="Sljedeći">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA BANNER ═══════════ -->
+  <section class="cta" id="kontakt">
+    <div class="cta__bg parallax" data-speed="0.2" style="background-image:url('img/gold-balloons-gift.jpg')"></div>
+    <div class="cta__overlay"></div>
+    <div class="container cta__inner reveal">
+      <h2 class="cta__title">Spremni za svoj <em>BUM</em>?</h2>
+      <p class="cta__sub">Pošaljite nam datum i ideju — odgovaramo u roku od 24h sa prijedlogom i ponudom.</p>
+      <div class="cta__actions">
+        <a href="tel:+38761000000" class="btn btn--gold btn--lg">📞 061 000 000</a>
+        <a href="mailto:info@balloonland.ba" class="btn btn--ghost btn--lg">✉ info@balloonland.ba</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="img/logo-white.png" alt="Balloon Land" class="footer__logo">
+        <p>Luksuzne dekoracije za vjenčanja, rođendane i proslave. Stvaramo momente koji se pamte zauvijek.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Navigacija</h4>
+        <a href="#pocetna">Početna</a>
+        <a href="onama.html">O nama</a>
+        <a href="usluge.html">Usluge</a>
+        <a href="paketi.html">Paketi</a>
+        <a href="galerija.html">Galerija</a>
+      </div>
+      <div class="footer__col">
+        <h4>Usluge</h4>
+        <a href="usluge.html#vjencanja">Vjenčanja</a>
+        <a href="usluge.html#rodjendani">Rođendani</a>
+        <a href="usluge.html#efekti">Prskalice &amp; efekti</a>
+        <a href="#kreiraj">Kreiraj sam</a>
+      </div>
+      <div class="footer__col">
+        <h4>Kontakt</h4>
+        <a href="tel:+38761000000">+387 61 000 000</a>
+        <a href="mailto:info@balloonland.ba">info@balloonland.ba</a>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Balloon Land — Lux weddings &amp; events. Sva prava zadržana.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>
