@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
   <link rel="stylesheet" href="css/dashboard.css?v=1">
   <link rel="icon" type="image/png" href="img/logo-black.png">
@@ -103,12 +103,95 @@
         </div>
 
         <div class="cform__field">
-          <label for="fSadrzaj">Sadržaj * <span class="dash-hint">(pasusi odvojeni praznim redom; dozvoljeno &lt;strong&gt;, &lt;em&gt;, &lt;a&gt;)</span></label>
-          <textarea id="fSadrzaj" rows="10" placeholder="Tekst objave…" required></textarea>
+          <label>Sadržaj *</label>
+          <div class="dash-editor">
+            <div class="dash-alati" id="dAlati">
+              <button type="button" data-cmd="bold" title="Podebljano"><b>B</b></button>
+              <button type="button" data-cmd="underline" title="Podvučeno"><u>U</u></button>
+              <span class="dash-alati__sep"></span>
+              <div class="dash-boje" id="dBoje" title="Boja teksta">
+                <button type="button" data-boja="#FAF7F2" style="background:#FAF7F2"></button>
+                <button type="button" data-boja="#E8C877" style="background:#E8C877"></button>
+                <button type="button" data-boja="#F2A7C3" style="background:#F2A7C3"></button>
+                <button type="button" data-boja="#3FB8AF" style="background:#3FB8AF"></button>
+                <button type="button" data-boja="#D6467E" style="background:#D6467E"></button>
+                <button type="button" data-boja="#3E6FD9" style="background:#3E6FD9"></button>
+              </div>
+              <span class="dash-alati__sep"></span>
+              <select id="dVelicina" title="Veličina slova">
+                <option value="">Veličina</option>
+                <option value="2">Malo</option>
+                <option value="3">Normalno</option>
+                <option value="5">Veliko</option>
+                <option value="6">Ogromno</option>
+              </select>
+              <select id="dFont" title="Font">
+                <option value="">Font</option>
+                <option value="Manrope">Manrope</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Lora">Lora</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Dancing Script">Dancing Script</option>
+              </select>
+              <span class="dash-alati__sep"></span>
+              <button type="button" data-cmd="insertUnorderedList" title="Lista">•≡</button>
+              <button type="button" data-cmd="insertOrderedList" title="Numerisana lista">1≡</button>
+              <span class="dash-alati__sep"></span>
+              <button type="button" data-cmd="removeFormat" title="Očisti formatiranje">⌫</button>
+            </div>
+            <div class="dash-editor__polje" id="fEditor" contenteditable="true"></div>
+          </div>
+        </div>
+
+        <!-- ─────── SLIDER ─────── -->
+        <div class="dash-slider-blok">
+          <label class="dash-switch">
+            <input type="checkbox" id="fSlider">
+            <span class="dash-switch__traka"></span>
+            <span class="dash-switch__tekst">🎠 Postavi vijest na slider (početna stranica)</span>
+          </label>
+
+          <div class="dash-slider-panel" id="sliderPanel" hidden>
+            <p class="dash-hint" style="margin-bottom:.8rem">
+              Naslov i uvod vijesti su fiksni na slajdu. Dodajte grafičke elemente i <strong>prevucite ih mišem</strong> na željeno mjesto.
+            </p>
+            <div class="dash-slider-alati">
+              <button type="button" class="dash-mini" id="elKrug">+ Krug sa %</button>
+              <button type="button" class="dash-mini" id="elTraka">+ Traka (akcija)</button>
+              <button type="button" class="dash-mini" id="elPill">+ Etiketa</button>
+              <input type="text" id="elTekst" placeholder="Tekst izabranog elementa" hidden>
+              <button type="button" class="dash-mini dash-mini--obrisi" id="elObrisi" hidden>🗑 Ukloni element</button>
+            </div>
+            <div class="dash-slajd" id="dSlajd">
+              <div class="dash-slajd__bg" id="dSlajdBg"></div>
+              <div class="dash-slajd__sadrzaj">
+                <p class="dash-slajd__kicker" id="dSlajdKicker">Kategorija</p>
+                <h3 class="dash-slajd__naslov" id="dSlajdNaslov">Naslov vijesti</h3>
+                <p class="dash-slajd__uvod" id="dSlajdUvod">Uvod vijesti…</p>
+              </div>
+              <div class="dash-slajd__elementi" id="dSlajdElementi"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─────── OBJAVLJIVANJE ─────── -->
+        <div class="cform__row dash-objava-red">
+          <div class="cform__field">
+            <label for="fStatus">Status objave</label>
+            <select id="fStatus">
+              <option value="objavljeno">✅ Objavi odmah</option>
+              <option value="skica">📝 Snimi kao skicu</option>
+              <option value="zakazano">🕐 Zakaži objavu</option>
+            </select>
+          </div>
+          <div class="cform__field" id="poljeZakazano" hidden>
+            <label for="fObjaviU">Objavi u</label>
+            <input type="datetime-local" id="fObjaviU">
+          </div>
         </div>
 
         <div class="dash-forma__akcije">
-          <button type="submit" class="btn btn--gold btn--lg" id="fSnimi">💾 Snimi objavu</button>
+          <button type="submit" class="btn btn--gold btn--lg" id="fSnimi">💾 Snimi</button>
           <span class="dash-status" id="dStatus"></span>
         </div>
       </form>

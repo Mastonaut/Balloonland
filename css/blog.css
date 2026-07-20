@@ -158,3 +158,16 @@
 @media (max-width: 768px) {
   .blog-list { grid-template-columns: 1fr; }
 }
+
+/* liste i formatiranje iz CMS editora */
+.article__content ul,
+.article__content ol {
+  margin: 0 0 1.3rem 1.6rem;
+  color: rgba(250, 247, 242, .82);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+.article__content ul { list-style: disc; }
+.article__content ol { list-style: decimal; }
+.article__content li { margin-bottom: .45rem; }
+.article__content u { text-underline-offset: 3px; }

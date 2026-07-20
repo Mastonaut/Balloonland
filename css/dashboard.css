@@ -177,6 +177,203 @@
 .dash-status { font-size: .9rem; font-weight: 700; color: var(--gold-2); }
 .dash-status.is-greska { color: #e05c6a; }
 
+/* ─────── status bedževi ─────── */
+.dash-bedz {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 800;
+  padding: .2rem .6rem;
+  border-radius: 100px;
+  letter-spacing: .03em;
+}
+.dash-bedz--objavljeno { background: rgba(63, 184, 175, .15); color: #3fb8af; }
+.dash-bedz--skica { background: rgba(250, 247, 242, .1); color: var(--muted); }
+.dash-bedz--zakazano { background: rgba(201, 162, 75, .15); color: var(--gold-2); }
+
+/* ─────── rich text editor ─────── */
+.dash-editor {
+  border: 1.5px solid rgba(250, 247, 242, .14);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(14, 13, 16, .6);
+}
+.dash-editor:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(201, 162, 75, .15);
+}
+.dash-alati {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .35rem;
+  padding: .6rem .8rem;
+  background: rgba(23, 21, 26, .9);
+  border-bottom: 1px solid rgba(250, 247, 242, .1);
+}
+.dash-alati button {
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(250, 247, 242, .85);
+  font-family: inherit;
+  font-size: .95rem;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.dash-alati button:hover { background: rgba(250, 247, 242, .08); border-color: rgba(201, 162, 75, .35); }
+.dash-alati select {
+  height: 34px;
+  background: rgba(14, 13, 16, .7);
+  border: 1px solid rgba(250, 247, 242, .15);
+  border-radius: 9px;
+  color: rgba(250, 247, 242, .85);
+  font-family: inherit;
+  font-size: .82rem;
+  padding: 0 .5rem;
+  cursor: pointer;
+}
+.dash-alati__sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(250, 247, 242, .12);
+  margin: 0 .3rem;
+}
+.dash-boje { display: flex; gap: .3rem; }
+.dash-boje button {
+  min-width: 22px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(250, 247, 242, .25);
+}
+.dash-boje button:hover { transform: scale(1.15); }
+.dash-editor__polje {
+  min-height: 260px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 1.1rem 1.2rem;
+  color: var(--ivory);
+  font-size: .98rem;
+  line-height: 1.7;
+  outline: none;
+}
+.dash-editor__polje p { margin-bottom: .8rem; }
+.dash-editor__polje ul, .dash-editor__polje ol { margin: .6rem 0 .9rem 1.5rem; }
+.dash-editor__polje li { margin-bottom: .3rem; }
+
+/* ─────── switch ─────── */
+.dash-slider-blok {
+  margin: 1.4rem 0;
+  padding: 1.2rem 1.3rem;
+  border: 1px dashed rgba(201, 162, 75, .35);
+  border-radius: 16px;
+  background: rgba(201, 162, 75, .05);
+}
+.dash-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  cursor: pointer;
+  user-select: none;
+}
+.dash-switch input { display: none; }
+.dash-switch__traka {
+  width: 52px; height: 28px;
+  border-radius: 100px;
+  background: rgba(250, 247, 242, .15);
+  position: relative;
+  transition: background .3s;
+  flex-shrink: 0;
+}
+.dash-switch__traka::after {
+  content: "";
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--ivory);
+  transition: transform .3s var(--ease), background .3s;
+}
+.dash-switch input:checked + .dash-switch__traka {
+  background: linear-gradient(120deg, var(--gold-3), var(--gold-2));
+}
+.dash-switch input:checked + .dash-switch__traka::after {
+  transform: translateX(24px);
+  background: var(--ink);
+}
+.dash-switch__tekst { font-weight: 700; font-size: .95rem; }
+
+/* ─────── pregled slajda + draggable elementi ─────── */
+.dash-slider-panel { margin-top: 1.2rem; }
+.dash-slider-alati {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .9rem;
+}
+.dash-slider-alati input {
+  flex: 1;
+  min-width: 160px;
+  background: rgba(14, 13, 16, .6);
+  border: 1.5px solid rgba(201, 162, 75, .4);
+  border-radius: 100px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: .85rem;
+  padding: .5rem 1rem;
+}
+.dash-slajd {
+  position: relative;
+  aspect-ratio: 16 / 8;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 162, 75, .35);
+  user-select: none;
+}
+.dash-slajd__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.dash-slajd::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(14, 13, 16, .88) 0%, rgba(14, 13, 16, .5) 45%, rgba(14, 13, 16, .15) 100%);
+  z-index: 1;
+}
+.dash-slajd__sadrzaj {
+  position: absolute;
+  z-index: 2;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 55%;
+  pointer-events: none;
+}
+.dash-slajd__kicker {
+  color: var(--gold-2);
+  font-size: .62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .3em;
+  margin-bottom: .4rem;
+}
+.dash-slajd__naslov {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  margin-bottom: .4rem;
+}
+.dash-slajd__uvod { color: rgba(250, 247, 242, .75); font-size: .78rem; }
+.dash-slajd__elementi { position: absolute; inset: 0; z-index: 3; }
+.dash-slajd__elementi .hv-el { cursor: grab; }
+.dash-slajd__elementi .hv-el:active { cursor: grabbing; }
+.dash-slajd__elementi .hv-el.is-izabran { outline: 2px dashed var(--gold-2); outline-offset: 4px; }
+
 @media (max-width: 900px) {
   .dash-body { grid-template-columns: 1fr; }
   .dash-side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: .6rem; }

@@ -1733,3 +1733,53 @@ button { font-family: inherit; cursor: pointer; }
   .pill { padding: .6rem 1.1rem; font-size: .82rem; }
   .feature { padding: 4rem 0; }
 }
+
+/* ═══════════ HERO VIJESTI — grafički elementi na slajdu ═══════════
+   (koristi ih i CMS dashboard pregled i javni hero slider) */
+.hv-el {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  white-space: nowrap;
+  font-weight: 800;
+}
+.hv-el--krug {
+  width: 108px;
+  height: 108px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #e8c877, #c9a24b 55%, #a37f2e);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  rotate: -8deg;
+  box-shadow: 0 14px 40px -10px rgba(201, 162, 75, .6);
+  animation: hvPuls 2.2s ease-in-out infinite;
+}
+@keyframes hvPuls { 0%, 100% { scale: 1; } 50% { scale: 1.07; } }
+.hv-el--traka {
+  background: linear-gradient(100deg, #a37f2e, #e8c877);
+  color: var(--ink);
+  font-size: .95rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: .55rem 1.6rem;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  clip-path: polygon(3% 0, 100% 0, 97% 100%, 0 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+}
+.hv-el--pill {
+  background: rgba(14, 13, 16, .75);
+  border: 1.5px solid var(--gold-2);
+  color: var(--gold-2);
+  padding: .5rem 1.2rem;
+  border-radius: 100px;
+  font-size: .88rem;
+  backdrop-filter: blur(6px);
+}
+@media (max-width: 768px) {
+  .hv-el--krug { width: 76px; height: 76px; font-size: 1.2rem; }
+  .hv-el--traka { font-size: .75rem; padding: .4rem 1.1rem; }
+  .hv-el--pill { font-size: .75rem; }
+}

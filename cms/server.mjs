@@ -55,6 +55,8 @@ function sacuvajObjave(objave) {
   generisiBlogData(objave);
 }
 function generisiBlogData(objave) {
+  // na javni sajt idu SAMO objavljene (skice i zakazane ostaju u CMS-u)
+  const javne = objave.filter((o) => (o.status || "objavljeno") === "objavljeno");
   const glava = `/* ═══════════════════════════════════════════
    BALLOON LAND — Blog objave (CMS core)
    AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
@@ -62,8 +64,28 @@ function generisiBlogData(objave) {
    ═══════════════════════════════════════════ */\n`;
   fs.writeFileSync(
     path.join(KORIJEN, "js", "blog-data.js"),
-    glava + "window.BLOG_OBJAVE = " + JSON.stringify(objave, null, 2) + ";\n"
+    glava + "window.BLOG_OBJAVE = " + JSON.stringify(javne, null, 2) + ";\n"
   );
+}
+
+/* ─────── zakazane objave: automatska objava kad dođe vrijeme ─────── */
+function formatirajDatum(d) {
+  return d.getDate() + ". " + MJESECI[d.getMonth()] + " " + d.getFullYear() + ".";
+}
+function objaviZakazane() {
+  const objave = ucitajObjave();
+  const sada = new Date();
+  let promjena = false;
+  objave.forEach((o) => {
+    if (o.status === "zakazano" && o.objaviU && new Date(o.objaviU) <= sada) {
+      o.status = "objavljeno";
+      o.datum = formatirajDatum(new Date(o.objaviU));
+      delete o.objaviU;
+      promjena = true;
+      console.log("🕐 Zakazana objava je objavljena: " + o.naslov);
+    }
+  });
+  if (promjena) sacuvajObjave(objave);
 }
 
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
@@ -167,7 +189,14 @@ async function api(req, res, putanja) {
       slika: o.slika || "img/gold-balloons-gift.jpg",
       uvod: o.uvod || "",
       sadrzaj: o.sadrzaj,
+      status: ["objavljeno", "skica", "zakazano"].includes(o.status) ? o.status : "objavljeno",
+      objaviU: o.status === "zakazano" ? (o.objaviU || null) : undefined,
+      slider: !!o.slider,
+      sliderElementi: Array.isArray(o.sliderElementi) ? o.sliderElementi : [],
     };
+    if (nova.status === "zakazano" && !nova.objaviU) {
+      return json(res, 400, { greska: "Za zakazanu objavu odaberite datum i vrijeme." });
+    }
     objave.unshift(nova);
     sacuvajObjave(objave);
     return json(res, 200, nova);
@@ -182,9 +211,13 @@ async function api(req, res, putanja) {
 
     if (metoda === "PUT") {
       const o = JSON.parse((await citajTijelo(req)).toString() || "{}");
-      ["naslov", "kategorija", "datum", "slika", "uvod", "sadrzaj"].forEach((polje) => {
+      ["naslov", "kategorija", "datum", "slika", "uvod", "sadrzaj", "status", "objaviU", "slider", "sliderElementi"].forEach((polje) => {
         if (o[polje] !== undefined) objave[i][polje] = o[polje];
       });
+      if (objave[i].status === "zakazano" && !objave[i].objaviU) {
+        return json(res, 400, { greska: "Za zakazanu objavu odaberite datum i vrijeme." });
+      }
+      if (objave[i].status !== "zakazano") delete objave[i].objaviU;
       sacuvajObjave(objave);
       return json(res, 200, objave[i]);
     }
@@ -245,6 +278,8 @@ http.createServer(async (req, res) => {
     json(res, 500, { greska: "Greška na serveru." });
   }
 }).listen(PORT, () => {
+  objaviZakazane();                       // odmah pri startu
+  setInterval(objaviZakazane, 60 * 1000); // pa svake minute
   console.log("🎈 Balloon Land CMS radi na http://localhost:" + PORT);
   console.log("   Sajt:      http://localhost:" + PORT + "/");
   console.log("   Prijava:   http://localhost:" + PORT + "/prijava.html");
