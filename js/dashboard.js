@@ -377,6 +377,131 @@
     }
   });
 
+  /* ═══════════ SEKCIJE (sidebar) ═══════════ */
+  const POCETNI_PANEL = { blog: "panelLista", galerija: "panelGLista" };
+  document.querySelectorAll(".dash-side__link[data-sekcija]").forEach((dugme) => {
+    dugme.addEventListener("click", () => {
+      document.querySelectorAll(".dash-side__link").forEach((b) => b.classList.toggle("is-active", b === dugme));
+      document.querySelectorAll(".dash-panel").forEach((p) => p.classList.remove("is-active"));
+      document.getElementById(POCETNI_PANEL[dugme.dataset.sekcija]).classList.add("is-active");
+      if (dugme.dataset.sekcija === "galerija") ucitajGaleriju();
+    });
+  });
+
+  /* ═══════════ GALERIJA ═══════════ */
+  const gLista = document.getElementById("gLista");
+  const gForma = document.getElementById("gForma");
+  const gStatus = document.getElementById("gStatus");
+  const KATEGORIJE = { vjencanja: "Vjenčanja", rodjendani: "Rođendani", djecije: "Dječije", efekti: "Efekti" };
+  let galerija = [];
+
+  async function ucitajGaleriju() {
+    galerija = await api("/api/galerija");
+    document.getElementById("gBrojac").textContent = galerija.length + " fotografija u galeriji";
+    gLista.innerHTML = galerija.length
+      ? galerija.map((s) => `
+          <div class="dash-red">
+            <img class="dash-red__slika" src="${s.slika}" alt="">
+            <div class="dash-red__info">
+              <h3>${s.naslov}</h3>
+              <p><span class="b-kat">${KATEGORIJE[s.kategorija] || s.kategorija}</span> ${s.slika}</p>
+            </div>
+            <div class="dash-red__akcije">
+              <button class="dash-mini" data-guredi="${s.id}">✏️ Uredi</button>
+              <button class="dash-mini dash-mini--obrisi" data-gobrisi="${s.id}">🗑 Obriši</button>
+            </div>
+          </div>`).join("")
+      : '<p style="color:var(--muted); padding:2rem 0;">Galerija je prazna — dodajte prvu fotografiju! 📸</p>';
+  }
+
+  gLista.addEventListener("click", async (e) => {
+    const urediId = e.target.dataset.guredi;
+    const obrisiId = e.target.dataset.gobrisi;
+    if (urediId) otvoriGFormu(galerija.find((s) => s.id === urediId));
+    if (obrisiId) {
+      const s = galerija.find((x) => x.id === obrisiId);
+      if (confirm('Ukloniti "' + s.naslov + '" iz galerije?')) {
+        await api("/api/galerija/" + obrisiId, { method: "DELETE" });
+        await ucitajGaleriju();
+      }
+    }
+  });
+
+  function otvoriGFormu(s) {
+    gForma.reset();
+    gStatus.textContent = "";
+    document.getElementById("gId").value = s ? s.id : "";
+    document.getElementById("gFormaNaslov").innerHTML = s ? "Izmjena <em>fotografije</em>" : "Nova <em>fotografija</em>";
+    document.getElementById("gNaslov").value = s ? s.naslov : "";
+    document.getElementById("gKategorija").value = s ? s.kategorija : "vjencanja";
+    postaviGSliku(s ? s.slika : "");
+    document.querySelectorAll(".dash-panel").forEach((p) => p.classList.remove("is-active"));
+    document.getElementById("panelGForma").classList.add("is-active");
+  }
+  function nazadNaGListu() {
+    document.querySelectorAll(".dash-panel").forEach((p) => p.classList.remove("is-active"));
+    document.getElementById("panelGLista").classList.add("is-active");
+  }
+  document.getElementById("gNova").addEventListener("click", () => otvoriGFormu(null));
+  document.getElementById("gNazad").addEventListener("click", nazadNaGListu);
+
+  function postaviGSliku(putanja) {
+    document.getElementById("gSlika").value = putanja;
+    document.getElementById("gSlikaPregled").src = putanja || "img/gold-balloons-gift.jpg";
+    document.getElementById("gSlikaInfo").textContent = putanja || "—";
+  }
+  document.getElementById("gSlikaDugme").addEventListener("click", () =>
+    document.getElementById("gSlikaFajl").click()
+  );
+  document.getElementById("gSlikaFajl").addEventListener("change", () => {
+    const fajl = document.getElementById("gSlikaFajl").files[0];
+    if (!fajl) return;
+    gStatus.classList.remove("is-greska");
+    gStatus.textContent = "⏳ Slika se šalje…";
+    const citac = new FileReader();
+    citac.onload = async () => {
+      try {
+        const { putanja } = await api("/api/upload", {
+          method: "POST",
+          body: JSON.stringify({ ime: fajl.name, data: citac.result, folder: "galerija" }),
+        });
+        postaviGSliku(putanja);
+        gStatus.textContent = "✅ Slika je dodana.";
+      } catch (gr) {
+        gStatus.classList.add("is-greska");
+        gStatus.textContent = "⚠ " + gr.message;
+      }
+    };
+    citac.readAsDataURL(fajl);
+  });
+
+  gForma.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const podaci = {
+      naslov: document.getElementById("gNaslov").value.trim(),
+      kategorija: document.getElementById("gKategorija").value,
+      slika: document.getElementById("gSlika").value,
+    };
+    if (!podaci.naslov || !podaci.slika) {
+      gStatus.classList.add("is-greska");
+      gStatus.textContent = "⚠ Fotografija i naslov su obavezni.";
+      return;
+    }
+    const id = document.getElementById("gId").value;
+    gStatus.classList.remove("is-greska");
+    gStatus.textContent = "⏳ Snimanje…";
+    try {
+      if (id) await api("/api/galerija/" + id, { method: "PUT", body: JSON.stringify(podaci) });
+      else await api("/api/galerija", { method: "POST", body: JSON.stringify(podaci) });
+      gStatus.textContent = "✅ Snimljeno — fotografija je u galeriji!";
+      await ucitajGaleriju();
+      setTimeout(nazadNaGListu, 700);
+    } catch (gr) {
+      gStatus.classList.add("is-greska");
+      gStatus.textContent = "⚠ " + gr.message;
+    }
+  });
+
   /* ─────── odjava ─────── */
   document.getElementById("dOdjava").addEventListener("click", async () => {
     await api("/api/odjava", { method: "POST" });

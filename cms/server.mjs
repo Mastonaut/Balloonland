@@ -88,6 +88,30 @@ function objaviZakazane() {
   if (promjena) sacuvajObjave(objave);
 }
 
+/* ─────── galerija podaci ─────── */
+const GAL_JSON = path.join(PODACI, "galerija.json");
+function ucitajGaleriju() {
+  return JSON.parse(fs.readFileSync(GAL_JSON, "utf8"));
+}
+function sacuvajGaleriju(stavke) {
+  fs.writeFileSync(GAL_JSON, JSON.stringify(stavke, null, 2));
+  const glava = `/* ═══════════════════════════════════════════
+   BALLOON LAND — Galerija (CMS core)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/galerija.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */\n`;
+  const kategorije = `\nwindow.GALERIJA_KATEGORIJE = {
+  vjencanja: "Vjenčanja",
+  rodjendani: "Rođendani",
+  djecije: "Dječije",
+  efekti: "Efekti",
+};\n`;
+  fs.writeFileSync(
+    path.join(KORIJEN, "js", "galerija-data.js"),
+    glava + "window.GALERIJA_STAVKE = " + JSON.stringify(stavke, null, 2) + ";\n" + kategorije
+  );
+}
+
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
 function danasnjiDatum() {
   const d = new Date();
@@ -228,9 +252,47 @@ async function api(req, res, putanja) {
     }
   }
 
-  // upload slike (JSON: { ime, data } — data je data-URL ili čisti base64)
+  // galerija: lista / dodavanje / izmjena / brisanje
+  if (putanja === "/api/galerija" && metoda === "GET") {
+    return json(res, 200, ucitajGaleriju());
+  }
+  if (putanja === "/api/galerija" && metoda === "POST") {
+    const s = JSON.parse((await citajTijelo(req)).toString() || "{}");
+    if (!s.slika || !s.naslov) return json(res, 400, { greska: "Slika i naslov su obavezni." });
+    const stavke = ucitajGaleriju();
+    let id = slug(s.naslov);
+    while (stavke.some((x) => x.id === id)) id += "-2";
+    const nova = {
+      id,
+      slika: s.slika,
+      kategorija: ["vjencanja", "rodjendani", "djecije", "efekti"].includes(s.kategorija) ? s.kategorija : "rodjendani",
+      naslov: s.naslov,
+    };
+    stavke.unshift(nova);
+    sacuvajGaleriju(stavke);
+    return json(res, 200, nova);
+  }
+  const galPojedinacna = putanja.match(/^\/api\/galerija\/([\w-]+)$/);
+  if (galPojedinacna) {
+    const stavke = ucitajGaleriju();
+    const i = stavke.findIndex((x) => x.id === galPojedinacna[1]);
+    if (i < 0) return json(res, 404, { greska: "Stavka nije pronađena." });
+    if (metoda === "PUT") {
+      const s = JSON.parse((await citajTijelo(req)).toString() || "{}");
+      ["slika", "kategorija", "naslov"].forEach((p) => { if (s[p] !== undefined) stavke[i][p] = s[p]; });
+      sacuvajGaleriju(stavke);
+      return json(res, 200, stavke[i]);
+    }
+    if (metoda === "DELETE") {
+      const [obrisana] = stavke.splice(i, 1);
+      sacuvajGaleriju(stavke);
+      return json(res, 200, obrisana);
+    }
+  }
+
+  // upload slike (JSON: { ime, data, folder } — data je data-URL ili čisti base64)
   if (putanja === "/api/upload" && metoda === "POST") {
-    const { ime, data } = JSON.parse((await citajTijelo(req)).toString() || "{}");
+    const { ime, data, folder: zeljeni } = JSON.parse((await citajTijelo(req)).toString() || "{}");
     if (!data) return json(res, 400, { greska: "Nedostaje slika." });
     const cistBase64 = String(data).replace(/^data:[^;]+;base64,/, "");
     const bafer = Buffer.from(cistBase64, "base64");
@@ -239,11 +301,12 @@ async function api(req, res, putanja) {
     if (![".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ekstenzija)) {
       return json(res, 400, { greska: "Dozvoljeni formati: jpg, png, webp, gif." });
     }
-    const folder = path.join(KORIJEN, "img", "blog");
+    const pod = ["blog", "galerija"].includes(zeljeni) ? zeljeni : "blog";
+    const folder = path.join(KORIJEN, "img", pod);
     fs.mkdirSync(folder, { recursive: true });
     const naziv = Date.now() + "-" + slug(path.basename(ime || "slika", ekstenzija)) + ekstenzija;
     fs.writeFileSync(path.join(folder, naziv), bafer);
-    return json(res, 200, { putanja: "img/blog/" + naziv });
+    return json(res, 200, { putanja: "img/" + pod + "/" + naziv });
   }
 
   return json(res, 404, { greska: "Nepoznata ruta." });

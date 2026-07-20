@@ -1,9 +1,4 @@
-/* ═══════════════════════════════════════════
-   BALLOON LAND — Galerija (CMS core)
-   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
-   Izvor: cms/podaci/galerija.json (uređuje se kroz dashboard)
-   ═══════════════════════════════════════════ */
-window.GALERIJA_STAVKE = [
+[
   {
     "id": "ceremonija-u-bijelom",
     "slika": "img/wedding-aisle.jpg",
@@ -130,11 +125,4 @@ window.GALERIJA_STAVKE = [
     "kategorija": "vjencanja",
     "naslov": "Zlatni luk"
   }
-];
-
-window.GALERIJA_KATEGORIJE = {
-  vjencanja: "Vjenčanja",
-  rodjendani: "Rođendani",
-  djecije: "Dječije",
-  efekti: "Efekti",
-};
+]

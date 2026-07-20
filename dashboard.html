@@ -21,8 +21,8 @@
     </a>
     <p class="dash-side__naslov">CMS Dashboard</p>
     <nav class="dash-side__nav">
-      <button class="dash-side__link is-active">📰 Blog</button>
-      <button class="dash-side__link" disabled title="Uskoro">🖼️ Galerija</button>
+      <button class="dash-side__link is-active" data-sekcija="blog">📰 Blog</button>
+      <button class="dash-side__link" data-sekcija="galerija">🖼️ Galerija</button>
       <button class="dash-side__link" disabled title="Uskoro">📦 Paketi</button>
       <button class="dash-side__link" disabled title="Uskoro">🎈 Usluge</button>
       <button class="dash-side__link" disabled title="Uskoro">⚙️ Postavke</button>
@@ -37,7 +37,7 @@
   <main class="dash-main">
 
     <!-- LISTA OBJAVA -->
-    <section class="dash-panel is-active" id="panelLista">
+    <section class="dash-panel is-active" id="panelLista" data-sekcija="blog">
       <header class="dash-head">
         <div>
           <h1>Blog <em>objave</em></h1>
@@ -49,7 +49,7 @@
     </section>
 
     <!-- FORMA (nova / izmjena) -->
-    <section class="dash-panel" id="panelForma">
+    <section class="dash-panel" id="panelForma" data-sekcija="blog">
       <header class="dash-head">
         <div>
           <h1 id="dFormaNaslov">Nova <em>objava</em></h1>
@@ -237,8 +237,69 @@
       </form>
     </section>
 
+    <!-- ═══════ GALERIJA: LISTA ═══════ -->
+    <section class="dash-panel" id="panelGLista" data-sekcija="galerija">
+      <header class="dash-head">
+        <div>
+          <h1>Galerija <em>fotografija</em></h1>
+          <p id="gBrojac">Učitavanje…</p>
+        </div>
+        <button class="btn btn--gold" id="gNova">+ Nova fotografija</button>
+      </header>
+      <div class="dash-lista" id="gLista"></div>
+    </section>
+
+    <!-- ═══════ GALERIJA: FORMA ═══════ -->
+    <section class="dash-panel" id="panelGForma" data-sekcija="galerija">
+      <header class="dash-head">
+        <div>
+          <h1 id="gFormaNaslov">Nova <em>fotografija</em></h1>
+          <p>Fotografija se odmah pojavljuje u galeriji na sajtu.</p>
+        </div>
+        <button class="btn btn--outline" id="gNazad">← Nazad na listu</button>
+      </header>
+
+      <form class="dash-forma" id="gForma" novalidate>
+        <input type="hidden" id="gId">
+
+        <div class="cform__field">
+          <label>Fotografija *</label>
+          <div class="dash-slika">
+            <img id="gSlikaPregled" src="img/gold-balloons-gift.jpg" alt="Pregled">
+            <div>
+              <input type="file" id="gSlikaFajl" accept="image/*" hidden>
+              <button type="button" class="btn btn--outline btn--sm" id="gSlikaDugme">📁 Izaberi fotografiju</button>
+              <p class="dash-slika__info" id="gSlikaInfo">—</p>
+            </div>
+          </div>
+          <input type="hidden" id="gSlika" value="">
+        </div>
+
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="gNaslov">Naslov *</label>
+            <input type="text" id="gNaslov" placeholder="npr. Zlatni luk na vjenčanju" required>
+          </div>
+          <div class="cform__field">
+            <label for="gKategorija">Kategorija</label>
+            <select id="gKategorija">
+              <option value="vjencanja">Vjenčanja</option>
+              <option value="rodjendani">Rođendani</option>
+              <option value="djecije">Dječije</option>
+              <option value="efekti">Efekti</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="dash-forma__akcije">
+          <button type="submit" class="btn btn--gold btn--lg">💾 Snimi</button>
+          <span class="dash-status" id="gStatus"></span>
+        </div>
+      </form>
+    </section>
+
   </main>
 
-  <script src="js/dashboard.js?v=2"></script>
+  <script src="js/dashboard.js?v=3"></script>
 </body>
 </html>
