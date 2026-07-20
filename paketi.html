@@ -56,59 +56,7 @@
         <p class="section__sub">Tri paketa — svaki dizajniran da ostavi utisak. Sve pakete moguće je prilagoditi vašem prostoru, temi i budžetu.</p>
       </div>
 
-      <div class="packages__grid">
-        <article class="package reveal">
-          <div class="package__head">
-            <h3>Mini <span>BUM</span></h3>
-            <p class="package__tag">Za intimne proslave</p>
-          </div>
-          <div class="package__price"><sup>od</sup> 149 <span>KM</span></div>
-          <ul class="package__list">
-            <li>Balonski stub ili mini luk</li>
-            <li>Brojka / natpis od balona</li>
-            <li>Konfeti baloni</li>
-            <li>Dostava i montaža</li>
-            <li class="off">Fotokutak</li>
-            <li class="off">Svjetlosni efekti</li>
-          </ul>
-          <a href="kontakt.html" class="btn btn--outline package__btn">Rezerviši</a>
-        </article>
-
-        <article class="package package--featured reveal" style="--d:.12s">
-          <span class="package__badge">★ Najpopularniji</span>
-          <div class="package__head">
-            <h3>Veliki <span>BUM</span></h3>
-            <p class="package__tag">Za nezaboravne momente</p>
-          </div>
-          <div class="package__price"><sup>od</sup> 399 <span>KM</span></div>
-          <ul class="package__list">
-            <li>Veliki balonski luk ili zid</li>
-            <li>Fotokutak sa pozadinom</li>
-            <li>Personalizovani natpisi</li>
-            <li>Konfeti top + prskalice</li>
-            <li>Dekoracija stolova</li>
-            <li>Dostava, montaža i demontaža</li>
-          </ul>
-          <a href="kontakt.html" class="btn btn--gold package__btn">Rezerviši odmah</a>
-        </article>
-
-        <article class="package reveal" style="--d:.24s">
-          <div class="package__head">
-            <h3>Lux <span>BUM</span></h3>
-            <p class="package__tag">Full spektakl produkcija</p>
-          </div>
-          <div class="package__price"><sup>od</sup> 899 <span>KM</span></div>
-          <ul class="package__list">
-            <li>Kompletna scenografija prostora</li>
-            <li>Hladne prskalice + teški dim</li>
-            <li>Svjetleća slova i LED dekor</li>
-            <li>Cvjetni / balonski zidovi</li>
-            <li>Koordinator na događaju</li>
-            <li>Sve iz paketa Veliki BUM</li>
-          </ul>
-          <a href="kontakt.html" class="btn btn--outline package__btn">Rezerviši</a>
-        </article>
-      </div>
+      <div class="packages__grid" id="paketiGrid"></div>
     </div>
   </section>
 
@@ -120,39 +68,7 @@
         <h2 class="section__title">Šta je <em>uključeno</em>?</h2>
         <p class="section__sub">Uporedite pakete stavku po stavku i pronađite savršen omjer za vaš događaj.</p>
       </div>
-      <div class="compare__scroll reveal">
-        <table class="compare__table">
-          <thead>
-            <tr>
-              <th>Stavka</th>
-              <th>Mini <em>BUM</em></th>
-              <th class="is-featured">Veliki <em>BUM</em></th>
-              <th>Lux <em>BUM</em></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Balonska instalacija</td><td>Stub / mini luk</td><td class="is-featured">Veliki luk ili zid</td><td>Kompletna scenografija</td></tr>
-            <tr><td>Brojka / natpis od balona</td><td class="yes">✦</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Konfeti baloni</td><td class="yes">✦</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Fotokutak sa pozadinom</td><td class="no">—</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Personalizovani natpisi</td><td class="no">—</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Konfeti top + prskalice</td><td class="no">—</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Dekoracija stolova</td><td class="no">—</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Hladne prskalice + teški dim</td><td class="no">—</td><td class="no is-featured">—</td><td class="yes">✦</td></tr>
-            <tr><td>Svjetleća slova i LED dekor</td><td class="no">—</td><td class="no is-featured">—</td><td class="yes">✦</td></tr>
-            <tr><td>Cvjetni / balonski zidovi</td><td class="no">—</td><td class="no is-featured">—</td><td class="yes">✦</td></tr>
-            <tr><td>Koordinator na događaju</td><td class="no">—</td><td class="no is-featured">—</td><td class="yes">✦</td></tr>
-            <tr><td>Dostava i montaža</td><td class="yes">✦</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr><td>Demontaža nakon događaja</td><td class="no">—</td><td class="yes is-featured">✦</td><td class="yes">✦</td></tr>
-            <tr class="compare__cta-row">
-              <td></td>
-              <td><a href="kontakt.html" class="btn btn--outline btn--sm">Rezerviši</a></td>
-              <td class="is-featured"><a href="kontakt.html" class="btn btn--gold btn--sm">Rezerviši</a></td>
-              <td><a href="kontakt.html" class="btn btn--outline btn--sm">Rezerviši</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="compare__scroll reveal" id="poredjenjeWrap"></div>
     </div>
   </section>
 
@@ -164,43 +80,7 @@
         <h2 class="section__title">Dodaci za ekstra <em>BUM</em></h2>
         <p class="section__sub">Svaki paket možete pojačati pojedinačnim dodacima — kombinujte po želji.</p>
       </div>
-      <div class="addons__grid">
-        <div class="addon reveal">
-          <span class="addon__icon">🎇</span>
-          <h3>Hladne prskalice</h3>
-          <p>Par fontana za prvi ples ili rezanje torte.</p>
-          <span class="addon__price">od 80 KM</span>
-        </div>
-        <div class="addon reveal" style="--d:.05s">
-          <span class="addon__icon">🌫️</span>
-          <h3>Teški dim</h3>
-          <p>Ples u oblacima — filmski efekat niskog dima.</p>
-          <span class="addon__price">od 120 KM</span>
-        </div>
-        <div class="addon reveal" style="--d:.1s">
-          <span class="addon__icon">🎊</span>
-          <h3>Konfeti top</h3>
-          <p>Zlatna kiša konfeta u ključnom trenutku.</p>
-          <span class="addon__price">od 40 KM</span>
-        </div>
-        <div class="addon reveal" style="--d:.15s">
-          <span class="addon__icon">💡</span>
-          <h3>Svjetleća slova</h3>
-          <p>LOVE, BUM, inicijali ili brojka — LED sjaj.</p>
-          <span class="addon__price">od 60 KM</span>
-        </div>
-        <div class="addon reveal" style="--d:.2s">
-          <span class="addon__icon">🎈</span>
-          <h3>Balon brojka</h3>
-          <p>Velika brojka od balona po izboru boja.</p>
-          <span class="addon__price">od 30 KM</span>
-        </div>
-        <div class="addon reveal" style="--d:.25s">
-          <span class="addon__icon">📸</span>
-          <h3>Fotokutak</h3>
-          <p>Pozadina, rekviziti i savršeno svjetlo.</p>
-          <span class="addon__price">od 150 KM</span>
-        </div>
+      <div class="addons__grid" id="dodaciGrid"></div>
       </div>
     </div>
   </section>
@@ -227,30 +107,7 @@
         <p class="section__kicker">Pitanja</p>
         <h2 class="section__title">Često nas <em>pitate</em></h2>
       </div>
-      <details class="faq__item reveal">
-        <summary>Koliko ranije treba rezervisati termin?</summary>
-        <p>Za vjenčanja i veće događaje preporučujemo 4–8 sedmica ranije, posebno u sezoni (maj–septembar). Za manje proslave često možemo uskočiti i za 5–7 dana — pišite nam, uvijek nađemo rješenje.</p>
-      </details>
-      <details class="faq__item reveal" style="--d:.05s">
-        <summary>Da li su cijene fiksne?</summary>
-        <p>Cijene paketa su početne ("od") i zavise od veličine prostora, količine balona i udaljenosti. Nakon kratke konsultacije dobijate tačnu, fiksnu ponudu — bez skrivenih troškova.</p>
-      </details>
-      <details class="faq__item reveal" style="--d:.1s">
-        <summary>Jesu li hladne prskalice i teški dim sigurni u zatvorenom prostoru?</summary>
-        <p>Da. Hladne prskalice ne stvaraju toplotu koja pali materijale, a teški dim se zadržava pri podu i ne aktivira požarne alarme. Koristimo certificiranu opremu i naš tim upravlja efektima tokom cijelog događaja.</p>
-      </details>
-      <details class="faq__item reveal" style="--d:.15s">
-        <summary>Dolazite li i van grada?</summary>
-        <p>Naravno! Radimo na području cijele BiH. Za lokacije van grada obračunavamo samo troškove puta, koji su jasno navedeni u ponudi.</p>
-      </details>
-      <details class="faq__item reveal" style="--d:.2s">
-        <summary>Šta ako se dekoracija ošteti prije početka proslave?</summary>
-        <p>Montažu završavamo prije dolaska gostiju i sve provjeravamo na licu mjesta. U paketima Veliki i Lux BUM naš tim ostaje dostupan i tokom događaja — ako balon pukne, mi ga mijenjamo.</p>
-      </details>
-      <details class="faq__item reveal" style="--d:.25s">
-        <summary>Kako izgleda proces plaćanja?</summary>
-        <p>Rezervacija termina se potvrđuje avansom od 30%, a ostatak plaćate nakon montaže, kada vidite i odobrite dekoraciju. Moguće je plaćanje gotovinom ili na račun.</p>
-      </details>
+      <div id="faqList"></div>
     </div>
   </section>
 
@@ -307,6 +164,8 @@
     </div>
   </footer>
 
+  <script src="js/paketi-data.js?v=1"></script>
+  <script src="js/paketi.js?v=1"></script>
   <script src="js/main.js?v=2"></script>
 </body>
 </html>
