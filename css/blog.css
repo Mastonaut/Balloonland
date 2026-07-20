@@ -1,0 +1,160 @@
+/* ═══════════════════════════════════════════
+   BALLOON LAND — Blog stilovi
+   ═══════════════════════════════════════════ */
+
+/* ─────── LISTA OBJAVA ─────── */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.blog__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--muted);
+  padding: 4rem 0;
+  font-size: 1.1rem;
+}
+.b-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(23, 21, 26, .75);
+  border: 1px solid rgba(250, 247, 242, .09);
+  border-radius: 22px;
+  overflow: hidden;
+  transition: transform .45s var(--ease), border-color .4s, box-shadow .5s;
+}
+.b-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201, 162, 75, .45);
+  box-shadow: 0 26px 60px -20px rgba(0, 0, 0, .65);
+}
+.b-card--featured { grid-column: 1 / -1; flex-direction: row; }
+.b-card--featured .b-card__media { flex: 1.2; aspect-ratio: auto; min-height: 340px; }
+.b-card--featured .b-card__body { flex: 1; align-self: center; padding: 2.6rem; }
+.b-card--featured h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+.b-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.b-card__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--ease);
+}
+.b-card:hover .b-card__media img { transform: scale(1.06); }
+.b-card__cat {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: linear-gradient(120deg, var(--gold-3), var(--gold-2));
+  color: var(--ink);
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .4rem .95rem;
+  border-radius: 100px;
+  box-shadow: var(--shadow-gold);
+}
+.b-card__body { padding: 1.6rem 1.7rem 1.8rem; display: flex; flex-direction: column; flex: 1; }
+.b-card__date {
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.b-card h2 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin-bottom: .6rem;
+}
+.b-card__uvod { color: rgba(250, 247, 242, .72); font-size: .92rem; flex: 1; }
+.b-card__link {
+  margin-top: 1.1rem;
+  color: var(--gold-2);
+  font-weight: 700;
+  font-size: .88rem;
+}
+
+/* ─────── POJEDINAČNA OBJAVA ─────── */
+.article {
+  max-width: 780px;
+  margin-inline: auto;
+}
+.article__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.article__meta .b-card__cat { position: static; }
+.article__date {
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.article__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  line-height: 1.12;
+  margin-bottom: 1.8rem;
+}
+.article__hero {
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid rgba(201, 162, 75, .25);
+  margin-bottom: 2.2rem;
+}
+.article__content p {
+  color: rgba(250, 247, 242, .82);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 1.3rem;
+}
+.article__content a { color: var(--gold-2); text-decoration: underline; text-underline-offset: 3px; }
+.article__content strong { color: var(--ivory); }
+.article__content em { color: var(--gold-2); }
+.article__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(250, 247, 242, .1);
+}
+.article__navlink {
+  color: rgba(250, 247, 242, .75);
+  font-weight: 600;
+  font-size: .92rem;
+  max-width: 45%;
+  transition: color .3s;
+}
+.article__navlink:hover { color: var(--gold-2); }
+.article__navlink--right { text-align: right; margin-left: auto; }
+.article__missing {
+  text-align: center;
+  padding: 4rem 0;
+}
+.article__missing span { font-size: 3rem; }
+.article__missing h1 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin: 1rem 0 .5rem;
+}
+.article__missing p { color: var(--muted); margin-bottom: 2rem; }
+
+/* ─────── RESPONSIVE ─────── */
+@media (max-width: 1024px) {
+  .blog-list { grid-template-columns: repeat(2, 1fr); }
+  .b-card--featured { flex-direction: column; }
+  .b-card--featured .b-card__media { min-height: 0; aspect-ratio: 16 / 9; }
+}
+@media (max-width: 768px) {
+  .blog-list { grid-template-columns: 1fr; }
+}
