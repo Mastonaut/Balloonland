@@ -1,0 +1,177 @@
+/* ═══════════════════════════════════════════
+   BALLOON LAND — Prijava na dashboard
+   ═══════════════════════════════════════════ */
+
+.login-body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  overflow-x: hidden;
+}
+
+/* pozadina */
+.login-bg { position: fixed; inset: 0; z-index: -1; }
+.login-bg__img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px) brightness(.5);
+  transform: scale(1.05);
+}
+.login-bg__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 30%, rgba(201, 162, 75, .12), transparent),
+    linear-gradient(180deg, rgba(14, 13, 16, .82), rgba(14, 13, 16, .94));
+}
+
+/* kartica */
+.login { width: min(440px, 100%); }
+.login__card {
+  background: linear-gradient(170deg, rgba(201, 162, 75, .12), rgba(23, 21, 26, .92) 40%);
+  border: 1px solid rgba(201, 162, 75, .35);
+  border-radius: 26px;
+  padding: 2.8rem 2.6rem 2rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, .8);
+  animation: loginIn .6s var(--ease);
+}
+@keyframes loginIn { from { opacity: 0; transform: translateY(24px); } }
+
+.login__logo { display: block; width: 190px; margin: 0 auto .8rem; }
+.login__sub {
+  text-align: center;
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid rgba(250, 247, 242, .08);
+}
+
+.login__title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+.login__title em {
+  font-style: italic;
+  background: linear-gradient(100deg, var(--gold-2), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.login__text {
+  color: rgba(250, 247, 242, .75);
+  font-size: .92rem;
+  text-align: center;
+  margin: -0.6rem 0 1.4rem;
+}
+
+/* forme (prijava / reset) — samo aktivna je vidljiva */
+.login__form { display: none; }
+.login__form.is-active { display: block; animation: loginIn .45s var(--ease); }
+
+/* lozinka + oko */
+.login__pass { position: relative; }
+.login__pass input { padding-right: 3.2rem; }
+.login__eye {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 1.05rem;
+  opacity: .6;
+  transition: opacity .25s, background .25s;
+}
+.login__eye:hover { opacity: 1; background: rgba(250, 247, 242, .08); }
+.login__eye.is-on { opacity: 1; background: rgba(201, 162, 75, .18); }
+
+/* zapamti me */
+.login__remember {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .88rem;
+  color: rgba(250, 247, 242, .75);
+  cursor: pointer;
+  margin: .2rem 0 1.4rem;
+  user-select: none;
+}
+.login__remember input {
+  width: 17px; height: 17px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.login__submit { width: 100%; justify-content: center; }
+
+/* zaboravljeni password */
+.login__forgot {
+  text-align: center;
+  color: var(--muted);
+  font-size: .88rem;
+  margin-top: 1.3rem;
+}
+.login__link {
+  background: none;
+  border: none;
+  color: var(--gold-2);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .25s;
+}
+.login__link:hover { color: var(--ivory); }
+
+/* obavijesti */
+.login__notice {
+  display: flex;
+  gap: .8rem;
+  align-items: flex-start;
+  margin-top: 1.4rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(201, 162, 75, .1);
+  border: 1px dashed rgba(201, 162, 75, .4);
+  animation: loginIn .4s var(--ease);
+}
+.login__notice[hidden] { display: none; }
+.login__notice span { font-size: 1.3rem; }
+.login__notice p { font-size: .87rem; color: rgba(250, 247, 242, .85); line-height: 1.5; }
+.login__notice--ok {
+  background: rgba(63, 184, 175, .08);
+  border-color: rgba(63, 184, 175, .4);
+}
+
+/* nazad na sajt */
+.login__back {
+  text-align: center;
+  margin-top: 1.8rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(250, 247, 242, .08);
+}
+.login__back a {
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 600;
+  transition: color .25s;
+}
+.login__back a:hover { color: var(--gold-2); }
+
+@media (max-width: 480px) {
+  .login__card { padding: 2.2rem 1.6rem 1.6rem; }
+}

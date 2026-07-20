@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prijava — Balloon Land Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/prijava.css?v=1">
+  <link rel="icon" type="image/png" href="img/logo-black.png">
+</head>
+<body class="login-body">
+
+  <div class="login-bg" aria-hidden="true">
+    <div class="login-bg__img" style="background-image:url('img/hero-gold-arch.jpg')"></div>
+    <div class="login-bg__overlay"></div>
+  </div>
+
+  <main class="login">
+    <div class="login__card">
+      <a href="index.html" class="login__logo">
+        <img src="img/logo-white.png" alt="Balloon Land">
+      </a>
+      <p class="login__sub">Dashboard — administracija sajta</p>
+
+      <!-- ─────── PRIJAVA ─────── -->
+      <form class="login__form is-active" id="loginForm" novalidate>
+        <h1 class="login__title">Dobrodošli <em>nazad</em></h1>
+
+        <div class="cform__field">
+          <label for="lUser">Korisničko ime</label>
+          <input type="text" id="lUser" name="username" placeholder="npr. admin" autocomplete="username" required>
+        </div>
+
+        <div class="cform__field">
+          <label for="lPass">Lozinka</label>
+          <div class="login__pass">
+            <input type="password" id="lPass" name="password" placeholder="••••••••" autocomplete="current-password" required>
+            <button type="button" class="login__eye" id="lEye" aria-label="Prikaži lozinku">👁</button>
+          </div>
+        </div>
+
+        <label class="login__remember">
+          <input type="checkbox" id="lRemember"> <span>Zapamti me na ovom uređaju</span>
+        </label>
+
+        <button type="submit" class="btn btn--gold btn--lg login__submit">Prijavi se →</button>
+
+        <p class="login__forgot">
+          Zaboravili ste password?
+          <button type="button" class="login__link" id="toReset">Resetujte ga odmah</button>
+        </p>
+
+        <div class="login__notice" id="loginNotice" hidden>
+          <span>🔧</span>
+          <p><strong>Dashboard je u izradi.</strong> Prijava će biti aktivna čim CMS bude gotov — korisničko ime i lozinku dobićete tada.</p>
+        </div>
+      </form>
+
+      <!-- ─────── RESET LOZINKE ─────── -->
+      <form class="login__form" id="resetForm" novalidate>
+        <h1 class="login__title">Reset <em>lozinke</em></h1>
+        <p class="login__text">Unesite email povezan sa vašim nalogom — poslaćemo vam link za postavljanje nove lozinke.</p>
+
+        <div class="cform__field">
+          <label for="rEmail">Email adresa</label>
+          <input type="email" id="rEmail" name="email" placeholder="vas@email.com" autocomplete="email" required>
+        </div>
+
+        <button type="submit" class="btn btn--gold btn--lg login__submit">Pošalji link za reset</button>
+
+        <p class="login__forgot">
+          <button type="button" class="login__link" id="toLogin">← Nazad na prijavu</button>
+        </p>
+
+        <div class="login__notice login__notice--ok" id="resetNotice" hidden>
+          <span>📬</span>
+          <p><strong>Provjerite inbox!</strong> Ako nalog sa tom adresom postoji, link za reset lozinke je upravo poslan. Ne zaboravite provjeriti i spam folder.</p>
+        </div>
+      </form>
+
+      <p class="login__back"><a href="index.html">← Nazad na sajt</a></p>
+    </div>
+  </main>
+
+  <script src="js/prijava.js?v=1"></script>
+</body>
+</html>
