@@ -66,11 +66,11 @@
           </a>
           <div class="c-card">
             <span class="c-card__icon">📍</span>
-            <div><h3>Posjetite nas</h3><p>Ul. Primjer bb, Sarajevo</p></div>
+            <div><h3>Posjetite nas</h3><p id="kAdresa">Ul. Primjer bb, Sarajevo</p></div>
           </div>
           <div class="c-card">
             <span class="c-card__icon">🕘</span>
-            <div><h3>Radno vrijeme</h3><p>Pon–Sub: 09–18h</p></div>
+            <div><h3>Radno vrijeme</h3><p id="kRadno">Pon–Sub: 09–18h</p></div>
           </div>
         </div>
 
@@ -145,6 +145,7 @@
   <!-- ═══════════ MAPA ═══════════ -->
   <section class="map reveal">
     <iframe
+      id="kMapa"
       title="Balloon Land lokacija"
       src="https://www.google.com/maps?q=Sarajevo,Bosna+i+Hercegovina&z=13&output=embed"
       loading="lazy"
@@ -191,6 +192,8 @@
     </div>
   </footer>
 
+  <script src="js/postavke-data.js?v=1"></script>
+  <script src="js/postavke.js?v=1"></script>
   <script src="js/main.js?v=2"></script>
 </body>
 </html>
