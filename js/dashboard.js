@@ -94,9 +94,27 @@
     const dugme = e.target.closest("button");
     if (!dugme) return;
     e.preventDefault();
+    // emoji panel
+    if (dugme.id === "dEmojiBtn") {
+      const panel = document.getElementById("dEmojiPanel");
+      panel.hidden = !panel.hidden;
+      return;
+    }
+    if (dugme.closest("#dEmojiPanel")) {
+      editor.focus();
+      document.execCommand("insertText", false, dugme.textContent);
+      document.getElementById("dEmojiPanel").hidden = true;
+      return;
+    }
     editor.focus();
     if (dugme.dataset.cmd) document.execCommand(dugme.dataset.cmd, false, null);
     if (dugme.dataset.boja) document.execCommand("foreColor", false, dugme.dataset.boja);
+    if (dugme.dataset.marker) {
+      // highlight selektovanog teksta
+      if (!document.execCommand("hiliteColor", false, dugme.dataset.marker)) {
+        document.execCommand("backColor", false, dugme.dataset.marker);
+      }
+    }
   });
   document.getElementById("dVelicina").addEventListener("change", (e) => {
     if (!e.target.value) return;

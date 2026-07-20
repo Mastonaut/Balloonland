@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=1">
+  <link rel="stylesheet" href="css/dashboard.css?v=2">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -137,6 +137,25 @@
               <button type="button" data-cmd="insertUnorderedList" title="Lista">•≡</button>
               <button type="button" data-cmd="insertOrderedList" title="Numerisana lista">1≡</button>
               <span class="dash-alati__sep"></span>
+              <div class="dash-markeri" title="Highlight selektovanog teksta">
+                <button type="button" data-marker="#C9A24B" style="background:#C9A24B">A</button>
+                <button type="button" data-marker="#D6467E" style="background:#D6467E">A</button>
+                <button type="button" data-marker="#3E6FD9" style="background:#3E6FD9">A</button>
+                <button type="button" data-marker="#7E2138" style="background:#7E2138">A</button>
+              </div>
+              <span class="dash-alati__sep"></span>
+              <div class="dash-emoji">
+                <button type="button" id="dEmojiBtn" title="Ubaci emoji">😊</button>
+                <div class="dash-emoji__panel" id="dEmojiPanel" hidden>
+                  <button type="button">🎈</button><button type="button">🎉</button><button type="button">🎊</button><button type="button">✨</button>
+                  <button type="button">⭐</button><button type="button">🌟</button><button type="button">🔥</button><button type="button">💥</button>
+                  <button type="button">🥂</button><button type="button">🍾</button><button type="button">🎂</button><button type="button">🍰</button>
+                  <button type="button">🎁</button><button type="button">💍</button><button type="button">💖</button><button type="button">💛</button>
+                  <button type="button">😍</button><button type="button">😊</button><button type="button">😄</button><button type="button">👏</button>
+                  <button type="button">🙌</button><button type="button">👑</button><button type="button">📸</button><button type="button">🌸</button>
+                </div>
+              </div>
+              <span class="dash-alati__sep"></span>
               <button type="button" data-cmd="removeFormat" title="Očisti formatiranje">⌫</button>
             </div>
             <div class="dash-editor__polje" id="fEditor" contenteditable="true"></div>
@@ -220,6 +239,6 @@
 
   </main>
 
-  <script src="js/dashboard.js?v=1"></script>
+  <script src="js/dashboard.js?v=2"></script>
 </body>
 </html>

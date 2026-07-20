@@ -171,3 +171,11 @@
 .article__content ol { list-style: decimal; }
 .article__content li { margin-bottom: .45rem; }
 .article__content u { text-underline-offset: 3px; }
+
+/* highlight iz CMS editora */
+.article__content span[style*="background-color"] {
+  padding: .05em .3em;
+  border-radius: 5px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

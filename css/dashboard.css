@@ -413,3 +413,32 @@
   .dash-red__akcije { grid-column: 1 / -1; }
   .dash-el-edit { grid-template-columns: 1fr; align-items: start; }
 }
+
+/* ─────── highlight markeri + emoji panel ─────── */
+.dash-markeri { display: flex; gap: .3rem; }
+.dash-markeri button {
+  min-width: 26px; width: 26px; height: 26px;
+  border-radius: 7px;
+  border: 1px solid rgba(250, 247, 242, .25);
+  color: #FDFBF7;
+  font-size: .72rem;
+  font-weight: 800;
+}
+.dash-markeri button:hover { transform: scale(1.12); }
+.dash-emoji { position: relative; }
+.dash-emoji__panel {
+  position: absolute;
+  top: 40px; left: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: .2rem;
+  background: #1b1820;
+  border: 1px solid rgba(201, 162, 75, .4);
+  border-radius: 12px;
+  padding: .5rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .6);
+}
+.dash-emoji__panel[hidden] { display: none; }
+.dash-emoji__panel button { min-width: 30px; height: 30px; font-size: 1.05rem; }
+.dash-editor__polje span[style*="background-color"] { padding: .05em .3em; border-radius: 5px; }
