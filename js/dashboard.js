@@ -148,36 +148,77 @@
     })
   );
 
-  const PODRAZUMIJEVANI_TEKST = { krug: "-20%", traka: "AKCIJA", pill: "✨ Novo" };
+  const elPanel = document.getElementById("elPanel");
+  const elVelicina = document.getElementById("elVelicina");
+  const elVelicinaVr = document.getElementById("elVelicinaVr");
+  const elBoje = document.getElementById("elBoje");
+
+  // podrazumijevano po tipu: tekst, veličina teksta (px) i boja teksta
+  const PODRAZUMIJEVANO = {
+    krug:  { tekst: "-20%",    velicina: 30, boja: "#2A2730" },
+    traka: { tekst: "AKCIJA",  velicina: 15, boja: "#2A2730" },
+    pill:  { tekst: "✨ Novo", velicina: 14, boja: "#E8C877" },
+  };
+
   ["Krug", "Traka", "Pill"].forEach((veliki) => {
     const tip = veliki.toLowerCase();
     document.getElementById("el" + veliki).addEventListener("click", () => {
-      sliderElementi.push({ tip, tekst: PODRAZUMIJEVANI_TEKST[tip], x: 75, y: 30 + sliderElementi.length * 14 });
+      sliderElementi.push({
+        tip,
+        ...PODRAZUMIJEVANO[tip],
+        x: 75,
+        y: 30 + sliderElementi.length * 14,
+      });
       izaberiElement(sliderElementi.length - 1);
-      nacrtajElemente();
     });
   });
+
+  function stilElementa(el) {
+    const d = PODRAZUMIJEVANO[el.tip] || {};
+    return "left:" + el.x + "%; top:" + el.y + "%;" +
+      " font-size:" + (el.velicina || d.velicina) + "px;" +
+      " color:" + (el.boja || d.boja) + ";";
+  }
 
   function nacrtajElemente() {
     slojElemenata.innerHTML = sliderElementi
       .map((el, i) => `
         <span class="hv-el hv-el--${el.tip}${i === izabraniElement ? " is-izabran" : ""}"
-              data-i="${i}" style="left:${el.x}%; top:${el.y}%">${el.tekst}</span>`)
+              data-i="${i}" style="${stilElementa(el)}">${el.tekst}</span>`)
       .join("");
   }
 
   function izaberiElement(i) {
     izabraniElement = i;
-    const ima = i >= 0 && sliderElementi[i];
-    elTekst.hidden = !ima;
-    elObrisi.hidden = !ima;
-    if (ima) elTekst.value = sliderElementi[i].tekst;
+    const el = i >= 0 ? sliderElementi[i] : null;
+    elPanel.hidden = !el;
+    if (el) {
+      elTekst.value = el.tekst;
+      elVelicina.value = el.velicina;
+      elVelicinaVr.textContent = el.velicina + "px";
+      elBoje.querySelectorAll("button").forEach((b) =>
+        b.classList.toggle("is-izabrana", b.dataset.boja.toLowerCase() === (el.boja || "").toLowerCase())
+      );
+    }
     nacrtajElemente();
   }
 
   elTekst.addEventListener("input", () => {
     if (izabraniElement < 0) return;
     sliderElementi[izabraniElement].tekst = elTekst.value;
+    nacrtajElemente();
+  });
+  elVelicina.addEventListener("input", () => {
+    if (izabraniElement < 0) return;
+    sliderElementi[izabraniElement].velicina = +elVelicina.value;
+    elVelicinaVr.textContent = elVelicina.value + "px";
+    nacrtajElemente();
+  });
+  elBoje.addEventListener("click", (e) => {
+    const dugme = e.target.closest("button");
+    if (!dugme || izabraniElement < 0) return;
+    sliderElementi[izabraniElement].boja = dugme.dataset.boja;
+    elBoje.querySelectorAll("button").forEach((b) => b.classList.toggle("is-izabrana", b === dugme));
     nacrtajElemente();
   });
   elObrisi.addEventListener("click", () => {
@@ -230,8 +271,7 @@
     izabraniElement = -1;
     sliderSwitch.checked = !!(o && o.slider);
     sliderPanel.hidden = !sliderSwitch.checked;
-    elTekst.hidden = true;
-    elObrisi.hidden = true;
+    elPanel.hidden = true;
     if (sliderSwitch.checked) osvjeziPregledSlajda();
     panelLista.classList.remove("is-active");
     panelForma.classList.add("is-active");

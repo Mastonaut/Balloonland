@@ -331,7 +331,34 @@
   overflow: hidden;
   border: 1px solid rgba(201, 162, 75, .35);
   user-select: none;
+  --hv-skala: .62; /* pregled je manji od pravog heroja — elementi srazmjerno */
 }
+
+/* ─────── editor izabranog elementa ─────── */
+.dash-el-edit {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr auto auto;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: .9rem;
+  padding: .9rem 1rem;
+  background: rgba(14, 13, 16, .5);
+  border: 1px solid rgba(201, 162, 75, .3);
+  border-radius: 14px;
+}
+.dash-el-edit .cform__field { margin-bottom: 0; }
+.dash-el-edit input[type="range"] {
+  width: 100%;
+  accent-color: var(--gold);
+  height: 34px;
+}
+.dash-boje--el { padding-bottom: .4rem; }
+.dash-boje--el button.is-izabrana {
+  border-color: var(--gold-2);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, .3);
+}
+.dash-el-edit .dash-mini--obrisi { margin-bottom: .3rem; }
 .dash-slajd__bg {
   position: absolute;
   inset: 0;
@@ -384,4 +411,5 @@
   .dash-forma .cform__row { grid-template-columns: 1fr; }
   .dash-red { grid-template-columns: 70px 1fr; }
   .dash-red__akcije { grid-column: 1 / -1; }
+  .dash-el-edit { grid-template-columns: 1fr; align-items: start; }
 }

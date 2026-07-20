@@ -11,6 +11,18 @@
   const objave = (window.BLOG_OBJAVE || []).filter((o) => o.slider);
   if (!kontejner || !objave.length) return;
 
+  const PODRAZUMIJEVANO = {
+    krug:  { velicina: 30, boja: "#2A2730" },
+    traka: { velicina: 15, boja: "#2A2730" },
+    pill:  { velicina: 14, boja: "#E8C877" },
+  };
+  const stil = (el) => {
+    const d = PODRAZUMIJEVANO[el.tip] || {};
+    return "left:" + el.x + "%; top:" + el.y + "%;" +
+      " font-size:" + (el.velicina || d.velicina) + "px;" +
+      " color:" + (el.boja || d.boja) + ";";
+  };
+
   objave.forEach((o) => {
     const slajd = document.createElement("div");
     slajd.className = "hero__slide";
@@ -26,7 +38,7 @@
         </div>
       </div>
       ${(o.sliderElementi || [])
-        .map((el) => `<span class="hv-el hv-el--${el.tip}" style="left:${el.x}%; top:${el.y}%">${el.tekst}</span>`)
+        .map((el) => `<span class="hv-el hv-el--${el.tip}" style="${stil(el)}">${el.tekst}</span>`)
         .join("")}`;
     kontejner.appendChild(slajd);
   });

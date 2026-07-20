@@ -159,8 +159,29 @@
               <button type="button" class="dash-mini" id="elKrug">+ Krug sa %</button>
               <button type="button" class="dash-mini" id="elTraka">+ Traka (akcija)</button>
               <button type="button" class="dash-mini" id="elPill">+ Etiketa</button>
-              <input type="text" id="elTekst" placeholder="Tekst izabranog elementa" hidden>
-              <button type="button" class="dash-mini dash-mini--obrisi" id="elObrisi" hidden>🗑 Ukloni element</button>
+            </div>
+
+            <div class="dash-el-edit" id="elPanel" hidden>
+              <div class="cform__field">
+                <label for="elTekst">Tekst elementa</label>
+                <input type="text" id="elTekst" placeholder="npr. -20%">
+              </div>
+              <div class="cform__field">
+                <label for="elVelicina">Veličina teksta: <span id="elVelicinaVr">30px</span></label>
+                <input type="range" id="elVelicina" min="10" max="60" step="1" value="30">
+              </div>
+              <div class="cform__field">
+                <label>Boja teksta</label>
+                <div class="dash-boje dash-boje--el" id="elBoje">
+                  <button type="button" data-boja="#2A2730" style="background:#2A2730"></button>
+                  <button type="button" data-boja="#FDFBF7" style="background:#FDFBF7"></button>
+                  <button type="button" data-boja="#E8C877" style="background:#E8C877"></button>
+                  <button type="button" data-boja="#D6467E" style="background:#D6467E"></button>
+                  <button type="button" data-boja="#3E6FD9" style="background:#3E6FD9"></button>
+                  <button type="button" data-boja="#C93A46" style="background:#C93A46"></button>
+                </div>
+              </div>
+              <button type="button" class="dash-mini dash-mini--obrisi" id="elObrisi">🗑 Ukloni</button>
             </div>
             <div class="dash-slajd" id="dSlajd">
               <div class="dash-slajd__bg" id="dSlajdBg"></div>
