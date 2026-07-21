@@ -267,6 +267,7 @@ async function api(req, res, putanja) {
       slika: s.slika,
       kategorija: ["vjencanja", "rodjendani", "djecije", "efekti"].includes(s.kategorija) ? s.kategorija : "rodjendani",
       naslov: s.naslov,
+      datum: new Date().toISOString().slice(0, 10), // datum upload-a
     };
     stavke.unshift(nova);
     sacuvajGaleriju(stavke);
@@ -279,7 +280,7 @@ async function api(req, res, putanja) {
     if (i < 0) return json(res, 404, { greska: "Stavka nije pronađena." });
     if (metoda === "PUT") {
       const s = JSON.parse((await citajTijelo(req)).toString() || "{}");
-      ["slika", "kategorija", "naslov"].forEach((p) => { if (s[p] !== undefined) stavke[i][p] = s[p]; });
+      ["slika", "kategorija", "naslov", "datum"].forEach((p) => { if (s[p] !== undefined) stavke[i][p] = s[p]; });
       sacuvajGaleriju(stavke);
       return json(res, 200, stavke[i]);
     }

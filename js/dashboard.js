@@ -395,23 +395,56 @@
   const KATEGORIJE = { vjencanja: "Vjenčanja", rodjendani: "Rođendani", djecije: "Dječije", efekti: "Efekti" };
   let galerija = [];
 
-  async function ucitajGaleriju() {
-    galerija = await api("/api/galerija");
-    document.getElementById("gBrojac").textContent = galerija.length + " fotografija u galeriji";
-    gLista.innerHTML = galerija.length
-      ? galerija.map((s) => `
+  const gFilter = { kat: "", god: "" };
+  const gDatumPrikaz = (iso) => (iso ? iso.split("-").reverse().join(".") + "." : "—");
+
+  function prikaziGaleriju() {
+    const stavke = galerija.filter((s) =>
+      (!gFilter.kat || s.kategorija === gFilter.kat) &&
+      (!gFilter.god || (s.datum || "").startsWith(gFilter.god))
+    );
+    document.getElementById("gBrojac").textContent =
+      (gFilter.kat || gFilter.god)
+        ? stavke.length + " od " + galerija.length + " fotografija (filtrirano)"
+        : galerija.length + " fotografija u galeriji";
+    gLista.innerHTML = stavke.length
+      ? stavke.map((s) => `
           <div class="dash-red">
             <img class="dash-red__slika" src="${s.slika}" alt="">
             <div class="dash-red__info">
               <h3>${s.naslov}</h3>
-              <p><span class="b-kat">${KATEGORIJE[s.kategorija] || s.kategorija}</span> ${s.slika}</p>
+              <p><span class="b-kat">${KATEGORIJE[s.kategorija] || s.kategorija}</span> 📅 ${gDatumPrikaz(s.datum)} &nbsp; ${s.slika}</p>
             </div>
             <div class="dash-red__akcije">
               <button class="dash-mini" data-guredi="${s.id}">✏️ Uredi</button>
               <button class="dash-mini dash-mini--obrisi" data-gobrisi="${s.id}">🗑 Obriši</button>
             </div>
           </div>`).join("")
-      : '<p style="color:var(--muted); padding:2rem 0;">Galerija je prazna — dodajte prvu fotografiju! 📸</p>';
+      : '<p style="color:var(--muted); padding:2rem 0;">Nema fotografija za izabrani filter. 📸</p>';
+  }
+
+  function napuniGodine() {
+    const izbor = document.getElementById("gFilterGod");
+    const trenutna = izbor.value;
+    const godine = [...new Set(galerija.map((s) => (s.datum || "").slice(0, 4)).filter(Boolean))].sort().reverse();
+    izbor.innerHTML = '<option value="">Sve</option>' +
+      godine.map((g) => `<option value="${g}">${g}</option>`).join("");
+    izbor.value = godine.includes(trenutna) ? trenutna : "";
+  }
+
+  document.getElementById("gFilterKat").addEventListener("change", (e) => {
+    gFilter.kat = e.target.value;
+    prikaziGaleriju();
+  });
+  document.getElementById("gFilterGod").addEventListener("change", (e) => {
+    gFilter.god = e.target.value;
+    prikaziGaleriju();
+  });
+
+  async function ucitajGaleriju() {
+    galerija = await api("/api/galerija");
+    napuniGodine();
+    prikaziGaleriju();
   }
 
   gLista.addEventListener("click", async (e) => {

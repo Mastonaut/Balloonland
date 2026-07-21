@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=2">
+  <link rel="stylesheet" href="css/dashboard.css?v=3">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -246,6 +246,20 @@
         </div>
         <button class="btn btn--gold" id="gNova">+ Nova fotografija</button>
       </header>
+      <div class="dash-filteri">
+        <label>Kategorija:
+          <select id="gFilterKat">
+            <option value="">Sve</option>
+            <option value="vjencanja">Vjenčanja</option>
+            <option value="rodjendani">Rođendani</option>
+            <option value="djecije">Dječije</option>
+            <option value="efekti">Efekti</option>
+          </select>
+        </label>
+        <label>Godina:
+          <select id="gFilterGod"><option value="">Sve</option></select>
+        </label>
+      </div>
       <div class="dash-lista" id="gLista"></div>
     </section>
 
@@ -300,6 +314,6 @@
 
   </main>
 
-  <script src="js/dashboard.js?v=3"></script>
+  <script src="js/dashboard.js?v=4"></script>
 </body>
 </html>

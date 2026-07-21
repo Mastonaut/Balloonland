@@ -442,3 +442,31 @@
 .dash-emoji__panel[hidden] { display: none; }
 .dash-emoji__panel button { min-width: 30px; height: 30px; font-size: 1.05rem; }
 .dash-editor__polje span[style*="background-color"] { padding: .05em .3em; border-radius: 5px; }
+
+/* ─────── filteri galerije ─────── */
+.dash-filteri {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.dash-filteri label {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 700;
+}
+.dash-filteri select {
+  height: 36px;
+  background: rgba(14, 13, 16, .7);
+  border: 1px solid rgba(250, 247, 242, .15);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: .88rem;
+  padding: 0 .7rem;
+  cursor: pointer;
+}
+.dash-filteri select:focus { outline: none; border-color: var(--gold); }
