@@ -112,6 +112,21 @@ function sacuvajGaleriju(stavke) {
   );
 }
 
+/* ─────── postavke sajta ─────── */
+const POSTAVKE_JSON = path.join(PODACI, "postavke.json");
+function sacuvajPostavke(p) {
+  fs.writeFileSync(POSTAVKE_JSON, JSON.stringify(p, null, 2));
+  const glava = `/* ═══════════════════════════════════════════
+   BALLOON LAND — Globalne postavke sajta (CMS core)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/postavke.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */\n`;
+  fs.writeFileSync(
+    path.join(KORIJEN, "js", "postavke-data.js"),
+    glava + "window.POSTAVKE = " + JSON.stringify(p, null, 2) + ";\n"
+  );
+}
+
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
 function danasnjiDatum() {
   const d = new Date();
@@ -250,6 +265,30 @@ async function api(req, res, putanja) {
       sacuvajObjave(objave);
       return json(res, 200, obrisana);
     }
+  }
+
+  // postavke sajta
+  if (putanja === "/api/postavke" && metoda === "GET") {
+    return json(res, 200, JSON.parse(fs.readFileSync(POSTAVKE_JSON, "utf8")));
+  }
+  if (putanja === "/api/postavke" && metoda === "PUT") {
+    const p = JSON.parse((await citajTijelo(req)).toString() || "{}");
+    if (!p.telefon || !p.email) return json(res, 400, { greska: "Telefon i email su obavezni." });
+    const postavke = {
+      telefon: p.telefon,
+      telefonPrikaz: p.telefonPrikaz || p.telefon,
+      email: p.email,
+      adresa: p.adresa || "",
+      radnoVrijeme: p.radnoVrijeme || "",
+      mreze: {
+        instagram: (p.mreze && p.mreze.instagram) || "#",
+        facebook: (p.mreze && p.mreze.facebook) || "#",
+        tiktok: (p.mreze && p.mreze.tiktok) || "#",
+      },
+      mapa: p.mapa || "",
+    };
+    sacuvajPostavke(postavke);
+    return json(res, 200, postavke);
   }
 
   // galerija: lista / dodavanje / izmjena / brisanje

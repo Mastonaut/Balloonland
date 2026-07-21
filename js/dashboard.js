@@ -378,14 +378,63 @@
   });
 
   /* ═══════════ SEKCIJE (sidebar) ═══════════ */
-  const POCETNI_PANEL = { blog: "panelLista", galerija: "panelGLista" };
+  const POCETNI_PANEL = { blog: "panelLista", galerija: "panelGLista", postavke: "panelPostavke" };
   document.querySelectorAll(".dash-side__link[data-sekcija]").forEach((dugme) => {
     dugme.addEventListener("click", () => {
       document.querySelectorAll(".dash-side__link").forEach((b) => b.classList.toggle("is-active", b === dugme));
       document.querySelectorAll(".dash-panel").forEach((p) => p.classList.remove("is-active"));
       document.getElementById(POCETNI_PANEL[dugme.dataset.sekcija]).classList.add("is-active");
       if (dugme.dataset.sekcija === "galerija") ucitajGaleriju();
+      if (dugme.dataset.sekcija === "postavke") ucitajPostavke();
     });
+  });
+
+  /* ═══════════ POSTAVKE ═══════════ */
+  const pStatus = document.getElementById("pStatus");
+
+  async function ucitajPostavke() {
+    const p = await api("/api/postavke");
+    document.getElementById("pTelefon").value = p.telefon || "";
+    document.getElementById("pTelefonPrikaz").value = p.telefonPrikaz || "";
+    document.getElementById("pEmail").value = p.email || "";
+    document.getElementById("pAdresa").value = p.adresa || "";
+    document.getElementById("pRadno").value = p.radnoVrijeme || "";
+    document.getElementById("pInstagram").value = (p.mreze && p.mreze.instagram !== "#") ? p.mreze.instagram : "";
+    document.getElementById("pFacebook").value = (p.mreze && p.mreze.facebook !== "#") ? p.mreze.facebook : "";
+    document.getElementById("pTiktok").value = (p.mreze && p.mreze.tiktok !== "#") ? p.mreze.tiktok : "";
+    document.getElementById("pMapa").value = p.mapa || "";
+    pStatus.textContent = "";
+  }
+
+  document.getElementById("pForma").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const podaci = {
+      telefon: document.getElementById("pTelefon").value.trim(),
+      telefonPrikaz: document.getElementById("pTelefonPrikaz").value.trim(),
+      email: document.getElementById("pEmail").value.trim(),
+      adresa: document.getElementById("pAdresa").value.trim(),
+      radnoVrijeme: document.getElementById("pRadno").value.trim(),
+      mreze: {
+        instagram: document.getElementById("pInstagram").value.trim() || "#",
+        facebook: document.getElementById("pFacebook").value.trim() || "#",
+        tiktok: document.getElementById("pTiktok").value.trim() || "#",
+      },
+      mapa: document.getElementById("pMapa").value.trim(),
+    };
+    if (!podaci.telefon || !podaci.email) {
+      pStatus.classList.add("is-greska");
+      pStatus.textContent = "⚠ Telefon i email su obavezni.";
+      return;
+    }
+    pStatus.classList.remove("is-greska");
+    pStatus.textContent = "⏳ Snimanje…";
+    try {
+      await api("/api/postavke", { method: "PUT", body: JSON.stringify(podaci) });
+      pStatus.textContent = "✅ Snimljeno — postavke važe na cijelom sajtu!";
+    } catch (gr) {
+      pStatus.classList.add("is-greska");
+      pStatus.textContent = "⚠ " + gr.message;
+    }
   });
 
   /* ═══════════ GALERIJA ═══════════ */

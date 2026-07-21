@@ -25,7 +25,7 @@
       <button class="dash-side__link" data-sekcija="galerija">🖼️ Galerija</button>
       <button class="dash-side__link" disabled title="Uskoro">📦 Paketi</button>
       <button class="dash-side__link" disabled title="Uskoro">🎈 Usluge</button>
-      <button class="dash-side__link" disabled title="Uskoro">⚙️ Postavke</button>
+      <button class="dash-side__link" data-sekcija="postavke">⚙️ Postavke</button>
     </nav>
     <div class="dash-side__dno">
       <a href="index.html" target="_blank" rel="noopener" class="dash-side__mali">↗ Otvori sajt</a>
@@ -312,8 +312,69 @@
       </form>
     </section>
 
+    <!-- ═══════ POSTAVKE ═══════ -->
+    <section class="dash-panel" id="panelPostavke" data-sekcija="postavke">
+      <header class="dash-head">
+        <div>
+          <h1>Postavke <em>sajta</em></h1>
+          <p>Telefon, email, adresa, mreže i mapa — jedna izmjena ažurira cijeli sajt.</p>
+        </div>
+      </header>
+
+      <form class="dash-forma" id="pForma" novalidate>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pTelefon">Telefon (međunarodni) *</label>
+            <input type="text" id="pTelefon" placeholder="+387 61 000 000" required>
+          </div>
+          <div class="cform__field">
+            <label for="pTelefonPrikaz">Telefon (kratki prikaz)</label>
+            <input type="text" id="pTelefonPrikaz" placeholder="061 000 000">
+          </div>
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pEmail">Email *</label>
+            <input type="email" id="pEmail" placeholder="info@balloonland.ba" required>
+          </div>
+          <div class="cform__field">
+            <label for="pAdresa">Adresa</label>
+            <input type="text" id="pAdresa" placeholder="Ulica bb, Grad">
+          </div>
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pRadno">Radno vrijeme</label>
+            <input type="text" id="pRadno" placeholder="Pon–Sub: 09–18h">
+          </div>
+          <div class="cform__field">
+            <label for="pInstagram">Instagram link</label>
+            <input type="text" id="pInstagram" placeholder="https://instagram.com/...">
+          </div>
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pFacebook">Facebook link</label>
+            <input type="text" id="pFacebook" placeholder="https://facebook.com/...">
+          </div>
+          <div class="cform__field">
+            <label for="pTiktok">TikTok link</label>
+            <input type="text" id="pTiktok" placeholder="https://tiktok.com/@...">
+          </div>
+        </div>
+        <div class="cform__field">
+          <label for="pMapa">Google Maps embed URL <span class="dash-hint">(Podijeli → Ugradi mapu → src iz iframe koda)</span></label>
+          <input type="text" id="pMapa" placeholder="https://www.google.com/maps?...&output=embed">
+        </div>
+        <div class="dash-forma__akcije">
+          <button type="submit" class="btn btn--gold btn--lg">💾 Snimi postavke</button>
+          <span class="dash-status" id="pStatus"></span>
+        </div>
+      </form>
+    </section>
+
   </main>
 
-  <script src="js/dashboard.js?v=4"></script>
+  <script src="js/dashboard.js?v=5"></script>
 </body>
 </html>

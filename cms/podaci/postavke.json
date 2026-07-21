@@ -1,0 +1,13 @@
+{
+  "telefon": "+387 61 000 000",
+  "telefonPrikaz": "061 000 000",
+  "email": "info@balloonland.ba",
+  "adresa": "Ul. Primjer bb, Sarajevo",
+  "radnoVrijeme": "Pon–Sub: 09–18h",
+  "mreze": {
+    "instagram": "#",
+    "facebook": "#",
+    "tiktok": "#"
+  },
+  "mapa": "https://www.google.com/maps?q=Sarajevo,Bosna+i+Hercegovina&z=13&output=embed"
+}
