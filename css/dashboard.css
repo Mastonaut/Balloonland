@@ -673,3 +673,16 @@
 .pkt-tile--dodaj:hover { color: var(--gold-2); border-color: var(--gold-2); }
 .pkt-tile__plus { font-size: 2.1rem; line-height: 1; }
 .pkt-nazad { margin-bottom: 1.1rem; }
+
+/* kompaktno "Snimi sve promjene" — jedan red, niže */
+#pkSnimi {
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: .65rem 1.5rem;
+  font-size: .9rem;
+}
+
+/* drag-to-reorder kvadrata */
+.pkt-tile[draggable="true"] { cursor: grab; }
+.pkt-tile.pkt-tile--vuce { opacity: .4; cursor: grabbing; }
+.pkt-tile.pkt-tile--cilj { border-color: var(--gold-2); box-shadow: 0 0 0 3px rgba(201, 162, 75, .3); }

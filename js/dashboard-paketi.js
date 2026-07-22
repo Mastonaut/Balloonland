@@ -51,6 +51,7 @@
   const listaView = document.getElementById("pkKarticeLista");
   const editorView = document.getElementById("pkKarticeEditor");
   let uredjiviIndeks = -1;
+  let vuceniIndeks = -1;
 
   function stavkaHTML(s) {
     return `
@@ -94,7 +95,7 @@
   /* ─── grid kvadrata ─── */
   function tileHTML(p, i) {
     return `
-      <div class="pkt-tile${p.istaknut ? " is-istaknut" : ""}" data-tile="${i}" title="Uredi paket">
+      <div class="pkt-tile${p.istaknut ? " is-istaknut" : ""}" data-tile="${i}" draggable="true" title="Uredi — ili prevuci za redoslijed">
         ${p.istaknut ? '<span class="pkt-tile__zvijezda" title="Istaknut">★</span>' : ""}
         <span class="pkt-tile__broj">Paket ${i + 1}</span>
         <span class="pkt-tile__ime">${esc(p.ime || "bez imena")}</span>
@@ -150,6 +151,43 @@
     }
     const tile = e.target.closest("[data-tile]");
     if (tile) otvoriEditor(+tile.dataset.tile);
+  });
+
+  /* ─── drag-to-reorder kvadrata ─── */
+  elGrid.addEventListener("dragstart", (e) => {
+    const tile = e.target.closest(".pkt-tile[data-tile]");
+    if (!tile) return;
+    vuceniIndeks = +tile.dataset.tile;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", String(vuceniIndeks)); // Firefox traži podatke
+    tile.classList.add("pkt-tile--vuce");
+  });
+  elGrid.addEventListener("dragover", (e) => {
+    if (vuceniIndeks < 0) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    const tile = e.target.closest(".pkt-tile[data-tile]");
+    elGrid.querySelectorAll(".pkt-tile--cilj").forEach((t) => t.classList.remove("pkt-tile--cilj"));
+    if (tile && +tile.dataset.tile !== vuceniIndeks) tile.classList.add("pkt-tile--cilj");
+  });
+  elGrid.addEventListener("drop", (e) => {
+    if (vuceniIndeks < 0) return;
+    e.preventDefault();
+    const tile = e.target.closest(".pkt-tile[data-tile]");
+    if (tile) {
+      const cilj = +tile.dataset.tile;
+      if (cilj !== vuceniIndeks) {
+        const [premjesten] = podaci.paketi.splice(vuceniIndeks, 1);
+        podaci.paketi.splice(cilj, 0, premjesten);
+      }
+    }
+    vuceniIndeks = -1;
+    renderGrid();
+  });
+  elGrid.addEventListener("dragend", () => {
+    vuceniIndeks = -1;
+    elGrid.querySelectorAll(".pkt-tile--vuce, .pkt-tile--cilj")
+      .forEach((t) => t.classList.remove("pkt-tile--vuce", "pkt-tile--cilj"));
   });
 
   document.getElementById("pkNazadNaLista").addEventListener("click", () => {
