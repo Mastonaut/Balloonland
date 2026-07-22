@@ -46,7 +46,11 @@
   }
 
   /* ═══════════ KARTICE ═══════════ */
-  const elKartice = document.getElementById("pkKartice");
+  const elGrid = document.getElementById("pkGrid");
+  const elEditor = document.getElementById("pkEditor");
+  const listaView = document.getElementById("pkKarticeLista");
+  const editorView = document.getElementById("pkKarticeEditor");
+  let uredjiviIndeks = -1;
 
   function stavkaHTML(s) {
     return `
@@ -87,14 +91,43 @@
       </div>`;
   }
 
-  function renderKartice() {
-    elKartice.innerHTML = podaci.paketi.length
-      ? podaci.paketi.map(karticaHTML).join("")
-      : '<p class="dash-hint">Još nema paketa — dodaj prvi. 🎈</p>';
+  /* ─── grid kvadrata ─── */
+  function tileHTML(p, i) {
+    return `
+      <div class="pkt-tile${p.istaknut ? " is-istaknut" : ""}" data-tile="${i}" title="Uredi paket">
+        ${p.istaknut ? '<span class="pkt-tile__zvijezda" title="Istaknut">★</span>' : ""}
+        <span class="pkt-tile__broj">Paket ${i + 1}</span>
+        <span class="pkt-tile__ime">${esc(p.ime || "bez imena")}</span>
+        <span class="pkt-tile__uredi">✏️ Uredi</span>
+      </div>`;
+  }
+  function renderGrid() {
+    elGrid.innerHTML =
+      podaci.paketi.map(tileHTML).join("") +
+      `<button type="button" class="pkt-tile pkt-tile--dodaj" data-dodaj-paket>
+         <span class="pkt-tile__plus">+</span>
+         <span>Dodaj novi paket</span>
+       </button>`;
+  }
+  function prikaziListu() {
+    uredjiviIndeks = -1;
+    editorView.hidden = true;
+    listaView.hidden = false;
+    renderGrid();
+  }
+  function otvoriEditor(i) {
+    uredjiviIndeks = i;
+    elEditor.innerHTML = karticaHTML(podaci.paketi[i], i);
+    listaView.hidden = true;
+    editorView.hidden = false;
   }
 
-  function scrapeKartice() {
-    podaci.paketi = [...elKartice.querySelectorAll(".pkt-kartica")].map((k) => ({
+  /* ─── čitanje otvorenog editora u stanje ─── */
+  function scrapeEditor() {
+    if (uredjiviIndeks < 0) return;
+    const k = elEditor.querySelector(".pkt-kartica");
+    if (!k) return;
+    podaci.paketi[uredjiviIndeks] = {
       id: k.dataset.id || noviId(),
       ime: k.querySelector(".pk-ime").value.trim(),
       tag: k.querySelector(".pk-tag").value.trim(),
@@ -106,52 +139,56 @@
         const off = s.querySelector(".pk-stavka-off").checked;
         return off ? { t, off: true } : { t };
       }),
-    }));
+    };
   }
 
-  elKartice.addEventListener("click", (e) => {
+  elGrid.addEventListener("click", (e) => {
+    if (e.target.closest("[data-dodaj-paket]")) {
+      podaci.paketi.push({ id: noviId(), ime: "", tag: "", cijena: 0, istaknut: false, bedz: "", stavke: [{ t: "" }] });
+      otvoriEditor(podaci.paketi.length - 1);
+      return;
+    }
+    const tile = e.target.closest("[data-tile]");
+    if (tile) otvoriEditor(+tile.dataset.tile);
+  });
+
+  document.getElementById("pkNazadNaLista").addEventListener("click", () => {
+    scrapeEditor();
+    prikaziListu();
+  });
+
+  elEditor.addEventListener("click", (e) => {
+    if (uredjiviIndeks < 0) return;
     if (e.target.closest(".pk-dodaj-stavku")) {
-      scrapeKartice();
-      const i = [...elKartice.querySelectorAll(".pkt-kartica")].indexOf(e.target.closest(".pkt-kartica"));
-      podaci.paketi[i].stavke.push({ t: "" });
-      renderKartice();
+      scrapeEditor();
+      podaci.paketi[uredjiviIndeks].stavke.push({ t: "" });
+      otvoriEditor(uredjiviIndeks);
       return;
     }
     if (e.target.closest(".pk-obrisi-stavku")) {
-      scrapeKartice();
-      const kartica = e.target.closest(".pkt-kartica");
-      const i = [...elKartice.querySelectorAll(".pkt-kartica")].indexOf(kartica);
-      const j = [...kartica.querySelectorAll(".pk-stavka")].indexOf(e.target.closest(".pk-stavka"));
-      podaci.paketi[i].stavke.splice(j, 1);
-      renderKartice();
+      const j = [...elEditor.querySelectorAll(".pk-stavka")].indexOf(e.target.closest(".pk-stavka"));
+      scrapeEditor();
+      podaci.paketi[uredjiviIndeks].stavke.splice(j, 1);
+      otvoriEditor(uredjiviIndeks);
       return;
     }
-    const del = e.target.closest("[data-obrisi-paket]");
-    if (del) {
-      scrapeKartice();
-      const i = +del.dataset.obrisiPaket;
-      if (confirm('Obrisati paket "' + (podaci.paketi[i].ime || "bez imena") + '"?')) {
-        podaci.paketi.splice(i, 1);
-        renderKartice();
+    if (e.target.closest("[data-obrisi-paket]")) {
+      if (confirm('Obrisati paket "' + (podaci.paketi[uredjiviIndeks].ime || "bez imena") + '"?')) {
+        podaci.paketi.splice(uredjiviIndeks, 1);
+        prikaziListu();
       }
       return;
     }
     const gore = e.target.closest("[data-gore]");
     const dole = e.target.closest("[data-dole]");
     if (gore || dole) {
-      scrapeKartice();
-      const i = +(gore || dole).dataset[gore ? "gore" : "dole"];
+      scrapeEditor();
+      const i = uredjiviIndeks;
       const j = gore ? i - 1 : i + 1;
       if (j < 0 || j >= podaci.paketi.length) return;
       [podaci.paketi[i], podaci.paketi[j]] = [podaci.paketi[j], podaci.paketi[i]];
-      renderKartice();
+      otvoriEditor(j);
     }
-  });
-
-  document.getElementById("pkDodajPaket").addEventListener("click", () => {
-    scrapeKartice();
-    podaci.paketi.push({ id: noviId(), ime: "", tag: "", cijena: 0, istaknut: false, bedz: "", stavke: [{ t: "" }] });
-    renderKartice();
   });
 
   /* ═══════════ TABELA POREĐENJA ═══════════ */
@@ -215,7 +252,7 @@
     renderPoredjenje();
   });
   document.getElementById("pkDodajRed").addEventListener("click", () => {
-    scrapeKartice();
+    scrapeEditor();
     scrapePoredjenje();
     const red = { stavka: "" };
     podaci.paketi.forEach((p) => { red[p.id] = false; });
@@ -299,7 +336,7 @@
 
   /* ═══════════ SUB-TABOVI ═══════════ */
   function sinhronizuj() {
-    scrapeKartice();
+    scrapeEditor();
     scrapePoredjenje();
     scrapeDodaci();
     scrapeFaq();
@@ -324,7 +361,7 @@
     status.textContent = "⏳ Snimanje…";
     try {
       podaci = await api("/api/paketi", { method: "PUT", body: JSON.stringify(podaci) });
-      renderKartice(); renderPoredjenje(); renderDodaci(); renderFaq();
+      prikaziListu(); renderPoredjenje(); renderDodaci(); renderFaq();
       status.textContent = "✅ Snimljeno — paketi su ažurirani na cijelom sajtu!";
     } catch (gr) {
       greska(gr.message);
@@ -340,7 +377,7 @@
         const m = /^paket-(\d+)$/.exec(p.id || "");
         if (m) brojac = Math.max(brojac, +m[1]);
       });
-      renderKartice(); renderPoredjenje(); renderDodaci(); renderFaq();
+      prikaziListu(); renderPoredjenje(); renderDodaci(); renderFaq();
       document.querySelectorAll("#pktTabs .pkt-tab").forEach((b) => b.classList.toggle("is-active", b.dataset.tab === "kartice"));
       koren.querySelectorAll(".pkt-tabpanel").forEach((p) => p.classList.toggle("is-active", p.dataset.tab === "kartice"));
       status.textContent = "";

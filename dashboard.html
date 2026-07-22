@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=4">
+  <link rel="stylesheet" href="css/dashboard.css?v=5">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -403,9 +403,14 @@
 
       <!-- KARTICE -->
       <div class="pkt-tabpanel is-active" data-tab="kartice">
-        <p class="dash-hint">Redoslijed = redoslijed prikaza na sajtu. Prekrižene stavke se prikazuju sivo (nije uključeno).</p>
-        <div id="pkKartice"></div>
-        <button type="button" class="dash-mini pkt-dodaj" id="pkDodajPaket">+ Dodaj paket</button>
+        <div id="pkKarticeLista">
+          <p class="dash-hint">Klikni na paket da ga urediš. Redoslijed kvadrata = redoslijed prikaza na sajtu.</p>
+          <div class="pkt-grid" id="pkGrid"></div>
+        </div>
+        <div id="pkKarticeEditor" hidden>
+          <button type="button" class="btn btn--outline btn--sm pkt-nazad" id="pkNazadNaLista">← Nazad na pakete</button>
+          <div id="pkEditor"></div>
+        </div>
       </div>
 
       <!-- POREĐENJE -->
@@ -433,6 +438,6 @@
   </main>
 
   <script src="js/dashboard.js?v=7"></script>
-  <script src="js/dashboard-paketi.js?v=1"></script>
+  <script src="js/dashboard-paketi.js?v=2"></script>
 </body>
 </html>

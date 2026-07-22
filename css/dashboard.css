@@ -611,3 +611,65 @@
 .pkt-faq textarea::placeholder,
 .pk-stavka input::placeholder,
 .pkt-tabela input::placeholder { color: rgba(141, 136, 148, .7); }
+
+/* ─────── paketi: grid kvadrata ─────── */
+.pkt-grid { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .5rem; }
+.pkt-tile {
+  position: relative;
+  width: 165px; height: 165px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  background: rgba(14, 13, 16, .6);
+  border: 1.5px solid rgba(250, 247, 242, .14);
+  border-radius: 18px;
+  color: var(--ivory);
+  font-family: inherit;
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.pkt-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .5);
+}
+.pkt-tile.is-istaknut {
+  border-color: var(--gold-2);
+  background: linear-gradient(160deg, rgba(201, 162, 75, .16), rgba(14, 13, 16, .6));
+}
+.pkt-tile__broj {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold-2);
+}
+.pkt-tile__ime {
+  font-size: .9rem;
+  color: var(--muted);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pkt-tile__zvijezda { position: absolute; top: .55rem; right: .75rem; color: var(--gold-2); font-size: 1rem; }
+.pkt-tile__uredi {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: linear-gradient(120deg, var(--gold-3), var(--gold) 60%, var(--gold-2));
+  color: var(--ink);
+  font-size: .82rem;
+  font-weight: 800;
+  padding: .5rem;
+  transform: translateY(101%);
+  transition: transform .18s;
+}
+.pkt-tile:hover .pkt-tile__uredi { transform: translateY(0); }
+.pkt-tile--dodaj { border-style: dashed; color: var(--muted); gap: .5rem; }
+.pkt-tile--dodaj:hover { color: var(--gold-2); border-color: var(--gold-2); }
+.pkt-tile__plus { font-size: 2.1rem; line-height: 1; }
+.pkt-nazad { margin-bottom: 1.1rem; }
