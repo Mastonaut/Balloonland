@@ -279,7 +279,11 @@ async function api(req, res, putanja) {
       telefonPrikaz: p.telefonPrikaz || p.telefon,
       email: p.email,
       adresa: p.adresa || "",
-      radnoVrijeme: p.radnoVrijeme || "",
+      radnoVrijeme: {
+        ponPet: (p.radnoVrijeme && p.radnoVrijeme.ponPet) || "",
+        subota: (p.radnoVrijeme && p.radnoVrijeme.subota) || "",
+        nedjelja: (p.radnoVrijeme && p.radnoVrijeme.nedjelja) || "",
+      },
       mreze: {
         instagram: (p.mreze && p.mreze.instagram) || "#",
         facebook: (p.mreze && p.mreze.facebook) || "#",

@@ -3,7 +3,11 @@
   "telefonPrikaz": "061 000 000",
   "email": "info@balloonland.ba",
   "adresa": "Ul. Primjer bb, Sarajevo",
-  "radnoVrijeme": "Pon–Sub: 09–18h",
+  "radnoVrijeme": {
+    "ponPet": "Pon–Pet: 09–18h",
+    "subota": "Sub: 09–14h",
+    "nedjelja": "Ned: zatvoreno"
+  },
   "mreze": {
     "instagram": "#",
     "facebook": "#",

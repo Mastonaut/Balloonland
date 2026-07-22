@@ -344,8 +344,18 @@
         </div>
         <div class="cform__row">
           <div class="cform__field">
-            <label for="pRadno">Radno vrijeme</label>
-            <input type="text" id="pRadno" placeholder="Pon–Sub: 09–18h">
+            <label for="pRadnoPonPet">Radno vrijeme — Pon–Pet</label>
+            <input type="text" id="pRadnoPonPet" placeholder="Pon–Pet: 09–18h">
+          </div>
+          <div class="cform__field">
+            <label for="pRadnoSub">Radno vrijeme — Subota</label>
+            <input type="text" id="pRadnoSub" placeholder="Sub: 09–14h">
+          </div>
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pRadnoNed">Radno vrijeme — Nedjelja <span class="dash-hint">(prazno = ne prikazuje se)</span></label>
+            <input type="text" id="pRadnoNed" placeholder="Ned: zatvoreno">
           </div>
           <div class="cform__field">
             <label for="pInstagram">Instagram link</label>
@@ -375,6 +385,6 @@
 
   </main>
 
-  <script src="js/dashboard.js?v=5"></script>
+  <script src="js/dashboard.js?v=6"></script>
 </body>
 </html>

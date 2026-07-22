@@ -52,7 +52,15 @@
   const adresa = document.getElementById("kAdresa");
   if (adresa) adresa.textContent = P.adresa;
   const radno = document.getElementById("kRadno");
-  if (radno) radno.textContent = P.radnoVrijeme;
+  if (radno) {
+    const rv = P.radnoVrijeme;
+    if (rv && typeof rv === "object") {
+      radno.innerHTML = [rv.ponPet, rv.subota, rv.nedjelja]
+        .filter(Boolean).join("<br>");
+    } else {
+      radno.textContent = rv || "";
+    }
+  }
   const mapa = document.getElementById("kMapa");
   if (mapa && P.mapa) mapa.src = P.mapa;
 })();

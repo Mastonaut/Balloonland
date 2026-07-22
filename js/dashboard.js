@@ -398,7 +398,16 @@
     document.getElementById("pTelefonPrikaz").value = p.telefonPrikaz || "";
     document.getElementById("pEmail").value = p.email || "";
     document.getElementById("pAdresa").value = p.adresa || "";
-    document.getElementById("pRadno").value = p.radnoVrijeme || "";
+    const rv = p.radnoVrijeme;
+    if (rv && typeof rv === "object") {
+      document.getElementById("pRadnoPonPet").value = rv.ponPet || "";
+      document.getElementById("pRadnoSub").value = rv.subota || "";
+      document.getElementById("pRadnoNed").value = rv.nedjelja || "";
+    } else {
+      document.getElementById("pRadnoPonPet").value = rv || "";
+      document.getElementById("pRadnoSub").value = "";
+      document.getElementById("pRadnoNed").value = "";
+    }
     document.getElementById("pInstagram").value = (p.mreze && p.mreze.instagram !== "#") ? p.mreze.instagram : "";
     document.getElementById("pFacebook").value = (p.mreze && p.mreze.facebook !== "#") ? p.mreze.facebook : "";
     document.getElementById("pTiktok").value = (p.mreze && p.mreze.tiktok !== "#") ? p.mreze.tiktok : "";
@@ -413,7 +422,11 @@
       telefonPrikaz: document.getElementById("pTelefonPrikaz").value.trim(),
       email: document.getElementById("pEmail").value.trim(),
       adresa: document.getElementById("pAdresa").value.trim(),
-      radnoVrijeme: document.getElementById("pRadno").value.trim(),
+      radnoVrijeme: {
+        ponPet: document.getElementById("pRadnoPonPet").value.trim(),
+        subota: document.getElementById("pRadnoSub").value.trim(),
+        nedjelja: document.getElementById("pRadnoNed").value.trim(),
+      },
       mreze: {
         instagram: document.getElementById("pInstagram").value.trim() || "#",
         facebook: document.getElementById("pFacebook").value.trim() || "#",

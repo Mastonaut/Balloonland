@@ -1,14 +1,14 @@
-/* ═══════════════════════════════════════════
-   BALLOON LAND — Globalne postavke sajta (CMS core)
-   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
-   Izvor: cms/podaci/postavke.json (uređuje se kroz dashboard)
-   ═══════════════════════════════════════════ */
+/* AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno! Izvor: cms/podaci/postavke.json */
 window.POSTAVKE = {
   "telefon": "+387 61 000 000",
   "telefonPrikaz": "061 000 000",
   "email": "info@balloonland.ba",
   "adresa": "Ul. Primjer bb, Sarajevo",
-  "radnoVrijeme": "Pon–Sub: 09–18h",
+  "radnoVrijeme": {
+    "ponPet": "Pon–Pet: 09–18h",
+    "subota": "Sub: 09–14h",
+    "nedjelja": "Ned: zatvoreno"
+  },
   "mreze": {
     "instagram": "#",
     "facebook": "#",
