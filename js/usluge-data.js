@@ -1,88 +1,143 @@
 /* ═══════════════════════════════════════════
    BALLOON LAND — Usluge (CMS core)
-   Ovaj fajl će u budućnosti generisati CMS.
-
-   USLUGE: glavne usluge (naizmjenični redovi sa slikom).
-   Nova usluga = novi unos ovdje — broj (01, 02...),
-   raspored lijevo/desno i pill u navigaciji idu automatski.
-   "naslov" smije sadržati <em>...</em> za zlatni kurziv.
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/usluge.json (uređuje se kroz dashboard)
    ═══════════════════════════════════════════ */
 window.USLUGE = [
   {
-    id: "vjencanja",
-    emoji: "💍",
-    pill: "Vjenčanja",
-    naslov: "Vjenčanja iz <em>bajke</em>",
-    tag: "Najtraženije",
-    slika: "img/wedding-aisle.jpg",
-    tekst: "Od ceremonije do prvog plesa — kreiramo scenografiju koja prati vašu ljubavnu priču. Elegantni lukovi, raskošni cvjetni aranžmani, svjetlosna magija i detalji koji goste ostavljaju bez daha.",
-    chips: ["Lukovi & oltari", "Dekoracija sale", "Slatki sto", "Svjetleća slova", "Prvi ples efekti"],
-    sekundarno: { tekst: "Pogledaj radove", link: "galerija.html" },
+    "id": "vjencanja",
+    "emoji": "💍",
+    "pill": "Vjenčanja",
+    "naslov": "Vjenčanja iz <em>bajke</em>",
+    "tag": "Najtraženije",
+    "slika": "img/wedding-aisle.jpg",
+    "tekst": "Od ceremonije do prvog plesa — kreiramo scenografiju koja prati vašu ljubavnu priču. Elegantni lukovi, raskošni cvjetni aranžmani, svjetlosna magija i detalji koji goste ostavljaju bez daha.",
+    "chips": [
+      "Lukovi & oltari",
+      "Dekoracija sale",
+      "Slatki sto",
+      "Svjetleća slova",
+      "Prvi ples efekti"
+    ],
+    "sekundarno": {
+      "tekst": "Pogledaj radove",
+      "link": "galerija.html"
+    }
   },
   {
-    id: "rodjendani",
-    emoji: "🥂",
-    pill: "Rođendani",
-    naslov: "Rođendani &amp; <em>jubileji</em>",
-    tag: "18 / 30 / 40 / 50",
-    slika: "img/birthday-blackgold.jpg",
-    tekst: "Punoljetstva, okrugli rođendani, godišnjice — svaki broj zaslužuje svoj BUM. Biramo temu i paletu po vašem stilu: glamurozno crno-zlatno, nježni pasteli ili potpuno lud koncept po želji.",
-    chips: ["Brojke od balona", "Balonski zidovi", "Personalizovani natpisi", "Konfeti momenti", "Tematske dekoracije"],
-    sekundarno: { tekst: "Vidi pakete", link: "paketi.html" },
+    "id": "rodjendani",
+    "emoji": "🥂",
+    "pill": "Rođendani",
+    "naslov": "Rođendani &amp; <em>jubileji</em>",
+    "tag": "18 / 30 / 40 / 50",
+    "slika": "img/birthday-blackgold.jpg",
+    "tekst": "Punoljetstva, okrugli rođendani, godišnjice — svaki broj zaslužuje svoj BUM. Biramo temu i paletu po vašem stilu: glamurozno crno-zlatno, nježni pasteli ili potpuno lud koncept po želji.",
+    "chips": [
+      "Brojke od balona",
+      "Balonski zidovi",
+      "Personalizovani natpisi",
+      "Konfeti momenti",
+      "Tematske dekoracije"
+    ],
+    "sekundarno": {
+      "tekst": "Vidi pakete",
+      "link": "paketi.html"
+    }
   },
   {
-    id: "djecije",
-    emoji: "🎈",
-    pill: "Dječije proslave",
-    naslov: "Dječije <em>proslave</em>",
-    tag: "Svjetovi iz mašte",
-    slika: "img/kids-party.jpg",
-    tekst: "Prvi rođendani, krstitke, male mature — gradimo šarene svjetove u kojima su djeca glavni junaci. Superheroji, princeze, džungla, svemir... vi izaberite temu, mi napravimo čaroliju.",
-    chips: ["Tematski setovi", "Balonske figure", "Photo kutak za male goste", "Pinjate & rekviziti", "Slatki sto"],
-    sekundarno: null,
+    "id": "djecije",
+    "emoji": "🎈",
+    "pill": "Dječije proslave",
+    "naslov": "Dječije <em>proslave</em>",
+    "tag": "Svjetovi iz mašte",
+    "slika": "img/kids-party.jpg",
+    "tekst": "Prvi rođendani, krstitke, male mature — gradimo šarene svjetove u kojima su djeca glavni junaci. Superheroji, princeze, džungla, svemir... vi izaberite temu, mi napravimo čaroliju.",
+    "chips": [
+      "Tematski setovi",
+      "Balonske figure",
+      "Photo kutak za male goste",
+      "Pinjate & rekviziti",
+      "Slatki sto"
+    ],
+    "sekundarno": null
   },
   {
-    id: "reveal",
-    emoji: "🩵",
-    pill: "Gender reveal",
-    naslov: "Gender <em>reveal</em>",
-    tag: "Boy or girl?",
-    slika: "img/gender-reveal.jpg",
-    tekst: "Najslađa tajna otkriva se uz spektakl! Balon iznenađenja, konfeti topovi u roze ili plavom, dimne baklje i scenografija koja taj trenutak pretvara u uspomenu za cijeli život.",
-    chips: ["Balon iznenađenja", "Konfeti topovi", "Roze / plavi dim", "Foto pozadine", "\"Boy or Girl\" setovi"],
-    sekundarno: null,
-  },
+    "id": "reveal",
+    "emoji": "🩵",
+    "pill": "Gender reveal",
+    "naslov": "Gender <em>reveal</em>",
+    "tag": "Boy or girl?",
+    "slika": "img/gender-reveal.jpg",
+    "tekst": "Najslađa tajna otkriva se uz spektakl! Balon iznenađenja, konfeti topovi u roze ili plavom, dimne baklje i scenografija koja taj trenutak pretvara u uspomenu za cijeli život.",
+    "chips": [
+      "Balon iznenađenja",
+      "Konfeti topovi",
+      "Roze / plavi dim",
+      "Foto pozadine",
+      "\"Boy or Girl\" setovi"
+    ],
+    "sekundarno": null
+  }
 ];
 
-// Sekcija specijalnih efekata (dobija broj nakon glavnih usluga)
 window.USLUGE_EFEKTI = {
-  emoji: "✨",
-  pill: "Specijalni efekti",
-  naslov: "Specijalni <em>efekti</em>",
-  podnaslov: "Trenutak kada svi vade telefone — čista magija koja podiže svaki događaj.",
-  kartice: [
-    { slika: "img/sparkler-closeup.jpg", naslov: "Hladne prskalice", tekst: "Sigurne za unutrašnji prostor — savršene za prvi ples, ulazak slavljenika ili rezanje torte." },
-    { slika: "img/smoke-dance.jpg", naslov: "Teški dim", tekst: "Ples u oblacima — filmski efekat niskog dima koji ne diže se i ne aktivira alarme." },
-    { slika: "img/hero-sparklers.jpg", naslov: "Konfeti &amp; špaliri", tekst: "Konfeti topovi, špaliri prskalica na izlasku i veliki finale momenti za pamćenje." },
-  ],
+  "emoji": "✨",
+  "pill": "Specijalni efekti",
+  "naslov": "Specijalni <em>efekti</em>",
+  "podnaslov": "Trenutak kada svi vade telefone — čista magija koja podiže svaki događaj.",
+  "kartice": [
+    {
+      "slika": "img/sparkler-closeup.jpg",
+      "naslov": "Hladne prskalice",
+      "tekst": "Sigurne za unutrašnji prostor — savršene za prvi ples, ulazak slavljenika ili rezanje torte."
+    },
+    {
+      "slika": "img/smoke-dance.jpg",
+      "naslov": "Teški dim",
+      "tekst": "Ples u oblacima — filmski efekat niskog dima koji ne diže se i ne aktivira alarme."
+    },
+    {
+      "slika": "img/hero-sparklers.jpg",
+      "naslov": "Konfeti &amp; špaliri",
+      "tekst": "Konfeti topovi, špaliri prskalica na izlasku i veliki finale momenti za pamćenje."
+    }
+  ]
 };
 
-// Fotokutak baner (dobija broj nakon efekata)
 window.USLUGE_FOTOKUTAK = {
-  emoji: "📸",
-  pill: "Fotokutak",
-  naslov: "Fotokutak &amp; <em>cvjetni zidovi</em>",
-  tekst: "Kutak koji svaki gost mora fotografisati. Cvjetni zidovi, svjetleće pozadine, neonski natpisi i rekviziti — vaš događaj postaje viralan sam od sebe.",
-  dugmad: [
-    { tekst: "Rezerviši fotokutak", link: "kontakt.html", stil: "gold" },
-    { tekst: "Kreiraj svoj dizajn", link: "kreiraj.html", stil: "ghost" },
-  ],
+  "emoji": "📸",
+  "pill": "Fotokutak",
+  "naslov": "Fotokutak &amp; <em>cvjetni zidovi</em>",
+  "tekst": "Kutak koji svaki gost mora fotografisati. Cvjetni zidovi, svjetleće pozadine, neonski natpisi i rekviziti — vaš događaj postaje viralan sam od sebe.",
+  "dugmad": [
+    {
+      "tekst": "Rezerviši fotokutak",
+      "link": "kontakt.html",
+      "stil": "gold"
+    },
+    {
+      "tekst": "Kreiraj svoj dizajn",
+      "link": "kreiraj.html",
+      "stil": "ghost"
+    }
+  ]
 };
 
-// Kako radimo — koraci procesa
 window.USLUGE_KORACI = [
-  { naslov: "Konsultacija", tekst: "Pošaljete nam datum, prostor i ideju — ili dođete na kafu pa maštamo zajedno." },
-  { naslov: "Dizajn &amp; ponuda", tekst: "U roku od 24h dobijate vizuelni prijedlog dekoracije i jasnu ponudu bez skrivenih troškova." },
-  { naslov: "Montaža", tekst: "Naš tim dolazi prije događaja, postavlja sve do detalja i testira svaki efekat." },
-  { naslov: "BUM! 🎉", tekst: "Vi uživate, gosti fotografišu, a mi poslije svega tiho počistimo — kao da nas nije ni bilo." },
+  {
+    "naslov": "Konsultacija",
+    "tekst": "Pošaljete nam datum, prostor i ideju — ili dođete na kafu pa maštamo zajedno."
+  },
+  {
+    "naslov": "Dizajn &amp; ponuda",
+    "tekst": "U roku od 24h dobijate vizuelni prijedlog dekoracije i jasnu ponudu bez skrivenih troškova."
+  },
+  {
+    "naslov": "Montaža",
+    "tekst": "Naš tim dolazi prije događaja, postavlja sve do detalja i testira svaki efekat."
+  },
+  {
+    "naslov": "BUM! 🎉",
+    "tekst": "Vi uživate, gosti fotografišu, a mi poslije svega tiho počistimo — kao da nas nije ni bilo."
+  }
 ];

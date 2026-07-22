@@ -209,6 +209,81 @@ function sacuvajPakete(ulaz) {
   return p;
 }
 
+/* ─────── usluge (glavne usluge, efekti, fotokutak, koraci) ─────── */
+const USLUGE_JSON = path.join(PODACI, "usluge.json");
+function ucitajUsluge() {
+  return JSON.parse(fs.readFileSync(USLUGE_JSON, "utf8"));
+}
+function normalizujUsluge(ulaz) {
+  const cist = (s) => String(s == null ? "" : s).trim();
+  const usluge = (Array.isArray(ulaz.usluge) ? ulaz.usluge : []).map((u, i) => {
+    const id = slug(cist(u.id) || cist(u.pill) || "usluga-" + (i + 1));
+    const sekTekst = u.sekundarno && cist(u.sekundarno.tekst);
+    return {
+      id,
+      emoji: cist(u.emoji) || "🎈",
+      pill: cist(u.pill) || "Usluga",
+      naslov: cist(u.naslov) || "Usluga",
+      tag: cist(u.tag),
+      slika: cist(u.slika) || "img/gold-balloons-gift.jpg",
+      tekst: cist(u.tekst),
+      chips: (Array.isArray(u.chips) ? u.chips : []).map(cist).filter(Boolean),
+      sekundarno: sekTekst ? { tekst: sekTekst, link: cist(u.sekundarno.link) || "kontakt.html" } : null,
+    };
+  });
+  const vidjeni = new Set();
+  usluge.forEach((u) => { while (vidjeni.has(u.id)) u.id += "-2"; vidjeni.add(u.id); });
+
+  const e = ulaz.efekti || {};
+  const efekti = {
+    emoji: cist(e.emoji) || "✨",
+    pill: cist(e.pill) || "Specijalni efekti",
+    naslov: cist(e.naslov) || "Specijalni efekti",
+    podnaslov: cist(e.podnaslov),
+    kartice: (Array.isArray(e.kartice) ? e.kartice : []).map((k) => ({
+      slika: cist(k.slika) || "img/gold-balloons-gift.jpg",
+      naslov: cist(k.naslov),
+      tekst: cist(k.tekst),
+    })).filter((k) => k.naslov),
+  };
+
+  const f = ulaz.fotokutak || {};
+  const fotokutak = {
+    emoji: cist(f.emoji) || "📸",
+    pill: cist(f.pill) || "Fotokutak",
+    naslov: cist(f.naslov) || "Fotokutak",
+    tekst: cist(f.tekst),
+    dugmad: (Array.isArray(f.dugmad) ? f.dugmad : []).map((d) => ({
+      tekst: cist(d.tekst),
+      link: cist(d.link) || "kontakt.html",
+      stil: d.stil === "ghost" ? "ghost" : "gold",
+    })).filter((d) => d.tekst),
+  };
+
+  const koraci = (Array.isArray(ulaz.koraci) ? ulaz.koraci : []).map((k) => ({
+    naslov: cist(k.naslov),
+    tekst: cist(k.tekst),
+  })).filter((k) => k.naslov);
+
+  return { usluge, efekti, fotokutak, koraci };
+}
+function sacuvajUsluge(ulaz) {
+  const u = normalizujUsluge(ulaz);
+  fs.writeFileSync(USLUGE_JSON, JSON.stringify(u, null, 2));
+  const glava = `/* ═══════════════════════════════════════════
+   BALLOON LAND — Usluge (CMS core)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/usluge.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */\n`;
+  const tijelo =
+    "window.USLUGE = " + JSON.stringify(u.usluge, null, 2) + ";\n\n" +
+    "window.USLUGE_EFEKTI = " + JSON.stringify(u.efekti, null, 2) + ";\n\n" +
+    "window.USLUGE_FOTOKUTAK = " + JSON.stringify(u.fotokutak, null, 2) + ";\n\n" +
+    "window.USLUGE_KORACI = " + JSON.stringify(u.koraci, null, 2) + ";\n";
+  fs.writeFileSync(path.join(KORIJEN, "js", "usluge-data.js"), glava + tijelo);
+  return u;
+}
+
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
 function danasnjiDatum() {
   const d = new Date();
@@ -432,6 +507,22 @@ async function api(req, res, putanja) {
     return json(res, 200, sacuvano);
   }
 
+  // usluge: cijeli dokument (glavne usluge + efekti + fotokutak + koraci)
+  if (putanja === "/api/usluge" && metoda === "GET") {
+    return json(res, 200, ucitajUsluge());
+  }
+  if (putanja === "/api/usluge" && metoda === "PUT") {
+    const ulaz = JSON.parse((await citajTijelo(req)).toString() || "{}");
+    if (!Array.isArray(ulaz.usluge) || ulaz.usluge.length === 0) {
+      return json(res, 400, { greska: "Potrebna je barem jedna usluga." });
+    }
+    if (ulaz.usluge.some((u) => !String(u.pill || "").trim() || !String(u.naslov || "").trim())) {
+      return json(res, 400, { greska: "Svaka usluga mora imati naziv (pill) i naslov." });
+    }
+    const sacuvano = sacuvajUsluge(ulaz);
+    return json(res, 200, sacuvano);
+  }
+
   // upload slike (JSON: { ime, data, folder } — data je data-URL ili čisti base64)
   if (putanja === "/api/upload" && metoda === "POST") {
     const { ime, data, folder: zeljeni } = JSON.parse((await citajTijelo(req)).toString() || "{}");
@@ -443,7 +534,7 @@ async function api(req, res, putanja) {
     if (![".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ekstenzija)) {
       return json(res, 400, { greska: "Dozvoljeni formati: jpg, png, webp, gif." });
     }
-    const pod = ["blog", "galerija"].includes(zeljeni) ? zeljeni : "blog";
+    const pod = ["blog", "galerija", "usluge"].includes(zeljeni) ? zeljeni : "blog";
     const folder = path.join(KORIJEN, "img", pod);
     fs.mkdirSync(folder, { recursive: true });
     const naziv = Date.now() + "-" + slug(path.basename(ime || "slika", ekstenzija)) + ekstenzija;

@@ -686,3 +686,73 @@
 .pkt-tile[draggable="true"] { cursor: grab; }
 .pkt-tile.pkt-tile--vuce { opacity: .4; cursor: grabbing; }
 .pkt-tile.pkt-tile--cilj { border-color: var(--gold-2); box-shadow: 0 0 0 3px rgba(201, 162, 75, .3); }
+
+/* ═══════════ USLUGE (sekcija) ═══════════ */
+/* kontrola za sliku */
+.usl-slika { display: flex; gap: 1.2rem; align-items: center; }
+.usl-slika__pregled {
+  width: 170px; height: 106px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 162, 75, .3);
+  background: rgba(14, 13, 16, .6);
+  flex: none;
+}
+.usl-slika__info { color: var(--muted); font-size: .78rem; margin-top: .5rem; word-break: break-all; }
+
+/* chips u editoru usluge */
+.usl-chips { display: flex; flex-direction: column; gap: .5rem; margin: .5rem 0 .7rem; }
+.usl-chip { display: flex; align-items: center; gap: .6rem; }
+.usl-chip .usl-chip-t { flex: 1; }
+
+/* podnaslov bloka (Kartice efekata / Dugmad) */
+.usl-podnaslov-bloka {
+  color: var(--gold-2);
+  font-weight: 700;
+  font-size: .9rem;
+  margin: 1.4rem 0 .7rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(250, 247, 242, .12);
+}
+
+/* koraci — redni broj */
+.usl-korak__broj {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold-2);
+  flex: none;
+  min-width: 2rem;
+}
+
+/* inputi/selecti/textarea izvan .cform__field u ovoj sekciji */
+.usl-chip input,
+.usl-korak input,
+.usl-korak textarea,
+.usl-foto-dugme select {
+  background: rgba(14, 13, 16, .6);
+  border: 1.5px solid rgba(250, 247, 242, .14);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: .9rem;
+  padding: .5rem .7rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.usl-korak textarea { width: 100%; resize: vertical; }
+.usl-foto-dugme select { appearance: none; cursor: pointer; flex: 0 1 9rem; }
+.usl-foto-dugme select option { background: var(--ink-2); }
+.usl-chip input:focus,
+.usl-korak input:focus,
+.usl-korak textarea:focus,
+.usl-foto-dugme select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, .13);
+}
+.usl-chip input::placeholder,
+.usl-korak input::placeholder,
+.usl-korak textarea::placeholder { color: rgba(141, 136, 148, .7); }
+
+/* kompaktno Snimi dugme i za usluge */
+#uslSnimi { white-space: nowrap; flex-shrink: 0; padding: .65rem 1.5rem; font-size: .9rem; }

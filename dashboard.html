@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=6">
+  <link rel="stylesheet" href="css/dashboard.css?v=7">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -24,7 +24,7 @@
       <button class="dash-side__link is-active" data-sekcija="blog">📰 Blog</button>
       <button class="dash-side__link" data-sekcija="galerija">🖼️ Galerija</button>
       <button class="dash-side__link" data-sekcija="paketi">📦 Paketi</button>
-      <button class="dash-side__link" disabled title="Uskoro">🎈 Usluge</button>
+      <button class="dash-side__link" data-sekcija="usluge">🎈 Usluge</button>
       <button class="dash-side__link" data-sekcija="postavke">⚙️ Postavke</button>
     </nav>
     <div class="dash-side__dno">
@@ -435,9 +435,60 @@
       </div>
     </section>
 
+    <!-- ═══════ USLUGE ═══════ -->
+    <section class="dash-panel" id="panelUsluge" data-sekcija="usluge">
+      <header class="dash-head">
+        <div>
+          <h1>Usluge <em>stranica</em></h1>
+          <p>Glavne usluge, specijalni efekti, fotokutak baner i koraci procesa.</p>
+        </div>
+        <button class="btn btn--gold" id="uslSnimi">💾 Snimi sve promjene</button>
+      </header>
+
+      <div class="pkt-tabs" id="uslTabs">
+        <button class="pkt-tab is-active" data-tab="usluge">🎈 Glavne usluge</button>
+        <button class="pkt-tab" data-tab="efekti">✨ Efekti</button>
+        <button class="pkt-tab" data-tab="fotokutak">📸 Fotokutak</button>
+        <button class="pkt-tab" data-tab="koraci">🪜 Koraci</button>
+      </div>
+      <p class="dash-status" id="uslStatus"></p>
+
+      <!-- GLAVNE USLUGE -->
+      <div class="pkt-tabpanel is-active" data-tab="usluge">
+        <div id="uslLista">
+          <p class="dash-hint">Klikni na uslugu da je urediš. Prevuci kvadrate za redoslijed (= redoslijed na stranici).</p>
+          <div class="pkt-grid" id="uslGrid"></div>
+        </div>
+        <div id="uslEditorWrap" hidden>
+          <button type="button" class="btn btn--outline btn--sm pkt-nazad" id="uslNazad">← Nazad na usluge</button>
+          <div id="uslEditor"></div>
+        </div>
+      </div>
+
+      <!-- EFEKTI -->
+      <div class="pkt-tabpanel" data-tab="efekti">
+        <p class="dash-hint">Zaglavlje sekcije + kartice efekata (svaka sa slikom).</p>
+        <div id="uslEfekti"></div>
+      </div>
+
+      <!-- FOTOKUTAK -->
+      <div class="pkt-tabpanel" data-tab="fotokutak">
+        <p class="dash-hint">Baner na dnu stranice — naslov, tekst i do dva dugmeta.</p>
+        <div id="uslFotokutak"></div>
+      </div>
+
+      <!-- KORACI -->
+      <div class="pkt-tabpanel" data-tab="koraci">
+        <p class="dash-hint">„Kako radimo“ — koraci procesa (redni broj se dodaje automatski).</p>
+        <div id="uslKoraci"></div>
+        <button type="button" class="dash-mini pkt-dodaj" id="uslDodajKorak">+ Dodaj korak</button>
+      </div>
+    </section>
+
   </main>
 
-  <script src="js/dashboard.js?v=7"></script>
+  <script src="js/dashboard.js?v=8"></script>
   <script src="js/dashboard-paketi.js?v=3"></script>
+  <script src="js/dashboard-usluge.js?v=1"></script>
 </body>
 </html>
