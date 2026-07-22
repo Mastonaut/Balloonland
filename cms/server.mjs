@@ -127,6 +127,88 @@ function sacuvajPostavke(p) {
   );
 }
 
+/* ─────── paketi (kartice, tabela poređenja, dodaci, FAQ) ─────── */
+const PAKETI_JSON = path.join(PODACI, "paketi.json");
+function ucitajPakete() {
+  return JSON.parse(fs.readFileSync(PAKETI_JSON, "utf8"));
+}
+function normalizujPakete(ulaz) {
+  const paketi = (Array.isArray(ulaz.paketi) ? ulaz.paketi : []).map((p, i) => {
+    const id = slug(String(p.id || p.ime || "paket-" + (i + 1)));
+    return {
+      id,
+      ime: String(p.ime || "").trim() || "Paket",
+      tag: String(p.tag || "").trim(),
+      cijena: Number(p.cijena) || 0,
+      istaknut: !!p.istaknut,
+      bedz: String(p.bedz || "").trim(),
+      stavke: (Array.isArray(p.stavke) ? p.stavke : [])
+        .map((s) => {
+          const t = String(s && s.t || "").trim();
+          if (!t) return null;
+          return s && s.off ? { t, off: true } : { t };
+        })
+        .filter(Boolean),
+    };
+  });
+  // jedinstveni id-evi
+  const vidjeni = new Set();
+  paketi.forEach((p) => { while (vidjeni.has(p.id)) p.id += "-2"; vidjeni.add(p.id); });
+  const idevi = paketi.map((p) => p.id);
+
+  const poredjenje = (Array.isArray(ulaz.poredjenje) ? ulaz.poredjenje : [])
+    .map((r) => {
+      const stavka = String(r && r.stavka || "").trim();
+      if (!stavka) return null;
+      const red = { stavka };
+      idevi.forEach((id) => {
+        const v = r[id];
+        red[id] = (v === true || v === false) ? v : (v == null ? false : String(v));
+      });
+      return red;
+    })
+    .filter(Boolean);
+
+  const dodaci = (Array.isArray(ulaz.dodaci) ? ulaz.dodaci : [])
+    .map((d) => {
+      const naziv = String(d && d.naziv || "").trim();
+      if (!naziv) return null;
+      return {
+        ikona: String(d.ikona || "🎈").trim() || "🎈",
+        naziv,
+        opis: String(d.opis || "").trim(),
+        cijena: String(d.cijena || "").trim(),
+      };
+    })
+    .filter(Boolean);
+
+  const faq = (Array.isArray(ulaz.faq) ? ulaz.faq : [])
+    .map((f) => {
+      const pitanje = String(f && f.pitanje || "").trim();
+      if (!pitanje) return null;
+      return { pitanje, odgovor: String(f.odgovor || "").trim() };
+    })
+    .filter(Boolean);
+
+  return { paketi, poredjenje, dodaci, faq };
+}
+function sacuvajPakete(ulaz) {
+  const p = normalizujPakete(ulaz);
+  fs.writeFileSync(PAKETI_JSON, JSON.stringify(p, null, 2));
+  const glava = `/* ═══════════════════════════════════════════
+   BALLOON LAND — Paketi, poređenje, dodaci i FAQ (CMS core)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/paketi.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */\n`;
+  const tijelo =
+    "window.PAKETI = " + JSON.stringify(p.paketi, null, 2) + ";\n\n" +
+    "window.PAKETI_POREDJENJE = " + JSON.stringify(p.poredjenje, null, 2) + ";\n\n" +
+    "window.PAKETI_DODACI = " + JSON.stringify(p.dodaci, null, 2) + ";\n\n" +
+    "window.PAKETI_FAQ = " + JSON.stringify(p.faq, null, 2) + ";\n";
+  fs.writeFileSync(path.join(KORIJEN, "js", "paketi-data.js"), glava + tijelo);
+  return p;
+}
+
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
 function danasnjiDatum() {
   const d = new Date();
@@ -332,6 +414,22 @@ async function api(req, res, putanja) {
       sacuvajGaleriju(stavke);
       return json(res, 200, obrisana);
     }
+  }
+
+  // paketi: cijeli dokument (kartice + poređenje + dodaci + FAQ)
+  if (putanja === "/api/paketi" && metoda === "GET") {
+    return json(res, 200, ucitajPakete());
+  }
+  if (putanja === "/api/paketi" && metoda === "PUT") {
+    const ulaz = JSON.parse((await citajTijelo(req)).toString() || "{}");
+    if (!Array.isArray(ulaz.paketi) || ulaz.paketi.length === 0) {
+      return json(res, 400, { greska: "Potreban je barem jedan paket." });
+    }
+    if (ulaz.paketi.some((p) => !String(p.ime || "").trim())) {
+      return json(res, 400, { greska: "Svaki paket mora imati ime." });
+    }
+    const sacuvano = sacuvajPakete(ulaz);
+    return json(res, 200, sacuvano);
   }
 
   // upload slike (JSON: { ime, data, folder } — data je data-URL ili čisti base64)

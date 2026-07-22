@@ -378,7 +378,7 @@
   });
 
   /* ═══════════ SEKCIJE (sidebar) ═══════════ */
-  const POCETNI_PANEL = { blog: "panelLista", galerija: "panelGLista", postavke: "panelPostavke" };
+  const POCETNI_PANEL = { blog: "panelLista", galerija: "panelGLista", postavke: "panelPostavke", paketi: "panelPaketi" };
   document.querySelectorAll(".dash-side__link[data-sekcija]").forEach((dugme) => {
     dugme.addEventListener("click", () => {
       document.querySelectorAll(".dash-side__link").forEach((b) => b.classList.toggle("is-active", b === dugme));
@@ -386,6 +386,7 @@
       document.getElementById(POCETNI_PANEL[dugme.dataset.sekcija]).classList.add("is-active");
       if (dugme.dataset.sekcija === "galerija") ucitajGaleriju();
       if (dugme.dataset.sekcija === "postavke") ucitajPostavke();
+      if (dugme.dataset.sekcija === "paketi" && window.PaketiCMS) window.PaketiCMS.ucitaj();
     });
   });
 

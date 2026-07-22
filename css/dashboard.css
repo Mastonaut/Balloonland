@@ -470,3 +470,144 @@
   cursor: pointer;
 }
 .dash-filteri select:focus { outline: none; border-color: var(--gold); }
+
+/* ═══════════ PAKETI (sekcija) ═══════════ */
+.pkt-tabs {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(250, 247, 242, .1);
+  padding-bottom: .8rem;
+}
+.pkt-tab {
+  background: rgba(14, 13, 16, .6);
+  border: 1px solid rgba(250, 247, 242, .14);
+  border-radius: 999px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .5rem 1.1rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.pkt-tab:hover { color: var(--ivory); border-color: var(--gold-2); }
+.pkt-tab.is-active {
+  background: linear-gradient(120deg, var(--gold-3), var(--gold) 60%, var(--gold-2));
+  border-color: transparent;
+  color: var(--ink);
+}
+.pkt-tabpanel { display: none; }
+.pkt-tabpanel.is-active { display: block; animation: dashFade .25s ease; }
+.pkt-dodaj { margin-top: 1rem; }
+
+/* kartice paketa */
+.pkt-kartica {
+  background: rgba(14, 13, 16, .5);
+  border: 1px solid rgba(250, 247, 242, .12);
+  border-radius: 16px;
+  padding: 1.2rem 1.3rem;
+  margin-bottom: 1.1rem;
+}
+.pkt-kartica__glava {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: .9rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px dashed rgba(250, 247, 242, .12);
+}
+.pkt-kartica__glava strong { color: var(--gold-2); font-size: .95rem; }
+.pkt-kartica__akcije { display: flex; gap: .35rem; flex-wrap: wrap; }
+.pk-stavke { display: flex; flex-direction: column; gap: .5rem; margin: .5rem 0 .7rem; }
+.pk-stavka { display: flex; align-items: center; gap: .6rem; }
+.pk-stavka .pk-stavka-t { flex: 1; }
+.pkt-check {
+  display: inline-flex !important;
+  align-items: center;
+  gap: .45rem;
+  color: var(--ivory);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pkt-check input { width: auto; accent-color: var(--gold); }
+.pkt-check--sm { color: var(--muted); font-size: .78rem; font-weight: 500; }
+
+/* tabela poređenja */
+.pkt-tabela-wrap { overflow-x: auto; }
+.pkt-tabela { border-collapse: collapse; width: 100%; min-width: 560px; }
+.pkt-tabela th, .pkt-tabela td {
+  border: 1px solid rgba(250, 247, 242, .1);
+  padding: .5rem .6rem;
+  text-align: left;
+  vertical-align: middle;
+}
+.pkt-tabela thead th { color: var(--gold-2); font-size: .82rem; background: rgba(14, 13, 16, .5); }
+.pkt-cmp-cell, .pk-cmp-cell { white-space: nowrap; }
+.pk-cmp-cell { display: table-cell; }
+.pk-cmp-cell .pk-cmp-mode { min-width: 74px; }
+.pk-cmp-cell .pk-cmp-tekst { margin-top: .35rem; width: 100%; min-width: 120px; }
+.pkt-tabela .pk-cmp-stavka { min-width: 160px; }
+
+/* dodaci i faq (redovi) */
+.pkt-red {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .6rem;
+  flex-wrap: wrap;
+}
+.pkt-red .pk-d-ikona { width: 3.4rem; text-align: center; flex: none; }
+.pkt-red .pk-d-naziv { flex: 1 1 140px; }
+.pkt-red .pk-d-opis { flex: 3 1 220px; }
+.pkt-red .pk-d-cijena { flex: 0 1 7rem; }
+.pkt-faq {
+  background: rgba(14, 13, 16, .5);
+  border: 1px solid rgba(250, 247, 242, .12);
+  border-radius: 12px;
+  padding: .9rem 1rem;
+  margin-bottom: .7rem;
+}
+.pkt-faq__glava { display: flex; gap: .6rem; align-items: center; margin-bottom: .55rem; }
+.pkt-faq__glava .pk-f-pitanje { flex: 1; font-weight: 700; }
+
+@keyframes dashFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* inputi izvan .cform__field (tabela, dodaci, faq) — isti izgled */
+.pkt-red input,
+.pkt-faq input,
+.pkt-faq textarea,
+.pk-stavka input[type="text"], .pk-stavka .pk-stavka-t,
+.pkt-tabela input,
+.pkt-tabela select {
+  background: rgba(14, 13, 16, .6);
+  border: 1.5px solid rgba(250, 247, 242, .14);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: .9rem;
+  padding: .5rem .7rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.pkt-faq textarea { width: 100%; resize: vertical; border-radius: 10px; }
+.pkt-tabela select { appearance: none; cursor: pointer; padding-right: .6rem; }
+.pkt-tabela option { background: var(--ink-2); }
+.pkt-red input:focus,
+.pkt-faq input:focus,
+.pkt-faq textarea:focus,
+.pk-stavka input:focus,
+.pkt-tabela input:focus,
+.pkt-tabela select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, .13);
+}
+.pkt-red input::placeholder,
+.pkt-faq input::placeholder,
+.pkt-faq textarea::placeholder,
+.pk-stavka input::placeholder,
+.pkt-tabela input::placeholder { color: rgba(141, 136, 148, .7); }

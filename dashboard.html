@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=3">
+  <link rel="stylesheet" href="css/dashboard.css?v=4">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -23,7 +23,7 @@
     <nav class="dash-side__nav">
       <button class="dash-side__link is-active" data-sekcija="blog">📰 Blog</button>
       <button class="dash-side__link" data-sekcija="galerija">🖼️ Galerija</button>
-      <button class="dash-side__link" disabled title="Uskoro">📦 Paketi</button>
+      <button class="dash-side__link" data-sekcija="paketi">📦 Paketi</button>
       <button class="dash-side__link" disabled title="Uskoro">🎈 Usluge</button>
       <button class="dash-side__link" data-sekcija="postavke">⚙️ Postavke</button>
     </nav>
@@ -383,8 +383,56 @@
       </form>
     </section>
 
+    <!-- ═══════ PAKETI ═══════ -->
+    <section class="dash-panel" id="panelPaketi" data-sekcija="paketi">
+      <header class="dash-head">
+        <div>
+          <h1>Paketi <em>i cjenovnik</em></h1>
+          <p>Kartice, tabela poređenja, dodaci i FAQ — sve na stranici Paketi i na početnoj.</p>
+        </div>
+        <button class="btn btn--gold" id="pkSnimi">💾 Snimi sve promjene</button>
+      </header>
+
+      <div class="pkt-tabs" id="pktTabs">
+        <button class="pkt-tab is-active" data-tab="kartice">🎈 Kartice</button>
+        <button class="pkt-tab" data-tab="poredjenje">📊 Poređenje</button>
+        <button class="pkt-tab" data-tab="dodaci">✨ Dodaci</button>
+        <button class="pkt-tab" data-tab="faq">❓ FAQ</button>
+      </div>
+      <p class="dash-status" id="pkStatus"></p>
+
+      <!-- KARTICE -->
+      <div class="pkt-tabpanel is-active" data-tab="kartice">
+        <p class="dash-hint">Redoslijed = redoslijed prikaza na sajtu. Prekrižene stavke se prikazuju sivo (nije uključeno).</p>
+        <div id="pkKartice"></div>
+        <button type="button" class="dash-mini pkt-dodaj" id="pkDodajPaket">+ Dodaj paket</button>
+      </div>
+
+      <!-- POREĐENJE -->
+      <div class="pkt-tabpanel" data-tab="poredjenje">
+        <p class="dash-hint">Svaki red je jedna stavka. Za svaku ćeliju: ✦ (uključeno), — (nije) ili vlastiti tekst. Kolone prate pakete iz taba „Kartice“.</p>
+        <div class="pkt-tabela-wrap" id="pkPoredjenje"></div>
+        <button type="button" class="dash-mini pkt-dodaj" id="pkDodajRed">+ Dodaj red</button>
+      </div>
+
+      <!-- DODACI -->
+      <div class="pkt-tabpanel" data-tab="dodaci">
+        <p class="dash-hint">À la carte dodaci — ikona (emoji), naziv, kratak opis i cijena.</p>
+        <div id="pkDodaci"></div>
+        <button type="button" class="dash-mini pkt-dodaj" id="pkDodajDodatak">+ Dodaj dodatak</button>
+      </div>
+
+      <!-- FAQ -->
+      <div class="pkt-tabpanel" data-tab="faq">
+        <p class="dash-hint">Često postavljana pitanja i odgovori.</p>
+        <div id="pkFaq"></div>
+        <button type="button" class="dash-mini pkt-dodaj" id="pkDodajFaq">+ Dodaj pitanje</button>
+      </div>
+    </section>
+
   </main>
 
-  <script src="js/dashboard.js?v=6"></script>
+  <script src="js/dashboard.js?v=7"></script>
+  <script src="js/dashboard-paketi.js?v=1"></script>
 </body>
 </html>
