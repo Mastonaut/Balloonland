@@ -159,7 +159,7 @@
 .dash-slika {
   display: flex;
   gap: 1.2rem;
-  align-items: center;
+  align-items: flex-start;
 }
 .dash-slika img {
   width: 170px; height: 106px;
@@ -689,7 +689,7 @@
 
 /* ═══════════ USLUGE (sekcija) ═══════════ */
 /* kontrola za sliku */
-.usl-slika { display: flex; gap: 1.2rem; align-items: center; }
+.usl-slika { display: flex; gap: 1.2rem; align-items: flex-start; }
 .usl-slika__pregled {
   width: 170px; height: 106px;
   object-fit: cover;
@@ -841,3 +841,14 @@
 .med-crop__box { position: absolute; border: 2px solid var(--gold-2); box-shadow: 0 0 0 9999px rgba(0, 0, 0, .5); cursor: move; }
 .med-crop__rucka { position: absolute; right: -8px; bottom: -8px; width: 16px; height: 16px; background: var(--gold-2); border: 2px solid var(--ink); border-radius: 50%; cursor: nwse-resize; }
 .med-crop__akcije { display: flex; gap: .6rem; margin-top: .9rem; }
+
+/* media modal — sva 3 dugmeta tačno iste visine + crveno "Obriši" */
+.med-modal .dash-forma__akcije { align-items: center; }
+.med-modal .dash-forma__akcije .btn {
+  height: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+}
+.med-obrisi { color: #e0808a; border-color: rgba(224, 92, 106, .45); }
+.med-obrisi:hover { color: #fff; background: #c9433a; border-color: #c9433a; }
