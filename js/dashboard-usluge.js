@@ -59,7 +59,8 @@
         <img class="usl-slika__pregled" src="${esc(putanja || "img/gold-balloons-gift.jpg")}" alt="Pregled">
         <div>
           <input type="file" class="usl-slika__fajl" accept="image/*" hidden>
-          <button type="button" class="btn btn--outline btn--sm usl-slika__dugme">📁 Izaberi sliku</button>
+          <button type="button" class="btn btn--outline btn--sm usl-slika__dugme">📁 Uploaduj novu</button>
+          <button type="button" class="btn btn--outline btn--sm usl-slika__biblioteka">📚 Iz biblioteke</button>
           <p class="usl-slika__info">${esc(putanja || "—")}</p>
         </div>
         <input type="hidden" class="usl-slika__putanja" value="${esc(putanja || "")}">
@@ -67,13 +68,23 @@
   }
   async function uploadSlika(fajl) {
     const dataUrl = await new Promise((res) => { const c = new FileReader(); c.onload = () => res(c.result); c.readAsDataURL(fajl); });
-    const { putanja } = await api("/api/upload", { method: "POST", body: JSON.stringify({ ime: fajl.name, data: dataUrl, folder: "usluge" }) });
+    const { putanja } = await api("/api/media", { method: "POST", body: JSON.stringify({ tip: "slika", ime: fajl.name, data: dataUrl }) });
     return putanja;
+  }
+  function postaviSlikuUKontrolu(box, putanja) {
+    box.querySelector(".usl-slika__putanja").value = putanja;
+    box.querySelector(".usl-slika__pregled").src = putanja;
+    box.querySelector(".usl-slika__info").textContent = putanja;
   }
   // delegirano na cijelom panelu — radi za sve slike (usluge i efekti)
   koren.addEventListener("click", (e) => {
     const dugme = e.target.closest(".usl-slika__dugme");
-    if (dugme) dugme.closest(".usl-slika").querySelector(".usl-slika__fajl").click();
+    if (dugme) { dugme.closest(".usl-slika").querySelector(".usl-slika__fajl").click(); return; }
+    const bib = e.target.closest(".usl-slika__biblioteka");
+    if (bib && window.MediaPicker) {
+      const box = bib.closest(".usl-slika");
+      window.MediaPicker.open((putanja) => postaviSlikuUKontrolu(box, putanja));
+    }
   });
   koren.addEventListener("change", async (e) => {
     const fajl = e.target.closest(".usl-slika__fajl");

@@ -311,6 +311,9 @@
   document.getElementById("fSlikaDugme").addEventListener("click", () =>
     document.getElementById("fSlikaFajl").click()
   );
+  document.getElementById("fBiblioteka").addEventListener("click", () => {
+    if (window.MediaPicker) window.MediaPicker.open((putanja) => postaviSliku(putanja));
+  });
   document.getElementById("fSlikaFajl").addEventListener("change", () => {
     const fajl = document.getElementById("fSlikaFajl").files[0];
     if (!fajl) return;
@@ -319,12 +322,12 @@
     const citac = new FileReader();
     citac.onload = async () => {
       try {
-        const { putanja } = await api("/api/upload", {
+        const { putanja } = await api("/api/media", {
           method: "POST",
-          body: JSON.stringify({ ime: fajl.name, data: citac.result }),
+          body: JSON.stringify({ tip: "slika", ime: fajl.name, data: citac.result }),
         });
         postaviSliku(putanja);
-        status.textContent = "✅ Slika je dodana.";
+        status.textContent = "✅ Slika dodana (i u Media biblioteku).";
       } catch (gr) {
         status.classList.add("is-greska");
         status.textContent = "⚠ " + gr.message;
@@ -551,6 +554,9 @@
   document.getElementById("gSlikaDugme").addEventListener("click", () =>
     document.getElementById("gSlikaFajl").click()
   );
+  document.getElementById("gBiblioteka").addEventListener("click", () => {
+    if (window.MediaPicker) window.MediaPicker.open((putanja) => postaviGSliku(putanja));
+  });
   document.getElementById("gSlikaFajl").addEventListener("change", () => {
     const fajl = document.getElementById("gSlikaFajl").files[0];
     if (!fajl) return;
@@ -559,12 +565,12 @@
     const citac = new FileReader();
     citac.onload = async () => {
       try {
-        const { putanja } = await api("/api/upload", {
+        const { putanja } = await api("/api/media", {
           method: "POST",
-          body: JSON.stringify({ ime: fajl.name, data: citac.result, folder: "galerija" }),
+          body: JSON.stringify({ tip: "slika", ime: fajl.name, data: citac.result }),
         });
         postaviGSliku(putanja);
-        gStatus.textContent = "✅ Slika je dodana.";
+        gStatus.textContent = "✅ Slika dodana (i u Media biblioteku).";
       } catch (gr) {
         gStatus.classList.add("is-greska");
         gStatus.textContent = "⚠ " + gr.message;

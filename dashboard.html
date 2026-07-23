@@ -91,7 +91,8 @@
             <img id="fSlikaPregled" src="img/gold-balloons-gift.jpg" alt="Pregled slike">
             <div>
               <input type="file" id="fSlikaFajl" accept="image/*" hidden>
-              <button type="button" class="btn btn--outline btn--sm" id="fSlikaDugme">📁 Izaberi sliku</button>
+              <button type="button" class="btn btn--outline btn--sm" id="fSlikaDugme">📁 Uploaduj novu</button>
+              <button type="button" class="btn btn--outline btn--sm" id="fBiblioteka">📚 Iz biblioteke</button>
               <p class="dash-slika__info" id="fSlikaInfo">img/gold-balloons-gift.jpg</p>
             </div>
           </div>
@@ -283,7 +284,8 @@
             <img id="gSlikaPregled" src="img/gold-balloons-gift.jpg" alt="Pregled">
             <div>
               <input type="file" id="gSlikaFajl" accept="image/*" hidden>
-              <button type="button" class="btn btn--outline btn--sm" id="gSlikaDugme">📁 Izaberi fotografiju</button>
+              <button type="button" class="btn btn--outline btn--sm" id="gSlikaDugme">📁 Uploaduj novu</button>
+              <button type="button" class="btn btn--outline btn--sm" id="gBiblioteka">📚 Iz biblioteke</button>
               <p class="dash-slika__info" id="gSlikaInfo">—</p>
             </div>
           </div>
@@ -593,9 +595,20 @@
     </div>
   </div>
 
-  <script src="js/dashboard.js?v=9"></script>
+  <!-- ═══════ MEDIA: PICKER (izbor iz biblioteke) ═══════ -->
+  <div class="med-modal" id="medPicker" hidden>
+    <div class="med-modal__pozadina" id="medPickerPozadina"></div>
+    <div class="med-modal__panel">
+      <button type="button" class="med-modal__x" id="medPickerX" aria-label="Zatvori">✕</button>
+      <h2>Izaberi iz biblioteke</h2>
+      <p class="dash-hint" id="medPickerPrazno" hidden>Biblioteka je prazna — uploaduj slike u sekciji 🗂️ Media.</p>
+      <div class="med-grid" id="medPickerGrid"></div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js?v=10"></script>
   <script src="js/dashboard-paketi.js?v=3"></script>
-  <script src="js/dashboard-usluge.js?v=1"></script>
-  <script src="js/dashboard-media.js?v=1"></script>
+  <script src="js/dashboard-usluge.js?v=2"></script>
+  <script src="js/dashboard-media.js?v=2"></script>
 </body>
 </html>

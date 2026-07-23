@@ -287,6 +287,38 @@
     poruka(status, "", false);
   });
 
+  /* ═══════════ PICKER (izbor iz biblioteke za druge sekcije) ═══════════ */
+  const picker = document.getElementById("medPicker");
+  const pickerGrid = document.getElementById("medPickerGrid");
+  const pickerPrazno = document.getElementById("medPickerPrazno");
+  let pickerCb = null;
+
+  async function otvoriPicker(cb) {
+    pickerCb = cb;
+    pickerPrazno.hidden = true;
+    pickerGrid.innerHTML = '<p class="dash-hint">Učitavanje…</p>';
+    picker.hidden = false;
+    try {
+      const slike = (await api("/api/media")).filter((s) => s.tip === "slika");
+      pickerPrazno.hidden = slike.length > 0;
+      pickerGrid.innerHTML = slike.map((s) => `
+        <button type="button" class="med-item" data-put="${esc(s.putanja)}">
+          <div class="med-item__thumb"><img src="${esc(s.putanja)}?t=${encodeURIComponent(s.velicina || 0)}" alt="${esc(s.alt)}" loading="lazy"></div>
+          <span class="med-item__naslov">${esc(s.naslov || s.originalnoIme || "(bez naslova)")}</span>
+        </button>`).join("");
+    } catch (gr) { pickerGrid.innerHTML = '<p class="dash-hint">⚠ ' + esc(gr.message) + "</p>"; }
+  }
+  function zatvoriPicker() { picker.hidden = true; pickerCb = null; }
+  pickerGrid.addEventListener("click", (e) => {
+    const it = e.target.closest(".med-item");
+    if (!it || !pickerCb) return;
+    pickerCb(it.dataset.put);
+    zatvoriPicker();
+  });
+  document.getElementById("medPickerX").addEventListener("click", zatvoriPicker);
+  document.getElementById("medPickerPozadina").addEventListener("click", zatvoriPicker);
+  window.MediaPicker = { open: otvoriPicker };
+
   /* ─────── učitavanje ─────── */
   async function ucitaj() {
     try {

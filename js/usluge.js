@@ -14,6 +14,7 @@
   const koraci = window.USLUGE_KORACI || [];
 
   const nn = (i) => String(i + 1).padStart(2, "0");
+  const altZa = (p, f) => (window.MEDIA && window.MEDIA[p] && window.MEDIA[p].alt) || f || "";
 
   /* ─────── PILLS ─────── */
   const pills = document.getElementById("uslugePills");
@@ -33,7 +34,7 @@
           <span class="feature__watermark">${nn(i)}</span>
           <div class="container feature__grid">
             <div class="feature__media reveal">
-              <img src="${u.slika}" alt="${u.pill} — Balloon Land" loading="lazy">
+              <img src="${u.slika}" alt="${altZa(u.slika, u.pill + " — Balloon Land")}" loading="lazy">
               ${u.tag ? `<span class="feature__tag">${u.tag}</span>` : ""}
             </div>
             <div class="feature__content reveal" style="--d:.15s">
@@ -64,7 +65,7 @@
     fxGrid.innerHTML = efekti.kartice
       .map((k, i) => `
         <a href="kontakt.html" class="fx-card reveal" style="--d:${i * 0.12}s">
-          <img src="${k.slika}" alt="${k.naslov}" loading="lazy">
+          <img src="${k.slika}" alt="${altZa(k.slika, k.naslov)}" loading="lazy">
           <div class="fx-card__body">
             <h3>${k.naslov}</h3>
             <p>${k.tekst}</p>

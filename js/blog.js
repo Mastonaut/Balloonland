@@ -6,6 +6,7 @@
   "use strict";
 
   const objave = window.BLOG_OBJAVE || [];
+  const altZa = (p, f) => (window.MEDIA && window.MEDIA[p] && window.MEDIA[p].alt) || f || "";
 
   /* ─────── LISTA OBJAVA (blog.html) ─────── */
   const list = document.getElementById("blogList");
@@ -17,7 +18,7 @@
         .map((o, i) => `
           <a href="objava.html?id=${encodeURIComponent(o.id)}" class="b-card reveal${i === 0 ? " b-card--featured" : ""}" style="--d:${(i % 3) * 0.08}s">
             <div class="b-card__media">
-              <img src="${o.slika}" alt="${o.naslov}" loading="lazy">
+              <img src="${o.slika}" alt="${altZa(o.slika, o.naslov)}" loading="lazy">
               <span class="b-card__cat">${o.kategorija}</span>
             </div>
             <div class="b-card__body">
@@ -65,7 +66,7 @@
     article.innerHTML = `
       <p class="article__meta"><span class="b-card__cat">${o.kategorija}</span> <span class="article__date">${o.datum}</span></p>
       <h1 class="article__title">${o.naslov}</h1>
-      <img class="article__hero" src="${o.slika}" alt="${o.naslov}">
+      <img class="article__hero" src="${o.slika}" alt="${altZa(o.slika, o.naslov)}">
       <div class="article__content">${o.sadrzaj}</div>
       <div class="article__nav">
         ${next ? `<a href="objava.html?id=${encodeURIComponent(next.id)}" class="article__navlink">← ${next.naslov}</a>` : "<span></span>"}

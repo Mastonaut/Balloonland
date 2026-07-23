@@ -1,4 +1,8 @@
-/* AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno! Izvor: cms/podaci/galerija.json */
+/* ═══════════════════════════════════════════
+   BALLOON LAND — Galerija (CMS core)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/galerija.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */
 window.GALERIJA_STAVKE = [
   {
     "id": "ceremonija-u-bijelom",
