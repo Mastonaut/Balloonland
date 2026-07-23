@@ -756,3 +756,88 @@
 
 /* kompaktno Snimi dugme i za usluge */
 #uslSnimi { white-space: nowrap; flex-shrink: 0; padding: .65rem 1.5rem; font-size: .9rem; }
+
+/* ═══════════ MEDIA biblioteka ═══════════ */
+.med-alati { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.med-link-input {
+  background: rgba(14, 13, 16, .6);
+  border: 1.5px solid rgba(250, 247, 242, .14);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: .9rem;
+  padding: .5rem .8rem;
+  min-width: 240px;
+  flex: 1 1 240px;
+  max-width: 420px;
+}
+.med-link-input:focus { outline: none; border-color: var(--gold); }
+
+.med-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+.med-item {
+  background: rgba(14, 13, 16, .5);
+  border: 1px solid rgba(250, 247, 242, .12);
+  border-radius: 14px;
+  padding: .5rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.med-item:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 12px 28px rgba(0, 0, 0, .45); }
+.med-item__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 9px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .35);
+  display: flex; align-items: center; justify-content: center;
+}
+.med-item__thumb img,
+.med-item__thumb video { width: 100%; height: 100%; object-fit: cover; }
+.med-item__ikona { display: flex; flex-direction: column; align-items: center; gap: .2rem; font-size: 2.2rem; color: var(--gold-2); }
+.med-item__ikona span { font-size: .68rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; }
+.med-item__warn { position: absolute; top: .4rem; right: .4rem; background: #c9433a; color: #fff; border-radius: 6px; padding: 0 .35rem; font-size: .8rem; }
+.med-item__naslov { font-size: .82rem; color: var(--ivory); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* modal */
+.med-modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-start; justify-content: center; padding: 3vh 1rem; overflow-y: auto; }
+.med-modal[hidden] { display: none; }
+.med-modal__pozadina { position: fixed; inset: 0; background: rgba(0, 0, 0, .72); backdrop-filter: blur(3px); }
+.med-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(620px, 100%);
+  background: var(--ink-2);
+  border: 1px solid rgba(201, 162, 75, .3);
+  border-radius: 18px;
+  padding: 1.6rem 1.6rem 1.4rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+}
+.med-modal__panel h2 { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1rem; }
+.med-modal__x { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; }
+.med-modal__x:hover { color: var(--ivory); }
+.med-modal__pregled { margin-bottom: 1rem; text-align: center; }
+.med-modal__pregled img,
+.med-modal__pregled video { max-width: 100%; max-height: 320px; border-radius: 12px; border: 1px solid rgba(201, 162, 75, .25); }
+.med-pregled__link { display: inline-block; padding: 1.4rem 1.8rem; background: rgba(14, 13, 16, .6); border: 1px dashed rgba(201, 162, 75, .35); border-radius: 12px; color: var(--gold-2); text-decoration: none; }
+.med-pregled__link small { color: var(--muted); word-break: break-all; }
+.med-modal__meta { color: var(--muted); font-size: .76rem; margin: -.3rem 0 1rem; word-break: break-all; }
+.med-modal .dash-forma__akcije { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+
+/* crop */
+.med-crop { background: rgba(14, 13, 16, .55); border: 1px solid rgba(250, 247, 242, .12); border-radius: 12px; padding: 1rem; margin-bottom: 1.1rem; }
+.med-crop__preseti { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.med-crop__preseti .is-active { background: var(--gold); color: var(--ink); border-color: transparent; }
+.med-crop__scena { position: relative; display: inline-block; max-width: 100%; touch-action: none; user-select: none; line-height: 0; }
+.med-crop__scena img { max-width: 100%; max-height: 60vh; display: block; }
+.med-crop__box { position: absolute; border: 2px solid var(--gold-2); box-shadow: 0 0 0 9999px rgba(0, 0, 0, .5); cursor: move; }
+.med-crop__rucka { position: absolute; right: -8px; bottom: -8px; width: 16px; height: 16px; background: var(--gold-2); border: 2px solid var(--ink); border-radius: 50%; cursor: nwse-resize; }
+.med-crop__akcije { display: flex; gap: .6rem; margin-top: .9rem; }

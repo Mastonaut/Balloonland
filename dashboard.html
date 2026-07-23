@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=7">
+  <link rel="stylesheet" href="css/dashboard.css?v=8">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -25,6 +25,7 @@
       <button class="dash-side__link" data-sekcija="galerija">🖼️ Galerija</button>
       <button class="dash-side__link" data-sekcija="paketi">📦 Paketi</button>
       <button class="dash-side__link" data-sekcija="usluge">🎈 Usluge</button>
+      <button class="dash-side__link" data-sekcija="media">🗂️ Media</button>
       <button class="dash-side__link" data-sekcija="postavke">⚙️ Postavke</button>
     </nav>
     <div class="dash-side__dno">
@@ -485,10 +486,116 @@
       </div>
     </section>
 
+    <!-- ═══════ MEDIA BIBLIOTEKA ═══════ -->
+    <section class="dash-panel" id="panelMedia" data-sekcija="media">
+      <header class="dash-head">
+        <div>
+          <h1>Media <em>biblioteka</em></h1>
+          <p>Jednom uploaduj — koristi svugdje. Naslov, opis i alt tekst čine slike vidljivim na Google-u.</p>
+        </div>
+      </header>
+
+      <div class="pkt-tabs" id="medTabs">
+        <button class="pkt-tab is-active" data-tab="slika">🖼️ Slike</button>
+        <button class="pkt-tab" data-tab="video">🎬 Video</button>
+        <button class="pkt-tab" data-tab="dokument">📄 Dokumenti</button>
+      </div>
+      <p class="dash-status" id="medStatus"></p>
+
+      <!-- SLIKE -->
+      <div class="pkt-tabpanel is-active" data-tab="slika">
+        <div class="med-alati">
+          <input type="file" id="medUploadSlika" accept="image/*" hidden>
+          <button type="button" class="btn btn--gold btn--sm" id="medDodajSlika">⬆ Uploaduj sliku</button>
+          <span class="dash-hint">JPG, PNG, WebP, GIF, SVG — max 12 MB</span>
+        </div>
+        <div class="med-grid" id="medGridSlika"></div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="pkt-tabpanel" data-tab="video">
+        <div class="med-alati">
+          <input type="file" id="medUploadVideo" accept="video/*" hidden>
+          <button type="button" class="btn btn--gold btn--sm" id="medDodajVideo">⬆ Uploaduj video</button>
+          <span class="dash-hint">ili</span>
+          <input type="text" id="medVideoLink" class="med-link-input" placeholder="YouTube / Vimeo link…">
+          <button type="button" class="btn btn--outline btn--sm" id="medDodajVideoLink">+ Dodaj link</button>
+        </div>
+        <div class="med-grid" id="medGridVideo"></div>
+      </div>
+
+      <!-- DOKUMENTI -->
+      <div class="pkt-tabpanel" data-tab="dokument">
+        <div class="med-alati">
+          <input type="file" id="medUploadDok" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv" hidden>
+          <button type="button" class="btn btn--gold btn--sm" id="medDodajDok">⬆ Uploaduj dokument</button>
+          <span class="dash-hint">PDF, Word, Excel, PowerPoint, TXT, CSV — max 25 MB</span>
+        </div>
+        <div class="med-grid" id="medGridDok"></div>
+      </div>
+    </section>
+
   </main>
 
-  <script src="js/dashboard.js?v=8"></script>
+  <!-- ═══════ MEDIA: EDITOR (modal) ═══════ -->
+  <div class="med-modal" id="medModal" hidden>
+    <div class="med-modal__pozadina" id="medModalPozadina"></div>
+    <div class="med-modal__panel" role="dialog" aria-modal="true">
+      <button type="button" class="med-modal__x" id="medZatvori" aria-label="Zatvori">✕</button>
+      <h2 id="medModalNaslov">Uredi media</h2>
+
+      <div class="med-modal__pregled" id="medPregled"></div>
+
+      <!-- CROP (samo slike) -->
+      <div class="med-crop" id="medCrop" hidden>
+        <div class="med-crop__preseti" id="medCropPreseti">
+          <span class="dash-hint">Omjer:</span>
+          <button type="button" class="dash-mini is-active" data-omjer="0">Slobodno</button>
+          <button type="button" class="dash-mini" data-omjer="1">1:1</button>
+          <button type="button" class="dash-mini" data-omjer="1.3333">4:3</button>
+          <button type="button" class="dash-mini" data-omjer="1.7778">16:9</button>
+          <button type="button" class="dash-mini" data-omjer="1.5">3:2</button>
+        </div>
+        <div class="med-crop__scena" id="medCropScena">
+          <img id="medCropSlika" alt="">
+          <div class="med-crop__box" id="medCropBox">
+            <span class="med-crop__rucka" data-ugao="se"></span>
+          </div>
+        </div>
+        <div class="med-crop__akcije">
+          <button type="button" class="btn btn--gold btn--sm" id="medCropPotvrdi">✓ Primijeni crop</button>
+          <button type="button" class="btn btn--outline btn--sm" id="medCropOtkazi">Otkaži</button>
+        </div>
+      </div>
+
+      <form id="medForma" class="dash-forma">
+        <input type="hidden" id="medId">
+        <div class="cform__field">
+          <label for="medNaslov">Naslov <span class="dash-hint">(interni naziv + osnova za SEO)</span></label>
+          <input type="text" id="medNaslov" placeholder="npr. Zlatni luk na vjenčanju u sali">
+        </div>
+        <div class="cform__field">
+          <label for="medAlt">Alt tekst <span class="dash-hint">(opis slike za Google i čitače ekrana — obavezno za SEO)</span></label>
+          <input type="text" id="medAlt" placeholder="npr. Zlatni balonski luk iznad mladenačkog stola">
+        </div>
+        <div class="cform__field">
+          <label for="medOpis">Opis <span class="dash-hint">(duži opis / caption — opciono)</span></label>
+          <textarea id="medOpis" rows="2" placeholder="Dodatni kontekst o fotografiji…"></textarea>
+        </div>
+        <p class="med-modal__meta" id="medMeta"></p>
+        <div class="dash-forma__akcije">
+          <button type="submit" class="btn btn--gold" id="medSnimi">💾 Snimi</button>
+          <button type="button" class="btn btn--outline btn--sm" id="medKropujDugme">✂ Kropuj sliku</button>
+          <button type="button" class="dash-mini dash-mini--obrisi" id="medObrisi">🗑 Obriši iz biblioteke</button>
+          <span class="dash-status" id="medFormaStatus"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js?v=9"></script>
   <script src="js/dashboard-paketi.js?v=3"></script>
   <script src="js/dashboard-usluge.js?v=1"></script>
+  <script src="js/dashboard-media.js?v=1"></script>
 </body>
 </html>

@@ -284,6 +284,50 @@ function sacuvajUsluge(ulaz) {
   return u;
 }
 
+/* ─────── media biblioteka (slike, video, dokumenti) ─────── */
+const MEDIA_JSON = path.join(PODACI, "media.json");
+const MEDIA_EKST = {
+  slika: [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"],
+  dokument: [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".csv"],
+  video: [".mp4", ".webm", ".mov"],
+};
+const MEDIA_LIMIT = { slika: 12 * 1024 * 1024, dokument: 25 * 1024 * 1024, video: 60 * 1024 * 1024 };
+function ucitajMediju() {
+  if (!fs.existsSync(MEDIA_JSON)) return [];
+  return JSON.parse(fs.readFileSync(MEDIA_JSON, "utf8"));
+}
+function sacuvajMediju(stavke) {
+  fs.writeFileSync(MEDIA_JSON, JSON.stringify(stavke, null, 2));
+  // javni sajt dobija mapu putanja→{alt,naslov,opis} za SEO na <img>
+  const mapa = {};
+  stavke.forEach((s) => {
+    if (s.tip === "slika") mapa[s.putanja] = { alt: s.alt || s.naslov || "", naslov: s.naslov || "", opis: s.opis || "" };
+  });
+  const glava = `/* ═══════════════════════════════════════════
+   BALLOON LAND — Media biblioteka (mapa za SEO alt/naslov)
+   AUTOMATSKI GENERISANO iz CMS-a — ne uređuj ručno!
+   Izvor: cms/podaci/media.json (uređuje se kroz dashboard)
+   ═══════════════════════════════════════════ */\n`;
+  fs.writeFileSync(path.join(KORIJEN, "js", "media-data.js"), glava + "window.MEDIA = " + JSON.stringify(mapa, null, 2) + ";\n");
+}
+function sacuvajMediaFajl(tip, ime, dataUrl) {
+  const cistBase64 = String(dataUrl).replace(/^data:[^;]+;base64,/, "");
+  const bafer = Buffer.from(cistBase64, "base64");
+  const ekst = (path.extname(ime || "") || "").toLowerCase();
+  if (!(MEDIA_EKST[tip] || []).includes(ekst)) {
+    throw { status: 400, greska: "Nedozvoljen format za " + tip + " (" + (MEDIA_EKST[tip] || []).join(", ") + ")." };
+  }
+  if (bafer.length > (MEDIA_LIMIT[tip] || MEDIA_LIMIT.slika)) {
+    throw { status: 400, greska: "Fajl je prevelik (max " + Math.round((MEDIA_LIMIT[tip]) / 1024 / 1024) + " MB)." };
+  }
+  const podfolder = tip === "slika" ? path.join("img", "media") : path.join("media", tip === "video" ? "video" : "dokumenti");
+  const folder = path.join(KORIJEN, podfolder);
+  fs.mkdirSync(folder, { recursive: true });
+  const naziv = Date.now() + "-" + slug(path.basename(ime || "fajl", ekst)) + ekst;
+  fs.writeFileSync(path.join(folder, naziv), bafer);
+  return { putanja: podfolder.replace(/\\/g, "/") + "/" + naziv, velicina: bafer.length };
+}
+
 const MJESECI = ["januar", "februar", "mart", "april", "maj", "jun", "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"];
 function danasnjiDatum() {
   const d = new Date();
@@ -325,6 +369,7 @@ const MIME = {
   ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg", ".svg": "image/svg+xml", ".webp": "image/webp",
   ".gif": "image/gif", ".ico": "image/x-icon", ".pdf": "application/pdf",
+  ".avif": "image/avif", ".mp4": "video/mp4", ".webm": "video/webm", ".mov": "video/quicktime",
 };
 
 /* ─────── API ─────── */
@@ -521,6 +566,78 @@ async function api(req, res, putanja) {
     }
     const sacuvano = sacuvajUsluge(ulaz);
     return json(res, 200, sacuvano);
+  }
+
+  // media biblioteka: lista
+  if (putanja === "/api/media" && metoda === "GET") {
+    return json(res, 200, ucitajMediju());
+  }
+  // media: nova stavka (upload fajla ili video link)
+  if (putanja === "/api/media" && metoda === "POST") {
+    const b = JSON.parse((await citajTijelo(req, 85 * 1024 * 1024)).toString() || "{}");
+    const tip = ["slika", "video", "dokument"].includes(b.tip) ? b.tip : "slika";
+    let putanjaFajla, izvor, velicina = 0;
+    if (tip === "video" && b.izvor === "link") {
+      const url = String(b.link || "").trim();
+      if (!/^https?:\/\//i.test(url)) return json(res, 400, { greska: "Unesite ispravan video link (http/https)." });
+      putanjaFajla = url; izvor = "link";
+    } else {
+      if (!b.data) return json(res, 400, { greska: "Nedostaje fajl." });
+      try {
+        const r = sacuvajMediaFajl(tip, b.ime, b.data);
+        putanjaFajla = r.putanja; velicina = r.velicina; izvor = "upload";
+      } catch (e) { return json(res, e.status || 400, { greska: e.greska || "Greška pri uploadu." }); }
+    }
+    const stavke = ucitajMediju();
+    const nova = {
+      id: "m-" + crypto.randomBytes(6).toString("hex"),
+      tip,
+      putanja: putanjaFajla,
+      izvor,
+      naslov: String(b.naslov || "").trim(),
+      opis: String(b.opis || "").trim(),
+      alt: String(b.alt || "").trim(),
+      originalnoIme: String(b.ime || "").trim(),
+      dimenzije: String(b.dimenzije || "").trim(),
+      velicina,
+      datum: new Date().toISOString().slice(0, 10),
+    };
+    stavke.unshift(nova);
+    sacuvajMediju(stavke);
+    return json(res, 200, nova);
+  }
+  // media: izmjena metapodataka / crop (nova slika) / brisanje
+  const medPoj = putanja.match(/^\/api\/media\/([\w-]+)$/);
+  if (medPoj) {
+    const stavke = ucitajMediju();
+    const i = stavke.findIndex((x) => x.id === medPoj[1]);
+    if (i < 0) return json(res, 404, { greska: "Stavka nije pronađena." });
+    if (metoda === "PUT") {
+      const b = JSON.parse((await citajTijelo(req, 20 * 1024 * 1024)).toString() || "{}");
+      ["naslov", "opis", "alt"].forEach((p) => { if (b[p] !== undefined) stavke[i][p] = String(b[p]).trim(); });
+      // crop: nova verzija slike prepisuje isti fajl (reference ostaju važeće)
+      if (b.data && stavke[i].tip === "slika" && stavke[i].izvor === "upload") {
+        const cist = String(b.data).replace(/^data:[^;]+;base64,/, "");
+        const bafer = Buffer.from(cist, "base64");
+        if (bafer.length > MEDIA_LIMIT.slika) return json(res, 400, { greska: "Slika je prevelika." });
+        const apsolutna = path.join(KORIJEN, stavke[i].putanja);
+        if (!apsolutna.startsWith(path.join(KORIJEN, "img", "media"))) return json(res, 400, { greska: "Neispravna putanja." });
+        fs.writeFileSync(apsolutna, bafer);
+        stavke[i].velicina = bafer.length;
+        if (b.dimenzije) stavke[i].dimenzije = String(b.dimenzije).trim();
+      }
+      sacuvajMediju(stavke);
+      return json(res, 200, stavke[i]);
+    }
+    if (metoda === "DELETE") {
+      const [obrisana] = stavke.splice(i, 1);
+      if (obrisana.izvor === "upload") {
+        const apsolutna = path.join(KORIJEN, obrisana.putanja);
+        if (apsolutna.startsWith(KORIJEN) && !apsolutna.startsWith(CMS_DIR)) { try { fs.unlinkSync(apsolutna); } catch (e) { /* fajl već nestao */ } }
+      }
+      sacuvajMediju(stavke);
+      return json(res, 200, obrisana);
+    }
   }
 
   // upload slike (JSON: { ime, data, folder } — data je data-URL ili čisti base64)
