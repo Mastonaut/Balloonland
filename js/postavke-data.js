@@ -27,6 +27,18 @@ window.POSTAVKE = {
     "grad": "Sarajevo",
     "drzava": "Bosna i Hercegovina",
     "lat": "43.8563",
-    "lng": "18.4131"
+    "lng": "18.4131",
+    "stranice": {
+      "usluge": {
+        "naslov": "",
+        "opis": "",
+        "ogSlika": ""
+      },
+      "paketi": {
+        "naslov": "",
+        "opis": "",
+        "ogSlika": ""
+      }
+    }
   }
 };

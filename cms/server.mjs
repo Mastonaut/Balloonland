@@ -128,6 +128,7 @@ function sacuvajPostavke(p) {
     glava + "window.POSTAVKE = " + JSON.stringify(p, null, 2) + ";\n"
   );
   generisiSitemap();
+  azurirajSveStranice();
 }
 
 /* ─────── statičke HTML stranice po blog objavi (SEO + social preview) ─────── */
@@ -206,6 +207,45 @@ function generisiObjaveHtml() {
     });
   } catch (e) { /* ignore */ }
 }
+
+/* ─────── SEO po fiksnim stranicama (prepisuje <head> u usluge.html / paketi.html) ─────── */
+const STRANICE_SEO_DEFAULT = {
+  usluge: { url: "/usluge.html", naslov: "Usluge — Balloon Land | Lux Weddings & Events", opis: "Vjenčanja, rođendani, dječije proslave, gender reveal, prskalice, dimni efekti i fotokutak — sve usluge Balloon Land na jednom mjestu.", ogSlika: "img/wedding-aisle.jpg" },
+  paketi: { url: "/paketi.html", naslov: "Paketi — Balloon Land | Lux Weddings & Events", opis: "Mini BUM, Veliki BUM i Lux BUM — transparentni paketi dekoracija sa cjenovnikom dodataka. Izaberite svoj BUM.", ogSlika: "img/packages-bg.jpg" },
+};
+function azurirajStranicuSeo(kljuc) {
+  const DEF = STRANICE_SEO_DEFAULT[kljuc];
+  if (!DEF) return;
+  const fajl = path.join(KORIJEN, DEF.url.replace(/^\//, ""));
+  let html;
+  try { html = fs.readFileSync(fajl, "utf8"); } catch (e) { return; }
+  let S = {}, stranice = {}, base = "", naziv = "Balloon Land";
+  try { const P = JSON.parse(fs.readFileSync(POSTAVKE_JSON, "utf8")); S = P.seo || {}; base = (S.sajtUrl || "").replace(/\/+$/, ""); naziv = S.nazivSajta || "Balloon Land"; stranice = S.stranice || {}; } catch (e) { /* nema postavki */ }
+  const p = stranice[kljuc] || {};
+  const naslov = (p.naslov || "").trim() || DEF.naslov;
+  const opis = (p.opis || "").trim() || DEF.opis;
+  const slika = (p.ogSlika || "").trim() || DEF.ogSlika;
+  const ogSlika = /^https?:\/\//.test(slika) ? slika : (base ? base + "/" + slika.replace(/^\//, "") : slika);
+  const url = base ? base + DEF.url : DEF.url;
+  const blok =
+    `  <title>${htmlEsc(naslov)}</title>\n` +
+    `  <meta name="description" content="${htmlEsc(opis)}">\n` +
+    `  <link rel="canonical" href="${htmlEsc(url)}">\n` +
+    `  <meta property="og:type" content="website">\n` +
+    `  <meta property="og:site_name" content="${htmlEsc(naziv)}">\n` +
+    `  <meta property="og:title" content="${htmlEsc(naslov)}">\n` +
+    `  <meta property="og:description" content="${htmlEsc(opis)}">\n` +
+    `  <meta property="og:url" content="${htmlEsc(url)}">\n` +
+    `  <meta property="og:image" content="${htmlEsc(ogSlika)}">\n` +
+    `  <meta property="og:locale" content="bs_BA">\n` +
+    `  <meta name="twitter:card" content="summary_large_image">\n` +
+    `  <meta name="twitter:title" content="${htmlEsc(naslov)}">\n` +
+    `  <meta name="twitter:description" content="${htmlEsc(opis)}">\n` +
+    `  <meta name="twitter:image" content="${htmlEsc(ogSlika)}">`;
+  const novi = html.replace(/  <title>[\s\S]*?<meta name="twitter:image"[^>]*>/, blok);
+  if (novi !== html) fs.writeFileSync(fajl, novi);
+}
+function azurirajSveStranice() { Object.keys(STRANICE_SEO_DEFAULT).forEach(azurirajStranicuSeo); }
 
 /* ─────── sitemap.xml + robots.txt (SEO) ─────── */
 function xmlEsc(s) {
@@ -611,6 +651,15 @@ async function api(req, res, putanja) {
         drzava: (p.seo && p.seo.drzava || "").trim(),
         lat: (p.seo && p.seo.lat || "").toString().trim(),
         lng: (p.seo && p.seo.lng || "").toString().trim(),
+        stranice: (() => {
+          const izv = (p.seo && p.seo.stranice) || {};
+          const jedna = (k) => ({
+            naslov: ((izv[k] || {}).naslov || "").trim(),
+            opis: ((izv[k] || {}).opis || "").trim(),
+            ogSlika: ((izv[k] || {}).ogSlika || "").trim(),
+          });
+          return { usluge: jedna("usluge"), paketi: jedna("paketi") };
+        })(),
       },
     };
     sacuvajPostavke(postavke);
@@ -815,6 +864,7 @@ http.createServer(async (req, res) => {
   setInterval(objaviZakazane, 60 * 1000); // pa svake minute
   generisiObjaveHtml();                   // statičke stranice objava
   generisiSitemap();                      // sitemap.xml + robots.txt
+  azurirajSveStranice();                  // SEO <head> u usluge.html/paketi.html
   console.log("🎈 Balloon Land CMS radi na http://localhost:" + PORT);
   console.log("   Sajt:      http://localhost:" + PORT + "/");
   console.log("   Prijava:   http://localhost:" + PORT + "/prijava.html");

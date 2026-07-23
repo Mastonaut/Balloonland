@@ -898,3 +898,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* SEO po stranicama (blok po stranici u Postavkama) */
+.dash-strana-seo {
+  border: 1px solid rgba(250, 247, 242, .12);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem 1.3rem;
+  margin-bottom: 1.1rem;
+  background: rgba(14, 13, 16, .4);
+}
+.dash-strana-seo h3 { color: var(--gold-2); font-size: 1rem; margin-bottom: .9rem; }

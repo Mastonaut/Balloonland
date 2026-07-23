@@ -468,6 +468,13 @@
     document.getElementById("pSeoDrzava").value = seo.drzava || "";
     document.getElementById("pSeoLat").value = seo.lat || "";
     document.getElementById("pSeoLng").value = seo.lng || "";
+    const str = seo.stranice || {};
+    document.getElementById("pSuNaslov").value = (str.usluge || {}).naslov || "";
+    document.getElementById("pSuOpis").value = (str.usluge || {}).opis || "";
+    postaviStranaOg("pSu", (str.usluge || {}).ogSlika || "", "img/wedding-aisle.jpg");
+    document.getElementById("pSpNaslov").value = (str.paketi || {}).naslov || "";
+    document.getElementById("pSpOpis").value = (str.paketi || {}).opis || "";
+    postaviStranaOg("pSp", (str.paketi || {}).ogSlika || "", "img/packages-bg.jpg");
     pStatus.textContent = "";
   }
 
@@ -478,6 +485,17 @@
   }
   document.getElementById("pSeoOgBiblioteka").addEventListener("click", () => {
     if (window.MediaPicker) window.MediaPicker.open((putanja) => postaviOgSliku(putanja));
+  });
+
+  function postaviStranaOg(prefix, putanja, def) {
+    document.getElementById(prefix + "Og").value = putanja || "";
+    document.getElementById(prefix + "OgPregled").src = putanja || def || "img/gold-balloons-gift.jpg";
+    document.getElementById(prefix + "OgInfo").textContent = putanja || "—";
+  }
+  document.querySelectorAll("[data-strana-og]").forEach((b) => {
+    b.addEventListener("click", () => {
+      if (window.MediaPicker) window.MediaPicker.open((putanja) => postaviStranaOg(b.dataset.stranaOg, putanja));
+    });
   });
 
   document.getElementById("pForma").addEventListener("submit", async (e) => {
@@ -507,6 +525,18 @@
         drzava: document.getElementById("pSeoDrzava").value.trim(),
         lat: document.getElementById("pSeoLat").value.trim(),
         lng: document.getElementById("pSeoLng").value.trim(),
+        stranice: {
+          usluge: {
+            naslov: document.getElementById("pSuNaslov").value.trim(),
+            opis: document.getElementById("pSuOpis").value.trim(),
+            ogSlika: document.getElementById("pSuOg").value.trim(),
+          },
+          paketi: {
+            naslov: document.getElementById("pSpNaslov").value.trim(),
+            opis: document.getElementById("pSpOpis").value.trim(),
+            ogSlika: document.getElementById("pSpOg").value.trim(),
+          },
+        },
       },
     };
     if (!podaci.telefon || !podaci.email) {
