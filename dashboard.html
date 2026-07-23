@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=10">
+  <link rel="stylesheet" href="css/dashboard.css?v=11">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -379,6 +379,54 @@
           <label for="pMapa">Google Maps embed URL <span class="dash-hint">(Podijeli → Ugradi mapu → src iz iframe koda)</span></label>
           <input type="text" id="pMapa" placeholder="https://www.google.com/maps?...&output=embed">
         </div>
+
+        <h2 class="dash-podsekcija">🔍 SEO — vidljivost na Google-u</h2>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pSeoNaziv">Naziv sajta</label>
+            <input type="text" id="pSeoNaziv" placeholder="Balloon Land">
+          </div>
+          <div class="cform__field">
+            <label for="pSeoUrl">Adresa sajta (domena) <span class="dash-hint">(za sitemap i social preview)</span></label>
+            <input type="text" id="pSeoUrl" placeholder="https://balloonland.ba">
+          </div>
+        </div>
+        <div class="cform__field">
+          <label for="pSeoOpis">Podrazumijevani opis <span class="dash-hint">(meta description — 1–2 rečenice, do ~160 znakova)</span></label>
+          <textarea id="pSeoOpis" rows="2" placeholder="Balloon Land — luksuzne dekoracije za vjenčanja, rođendane i proslave…"></textarea>
+        </div>
+        <div class="cform__field">
+          <label>Slika za dijeljenje (Open Graph) <span class="dash-hint">(prikazuje se kad se link dijeli na FB/WhatsApp)</span></label>
+          <div class="dash-slika">
+            <img id="pSeoOgPregled" src="img/gold-balloons-gift.jpg" alt="OG pregled">
+            <div>
+              <button type="button" class="btn btn--outline btn--sm" id="pSeoOgBiblioteka">📚 Iz biblioteke</button>
+              <p class="dash-slika__info" id="pSeoOgInfo">—</p>
+            </div>
+          </div>
+          <input type="hidden" id="pSeoOg" value="">
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pSeoGrad">Grad</label>
+            <input type="text" id="pSeoGrad" placeholder="Sarajevo">
+          </div>
+          <div class="cform__field">
+            <label for="pSeoDrzava">Država</label>
+            <input type="text" id="pSeoDrzava" placeholder="Bosna i Hercegovina">
+          </div>
+        </div>
+        <div class="cform__row">
+          <div class="cform__field">
+            <label for="pSeoLat">Geo širina (lat) <span class="dash-hint">(opciono — Google Maps → desni klik → koordinate)</span></label>
+            <input type="text" id="pSeoLat" placeholder="43.8563">
+          </div>
+          <div class="cform__field">
+            <label for="pSeoLng">Geo dužina (lng)</label>
+            <input type="text" id="pSeoLng" placeholder="18.4131">
+          </div>
+        </div>
+
         <div class="dash-forma__akcije">
           <button type="submit" class="btn btn--gold btn--lg">💾 Snimi postavke</button>
           <span class="dash-status" id="pStatus"></span>
@@ -606,7 +654,7 @@
     </div>
   </div>
 
-  <script src="js/dashboard.js?v=10"></script>
+  <script src="js/dashboard.js?v=11"></script>
   <script src="js/dashboard-paketi.js?v=3"></script>
   <script src="js/dashboard-usluge.js?v=2"></script>
   <script src="js/dashboard-media.js?v=2"></script>

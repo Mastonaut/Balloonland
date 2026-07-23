@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /cms/
+Disallow: /dashboard.html
+Disallow: /prijava.html
+
+Sitemap: https://balloonland.ba/sitemap.xml

@@ -53,6 +53,7 @@ function ucitajObjave() {
 function sacuvajObjave(objave) {
   fs.writeFileSync(BLOG_JSON, JSON.stringify(objave, null, 2));
   generisiBlogData(objave);
+  generisiSitemap();
 }
 function generisiBlogData(objave) {
   // na javni sajt idu SAMO objavljene (skice i zakazane ostaju u CMS-u)
@@ -125,6 +126,35 @@ function sacuvajPostavke(p) {
     path.join(KORIJEN, "js", "postavke-data.js"),
     glava + "window.POSTAVKE = " + JSON.stringify(p, null, 2) + ";\n"
   );
+  generisiSitemap();
+}
+
+/* ─────── sitemap.xml + robots.txt (SEO) ─────── */
+function xmlEsc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function generisiSitemap() {
+  let sajtUrl = "";
+  try { sajtUrl = ((JSON.parse(fs.readFileSync(POSTAVKE_JSON, "utf8")).seo) || {}).sajtUrl || ""; } catch (e) { /* nema postavki */ }
+  sajtUrl = sajtUrl.trim().replace(/\/+$/, "");
+  const robots = "User-agent: *\nAllow: /\nDisallow: /cms/\nDisallow: /dashboard.html\nDisallow: /prijava.html\n" +
+    (sajtUrl ? "\nSitemap: " + sajtUrl + "/sitemap.xml\n" : "");
+  fs.writeFileSync(path.join(KORIJEN, "robots.txt"), robots);
+  if (!sajtUrl) return; // bez domene nema smislenog sitemap-a
+  const danas = new Date().toISOString().slice(0, 10);
+  const fiksne = [
+    ["/", "1.0"], ["/usluge.html", "0.9"], ["/paketi.html", "0.9"],
+    ["/galerija.html", "0.8"], ["/blog.html", "0.7"], ["/onama.html", "0.6"],
+    ["/kontakt.html", "0.8"], ["/kreiraj.html", "0.6"],
+  ];
+  let objave = [];
+  try { objave = ucitajObjave().filter((o) => (o.status || "objavljeno") === "objavljeno"); } catch (e) { /* nema bloga */ }
+  const url = (loc, prio) => `  <url>\n    <loc>${xmlEsc(loc)}</loc>\n    <lastmod>${danas}</lastmod>\n    <priority>${prio}</priority>\n  </url>`;
+  const stavke = fiksne.map(([u, p]) => url(sajtUrl + u, p))
+    .concat(objave.map((o) => url(sajtUrl + "/objava.html?id=" + encodeURIComponent(o.id), "0.6")));
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    stavke.join("\n") + "\n</urlset>\n";
+  fs.writeFileSync(path.join(KORIJEN, "sitemap.xml"), xml);
 }
 
 /* ─────── paketi (kartice, tabela poređenja, dodaci, FAQ) ─────── */
@@ -492,6 +522,16 @@ async function api(req, res, putanja) {
         tiktok: (p.mreze && p.mreze.tiktok) || "#",
       },
       mapa: p.mapa || "",
+      seo: {
+        nazivSajta: (p.seo && p.seo.nazivSajta || "").trim() || "Balloon Land",
+        sajtUrl: (p.seo && p.seo.sajtUrl || "").trim().replace(/\/+$/, ""),
+        opis: (p.seo && p.seo.opis || "").trim(),
+        ogSlika: (p.seo && p.seo.ogSlika || "").trim(),
+        grad: (p.seo && p.seo.grad || "").trim(),
+        drzava: (p.seo && p.seo.drzava || "").trim(),
+        lat: (p.seo && p.seo.lat || "").toString().trim(),
+        lng: (p.seo && p.seo.lng || "").toString().trim(),
+      },
     };
     sacuvajPostavke(postavke);
     return json(res, 200, postavke);
@@ -693,6 +733,7 @@ http.createServer(async (req, res) => {
 }).listen(PORT, () => {
   objaviZakazane();                       // odmah pri startu
   setInterval(objaviZakazane, 60 * 1000); // pa svake minute
+  generisiSitemap();                      // sitemap.xml + robots.txt
   console.log("🎈 Balloon Land CMS radi na http://localhost:" + PORT);
   console.log("   Sajt:      http://localhost:" + PORT + "/");
   console.log("   Prijava:   http://localhost:" + PORT + "/prijava.html");

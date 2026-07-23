@@ -418,8 +418,26 @@
     document.getElementById("pFacebook").value = (p.mreze && p.mreze.facebook !== "#") ? p.mreze.facebook : "";
     document.getElementById("pTiktok").value = (p.mreze && p.mreze.tiktok !== "#") ? p.mreze.tiktok : "";
     document.getElementById("pMapa").value = p.mapa || "";
+    const seo = p.seo || {};
+    document.getElementById("pSeoNaziv").value = seo.nazivSajta || "";
+    document.getElementById("pSeoUrl").value = seo.sajtUrl || "";
+    document.getElementById("pSeoOpis").value = seo.opis || "";
+    postaviOgSliku(seo.ogSlika || "");
+    document.getElementById("pSeoGrad").value = seo.grad || "";
+    document.getElementById("pSeoDrzava").value = seo.drzava || "";
+    document.getElementById("pSeoLat").value = seo.lat || "";
+    document.getElementById("pSeoLng").value = seo.lng || "";
     pStatus.textContent = "";
   }
+
+  function postaviOgSliku(putanja) {
+    document.getElementById("pSeoOg").value = putanja || "";
+    document.getElementById("pSeoOgPregled").src = putanja || "img/gold-balloons-gift.jpg";
+    document.getElementById("pSeoOgInfo").textContent = putanja || "—";
+  }
+  document.getElementById("pSeoOgBiblioteka").addEventListener("click", () => {
+    if (window.MediaPicker) window.MediaPicker.open((putanja) => postaviOgSliku(putanja));
+  });
 
   document.getElementById("pForma").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -439,6 +457,16 @@
         tiktok: document.getElementById("pTiktok").value.trim() || "#",
       },
       mapa: document.getElementById("pMapa").value.trim(),
+      seo: {
+        nazivSajta: document.getElementById("pSeoNaziv").value.trim(),
+        sajtUrl: document.getElementById("pSeoUrl").value.trim(),
+        opis: document.getElementById("pSeoOpis").value.trim(),
+        ogSlika: document.getElementById("pSeoOg").value.trim(),
+        grad: document.getElementById("pSeoGrad").value.trim(),
+        drzava: document.getElementById("pSeoDrzava").value.trim(),
+        lat: document.getElementById("pSeoLat").value.trim(),
+        lng: document.getElementById("pSeoLng").value.trim(),
+      },
     };
     if (!podaci.telefon || !podaci.email) {
       pStatus.classList.add("is-greska");

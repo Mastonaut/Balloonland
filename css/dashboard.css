@@ -852,3 +852,13 @@
 }
 .med-obrisi { color: #e0808a; border-color: rgba(224, 92, 106, .45); }
 .med-obrisi:hover { color: #fff; background: #c9433a; border-color: #c9433a; }
+
+/* pod-sekcija naslov u formi (npr. SEO u Postavkama) */
+.dash-podsekcija {
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  color: var(--gold-2);
+  margin: 2rem 0 1rem;
+  padding-top: 1.4rem;
+  border-top: 1px dashed rgba(250, 247, 242, .14);
+}

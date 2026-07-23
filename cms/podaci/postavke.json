@@ -13,5 +13,15 @@
     "facebook": "#",
     "tiktok": "#"
   },
-  "mapa": "https://www.google.com/maps?q=Sarajevo,Bosna+i+Hercegovina&z=13&output=embed"
+  "mapa": "https://www.google.com/maps?q=Sarajevo,Bosna+i+Hercegovina&z=13&output=embed",
+  "seo": {
+    "nazivSajta": "Balloon Land",
+    "sajtUrl": "https://balloonland.ba",
+    "opis": "Balloon Land — luksuzne dekoracije za vjenčanja, rođendane i proslave u BiH.",
+    "ogSlika": "",
+    "grad": "Sarajevo",
+    "drzava": "Bosna i Hercegovina",
+    "lat": "43.8563",
+    "lng": "18.4131"
+  }
 }
