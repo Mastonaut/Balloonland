@@ -34,7 +34,7 @@
         <h1 class="hero__title">${o.naslov}</h1>
         <p class="hero__sub">${o.uvod || ""}</p>
         <div class="hero__actions">
-          <a href="objava.html?id=${encodeURIComponent(o.id)}" class="btn btn--gold">Pročitaj više</a>
+          <a href="objava-${o.id}.html" class="btn btn--gold">Pročitaj više</a>
         </div>
       </div>
       ${(o.sliderElementi || [])

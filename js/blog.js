@@ -16,7 +16,7 @@
     } else {
       list.innerHTML = objave
         .map((o, i) => `
-          <a href="objava.html?id=${encodeURIComponent(o.id)}" class="b-card reveal${i === 0 ? " b-card--featured" : ""}" style="--d:${(i % 3) * 0.08}s">
+          <a href="objava-${o.id}.html" class="b-card reveal${i === 0 ? " b-card--featured" : ""}" style="--d:${(i % 3) * 0.08}s">
             <div class="b-card__media">
               <img src="${o.slika}" alt="${altZa(o.slika, o.naslov)}" loading="lazy">
               <span class="b-card__cat">${o.kategorija}</span>
@@ -69,8 +69,8 @@
       <img class="article__hero" src="${o.slika}" alt="${altZa(o.slika, o.naslov)}">
       <div class="article__content">${o.sadrzaj}</div>
       <div class="article__nav">
-        ${next ? `<a href="objava.html?id=${encodeURIComponent(next.id)}" class="article__navlink">← ${next.naslov}</a>` : "<span></span>"}
-        ${prev ? `<a href="objava.html?id=${encodeURIComponent(prev.id)}" class="article__navlink article__navlink--right">${prev.naslov} →</a>` : "<span></span>"}
+        ${next ? `<a href="objava-${next.id}.html" class="article__navlink">← ${next.naslov}</a>` : "<span></span>"}
+        ${prev ? `<a href="objava-${prev.id}.html" class="article__navlink article__navlink--right">${prev.naslov} →</a>` : "<span></span>"}
       </div>`;
   }
 })();

@@ -67,7 +67,7 @@
             </div>
             <div class="dash-red__akcije">
               ${(o.status || "objavljeno") === "objavljeno"
-                ? `<a class="dash-mini" href="objava.html?id=${encodeURIComponent(o.id)}" target="_blank" rel="noopener">👁 Pogledaj</a>`
+                ? `<a class="dash-mini" href="objava-${o.id}.html" target="_blank" rel="noopener">👁 Pogledaj</a>`
                 : ""}
               <button class="dash-mini" data-uredi="${o.id}">✏️ Uredi</button>
               <button class="dash-mini dash-mini--obrisi" data-obrisi="${o.id}">🗑 Obriši</button>

@@ -53,6 +53,7 @@ function ucitajObjave() {
 function sacuvajObjave(objave) {
   fs.writeFileSync(BLOG_JSON, JSON.stringify(objave, null, 2));
   generisiBlogData(objave);
+  generisiObjaveHtml();
   generisiSitemap();
 }
 function generisiBlogData(objave) {
@@ -129,6 +130,82 @@ function sacuvajPostavke(p) {
   generisiSitemap();
 }
 
+/* ─────── statičke HTML stranice po blog objavi (SEO + social preview) ─────── */
+function htmlEsc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function generisiObjaveHtml() {
+  let template;
+  try { template = fs.readFileSync(path.join(KORIJEN, "objava.html"), "utf8"); } catch (e) { return; }
+  const javne = ucitajObjave().filter((o) => (o.status || "objavljeno") === "objavljeno");
+  let seo = {}, naziv = "Balloon Land";
+  try { const P = JSON.parse(fs.readFileSync(POSTAVKE_JSON, "utf8")); seo = P.seo || {}; naziv = seo.nazivSajta || "Balloon Land"; } catch (e) { /* nema postavki */ }
+  const base = (seo.sajtUrl || "").replace(/\/+$/, "");
+  const abs = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : base ? base + "/" + u.replace(/^\//, "") : u);
+  const mediaAlt = {};
+  try { ucitajMediju().forEach((m) => { if (m.tip === "slika" && m.alt) mediaAlt[m.putanja] = m.alt; }); } catch (e) { /* nema medija */ }
+
+  javne.forEach((o, idx) => {
+    const noviji = javne[idx - 1];
+    const stariji = javne[idx + 1];
+    const opis = (o.uvod || seo.opis || "").trim();
+    const alt = mediaAlt[o.slika] || o.naslov;
+    const staticUrl = (base ? base + "/" : "") + "objava-" + o.id + ".html";
+    const absSlika = abs(o.slika);
+
+    const article = {
+      "@context": "https://schema.org", "@type": "Article",
+      headline: o.naslov, image: absSlika || undefined, description: opis || undefined,
+      author: { "@type": "Organization", name: naziv },
+      publisher: { "@type": "Organization", name: naziv, logo: { "@type": "ImageObject", url: abs("img/logo-black.png") } },
+    };
+    const seoBlok =
+      `  <title>${htmlEsc(o.naslov)} — ${htmlEsc(naziv)} Blog</title>\n` +
+      `  <meta name="description" content="${htmlEsc(opis)}">\n` +
+      `  <link rel="canonical" href="${htmlEsc(staticUrl)}">\n` +
+      `  <meta property="og:type" content="article">\n` +
+      `  <meta property="og:site_name" content="${htmlEsc(naziv)}">\n` +
+      `  <meta property="og:title" content="${htmlEsc(o.naslov)}">\n` +
+      `  <meta property="og:description" content="${htmlEsc(opis)}">\n` +
+      `  <meta property="og:url" content="${htmlEsc(staticUrl)}">\n` +
+      `  <meta property="og:image" content="${htmlEsc(absSlika)}">\n` +
+      `  <meta property="og:locale" content="bs_BA">\n` +
+      `  <meta name="twitter:card" content="summary_large_image">\n` +
+      `  <meta name="twitter:title" content="${htmlEsc(o.naslov)}">\n` +
+      `  <meta name="twitter:description" content="${htmlEsc(opis)}">\n` +
+      `  <meta name="twitter:image" content="${htmlEsc(absSlika)}">\n` +
+      `  <script type="application/ld+json">${JSON.stringify(article)}</script>`;
+
+    const nav = `<div class="article__nav">\n` +
+      `        ${noviji ? `<a href="objava-${noviji.id}.html" class="article__navlink">← ${htmlEsc(noviji.naslov)}</a>` : "<span></span>"}\n` +
+      `        ${stariji ? `<a href="objava-${stariji.id}.html" class="article__navlink article__navlink--right">${htmlEsc(stariji.naslov)} →</a>` : "<span></span>"}\n` +
+      `      </div>`;
+    const clanak =
+      `<p class="article__meta"><span class="b-card__cat">${htmlEsc(o.kategorija)}</span> <span class="article__date">${htmlEsc(o.datum)}</span></p>\n` +
+      `      <h1 class="article__title">${htmlEsc(o.naslov)}</h1>\n` +
+      `      <img class="article__hero" src="${htmlEsc(o.slika)}" alt="${htmlEsc(alt)}">\n` +
+      `      <div class="article__content">${o.sadrzaj}</div>\n` +
+      `      ${nav}`;
+
+    let html = template
+      .replace(/  <title>[\s\S]*?<meta name="twitter:image"[^>]*>/, seoBlok)
+      .replace(/<article class="article" id="articleWrap">\s*<\/article>/, `<article class="article">${clanak}</article>`)
+      .replace(/\s*<script src="js\/blog-data\.js[^>]*><\/script>/, "")
+      .replace(/\s*<script src="js\/media-data\.js[^>]*><\/script>/, "")
+      .replace(/\s*<script src="js\/blog\.js[^>]*><\/script>/, "");
+    fs.writeFileSync(path.join(KORIJEN, "objava-" + o.id + ".html"), html);
+  });
+
+  // ukloni zastarjele static stranice (obrisane/povučene objave)
+  const validni = new Set(javne.map((o) => "objava-" + o.id + ".html"));
+  try {
+    fs.readdirSync(KORIJEN).forEach((f) => {
+      if (/^objava-.+\.html$/.test(f) && !validni.has(f)) { try { fs.unlinkSync(path.join(KORIJEN, f)); } catch (e) { /* već obrisano */ } }
+    });
+  } catch (e) { /* ignore */ }
+}
+
 /* ─────── sitemap.xml + robots.txt (SEO) ─────── */
 function xmlEsc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -151,7 +228,7 @@ function generisiSitemap() {
   try { objave = ucitajObjave().filter((o) => (o.status || "objavljeno") === "objavljeno"); } catch (e) { /* nema bloga */ }
   const url = (loc, prio) => `  <url>\n    <loc>${xmlEsc(loc)}</loc>\n    <lastmod>${danas}</lastmod>\n    <priority>${prio}</priority>\n  </url>`;
   const stavke = fiksne.map(([u, p]) => url(sajtUrl + u, p))
-    .concat(objave.map((o) => url(sajtUrl + "/objava.html?id=" + encodeURIComponent(o.id), "0.6")));
+    .concat(objave.map((o) => url(sajtUrl + "/objava-" + o.id + ".html", "0.6")));
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     stavke.join("\n") + "\n</urlset>\n";
   fs.writeFileSync(path.join(KORIJEN, "sitemap.xml"), xml);
@@ -733,6 +810,7 @@ http.createServer(async (req, res) => {
 }).listen(PORT, () => {
   objaviZakazane();                       // odmah pri startu
   setInterval(objaviZakazane, 60 * 1000); // pa svake minute
+  generisiObjaveHtml();                   // statičke stranice objava
   generisiSitemap();                      // sitemap.xml + robots.txt
   console.log("🎈 Balloon Land CMS radi na http://localhost:" + PORT);
   console.log("   Sajt:      http://localhost:" + PORT + "/");
