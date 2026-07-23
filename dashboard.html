@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Manrope:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=11">
+  <link rel="stylesheet" href="css/dashboard.css?v=12">
   <link rel="icon" type="image/png" href="img/logo-black.png">
 </head>
 <body class="dash-body">
@@ -161,6 +161,25 @@
               <button type="button" data-cmd="removeFormat" title="Očisti formatiranje">⌫</button>
             </div>
             <div class="dash-editor__polje" id="fEditor" contenteditable="true"></div>
+          </div>
+        </div>
+
+        <!-- ─────── SEO (opciono) ─────── -->
+        <h2 class="dash-podsekcija">🔍 SEO za Google <span class="dash-hint">(opciono — ako ostaviš prazno, koristi se Naslov i Uvod)</span></h2>
+        <div class="cform__field">
+          <label for="fSeoNaslov">SEO naslov <span class="dash-hint" id="fSeoNaslovBroj"></span></label>
+          <input type="text" id="fSeoNaslov" placeholder="Prazno = koristi Naslov objave">
+        </div>
+        <div class="cform__field">
+          <label for="fSeoOpis">Meta opis <span class="dash-hint" id="fSeoOpisBroj"></span></label>
+          <textarea id="fSeoOpis" rows="2" placeholder="Prazno = koristi Uvod"></textarea>
+        </div>
+        <div class="cform__field">
+          <label>Pregled u Google rezultatima</label>
+          <div class="dash-serp">
+            <p class="dash-serp__naslov" id="serpNaslov">Naslov objave</p>
+            <p class="dash-serp__url" id="serpUrl">vasadomena.ba › objava</p>
+            <p class="dash-serp__opis" id="serpOpis">Opis objave koji se prikazuje ispod naslova u Google pretrazi…</p>
           </div>
         </div>
 
@@ -654,7 +673,7 @@
     </div>
   </div>
 
-  <script src="js/dashboard.js?v=12"></script>
+  <script src="js/dashboard.js?v=13"></script>
   <script src="js/dashboard-paketi.js?v=3"></script>
   <script src="js/dashboard-usluge.js?v=2"></script>
   <script src="js/dashboard-media.js?v=2"></script>

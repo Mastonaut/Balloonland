@@ -107,19 +107,20 @@
     const id = new URLSearchParams(location.search).get("id");
     const o = window.BLOG_OBJAVE.find((x) => x.id === id);
     if (o) {
+      const oOpis = o.seoOpis || o.uvod || opis;
       ldSkripta({
         "@context": "https://schema.org",
         "@type": "Article",
         headline: o.naslov,
         image: abs(o.slika),
-        description: o.uvod || "",
+        description: oOpis,
         author: { "@type": "Organization", name: naziv },
         publisher: { "@type": "Organization", name: naziv, logo: { "@type": "ImageObject", url: abs("img/logo-black.png") } },
       });
       // OG za konkretnu objavu (Google; social preview → statičke stranice, korak 3)
       setMeta("og:type", "article");
-      setMeta("og:title", o.naslov + " — " + naziv);
-      setMeta("og:description", o.uvod || opis);
+      setMeta("og:title", (o.seoNaslov || o.naslov) + " — " + naziv);
+      setMeta("og:description", oOpis);
       if (abs(o.slika)) setMeta("og:image", abs(o.slika));
     }
   }

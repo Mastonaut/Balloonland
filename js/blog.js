@@ -59,7 +59,7 @@
       return;
     }
 
-    document.title = o.naslov + " — Balloon Land Blog";
+    document.title = (o.seoNaslov || o.naslov) + " — Balloon Land Blog";
 
     const prev = objave[idx + 1]; // starija
     const next = objave[idx - 1]; // novija

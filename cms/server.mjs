@@ -149,7 +149,8 @@ function generisiObjaveHtml() {
   javne.forEach((o, idx) => {
     const noviji = javne[idx - 1];
     const stariji = javne[idx + 1];
-    const opis = (o.uvod || seo.opis || "").trim();
+    const seoTitle = (o.seoNaslov || o.naslov || "").trim();
+    const opis = (o.seoOpis || o.uvod || seo.opis || "").trim();
     const alt = mediaAlt[o.slika] || o.naslov;
     const staticUrl = (base ? base + "/" : "") + "objava-" + o.id + ".html";
     const absSlika = abs(o.slika);
@@ -161,18 +162,18 @@ function generisiObjaveHtml() {
       publisher: { "@type": "Organization", name: naziv, logo: { "@type": "ImageObject", url: abs("img/logo-black.png") } },
     };
     const seoBlok =
-      `  <title>${htmlEsc(o.naslov)} — ${htmlEsc(naziv)} Blog</title>\n` +
+      `  <title>${htmlEsc(seoTitle)} — ${htmlEsc(naziv)} Blog</title>\n` +
       `  <meta name="description" content="${htmlEsc(opis)}">\n` +
       `  <link rel="canonical" href="${htmlEsc(staticUrl)}">\n` +
       `  <meta property="og:type" content="article">\n` +
       `  <meta property="og:site_name" content="${htmlEsc(naziv)}">\n` +
-      `  <meta property="og:title" content="${htmlEsc(o.naslov)}">\n` +
+      `  <meta property="og:title" content="${htmlEsc(seoTitle)}">\n` +
       `  <meta property="og:description" content="${htmlEsc(opis)}">\n` +
       `  <meta property="og:url" content="${htmlEsc(staticUrl)}">\n` +
       `  <meta property="og:image" content="${htmlEsc(absSlika)}">\n` +
       `  <meta property="og:locale" content="bs_BA">\n` +
       `  <meta name="twitter:card" content="summary_large_image">\n` +
-      `  <meta name="twitter:title" content="${htmlEsc(o.naslov)}">\n` +
+      `  <meta name="twitter:title" content="${htmlEsc(seoTitle)}">\n` +
       `  <meta name="twitter:description" content="${htmlEsc(opis)}">\n` +
       `  <meta name="twitter:image" content="${htmlEsc(absSlika)}">\n` +
       `  <script type="application/ld+json">${JSON.stringify(article)}</script>`;
@@ -536,6 +537,8 @@ async function api(req, res, putanja) {
       datum: o.datum || danasnjiDatum(),
       slika: o.slika || "img/gold-balloons-gift.jpg",
       uvod: o.uvod || "",
+      seoNaslov: (o.seoNaslov || "").trim(),
+      seoOpis: (o.seoOpis || "").trim(),
       sadrzaj: o.sadrzaj,
       status: ["objavljeno", "skica", "zakazano"].includes(o.status) ? o.status : "objavljeno",
       objaviU: o.status === "zakazano" ? (o.objaviU || null) : undefined,
@@ -559,7 +562,7 @@ async function api(req, res, putanja) {
 
     if (metoda === "PUT") {
       const o = JSON.parse((await citajTijelo(req)).toString() || "{}");
-      ["naslov", "kategorija", "datum", "slika", "uvod", "sadrzaj", "status", "objaviU", "slider", "sliderElementi"].forEach((polje) => {
+      ["naslov", "kategorija", "datum", "slika", "uvod", "seoNaslov", "seoOpis", "sadrzaj", "status", "objaviU", "slider", "sliderElementi"].forEach((polje) => {
         if (o[polje] !== undefined) objave[i][polje] = o[polje];
       });
       if (objave[i].status === "zakazano" && !objave[i].objaviU) {

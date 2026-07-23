@@ -40,6 +40,42 @@
     } catch (gr) { /* preusmjeren na prijavu */ }
   })();
 
+  /* ─────── SEO: live Google pregled + brojači (editor objave) ─────── */
+  let seoDomena = "vasadomena.ba";
+  api("/api/postavke").then((p) => {
+    const u = ((p.seo && p.seo.sajtUrl) || "").replace(/^https?:\/\//, "").replace(/\/+$/, "");
+    if (u) seoDomena = u;
+    osvjeziSerp();
+  }).catch(() => {});
+
+  function slugBl(t) {
+    const mapa = { š: "s", đ: "dj", č: "c", ć: "c", ž: "z" };
+    return String(t || "").toLowerCase().replace(/[šđčćž]/g, (s) => mapa[s])
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "objava";
+  }
+  function seoBrojac(el, len, max) {
+    if (!el) return;
+    el.textContent = "· " + len + "/" + max;
+    el.style.color = len > max ? "#e0a34b" : "";
+  }
+  function osvjeziSerp() {
+    const seoN = document.getElementById("fSeoNaslov");
+    if (!seoN) return;
+    const naslov = document.getElementById("fNaslov").value.trim();
+    const uvod = document.getElementById("fUvod").value.trim();
+    const sn = seoN.value.trim();
+    const so = document.getElementById("fSeoOpis").value.trim();
+    document.getElementById("serpNaslov").textContent = (sn || naslov || "Naslov objave") + " — Balloon Land Blog";
+    document.getElementById("serpUrl").textContent = seoDomena + " › objava-" + slugBl(naslov || sn);
+    document.getElementById("serpOpis").textContent = so || uvod || "Ovdje ide opis koji se prikazuje ispod naslova u Google pretrazi…";
+    seoBrojac(document.getElementById("fSeoNaslovBroj"), (sn || naslov).length, 60);
+    seoBrojac(document.getElementById("fSeoOpisBroj"), (so || uvod).length, 160);
+  }
+  ["fSeoNaslov", "fSeoOpis", "fNaslov", "fUvod"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", osvjeziSerp);
+  });
+
   /* ─────── lista objava ─────── */
   function statusBedz(o) {
     if (o.status === "skica") return '<span class="dash-bedz dash-bedz--skica">📝 Skica</span>';
@@ -279,6 +315,9 @@
     document.getElementById("fDatum").value = o ? o.datum : "";
     postaviSliku(o ? o.slika : "img/gold-balloons-gift.jpg");
     document.getElementById("fUvod").value = o ? o.uvod : "";
+    document.getElementById("fSeoNaslov").value = o && o.seoNaslov ? o.seoNaslov : "";
+    document.getElementById("fSeoOpis").value = o && o.seoOpis ? o.seoOpis : "";
+    osvjeziSerp();
     editor.innerHTML = o ? o.sadrzaj : "<p><br></p>";
     // status
     statusPolje.value = o ? (o.status || "objavljeno") : "objavljeno";
@@ -353,6 +392,8 @@
       datum: document.getElementById("fDatum").value.trim() || undefined,
       slika: document.getElementById("fSlika").value,
       uvod: document.getElementById("fUvod").value.trim(),
+      seoNaslov: document.getElementById("fSeoNaslov").value.trim(),
+      seoOpis: document.getElementById("fSeoOpis").value.trim(),
       sadrzaj,
       status: statusPolje.value,
       objaviU: statusPolje.value === "zakazano" ? document.getElementById("fObjaviU").value : undefined,
